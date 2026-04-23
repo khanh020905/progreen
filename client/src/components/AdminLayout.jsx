@@ -6,13 +6,13 @@ import {
   Ticket, 
   Gift, 
   LogOut, 
-  Leaf,
   ChevronRight,
   User,
   Users,
   FileText,
   Settings
 } from 'lucide-react';
+import Logo from './Logo';
 
 const AdminLayout = ({ children }) => {
   const navigate = useNavigate();
@@ -46,11 +46,8 @@ const AdminLayout = ({ children }) => {
     <div className="flex min-h-screen bg-[#f8faf9]">
       {/* Sidebar - matches reference: dark green, leaf icon + "Pro Green Life" */}
       <aside className="w-64 bg-[#0e2114] text-white flex flex-col fixed h-full z-30">
-        <div className="px-6 pt-8 pb-6 flex items-center gap-3">
-          <div className="bg-brand-500 p-2 rounded-xl">
-            <Leaf className="text-white w-5 h-5" />
-          </div>
-          <span className="text-lg font-extrabold tracking-tight">Pro Green Life</span>
+        <div className="px-6 pt-8 pb-10 flex items-center gap-3 border-b border-white/5 mb-4">
+          <Logo inverted={true} className="scale-110 origin-left" />
         </div>
 
         <nav className="flex-1 px-4 space-y-1">

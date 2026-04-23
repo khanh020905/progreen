@@ -1,5 +1,6 @@
 import React from 'react';
-import { Leaf, Globe } from 'lucide-react';
+import { Globe } from 'lucide-react';
+import Logo from './Logo';
 
 const Footer = () => {
   return (
@@ -7,10 +8,7 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
           <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <div className="bg-brand-500 p-2 rounded-xl"><Leaf className="text-white w-6 h-6" /></div>
-              <span className="text-2xl font-black tracking-tighter">Pro Green Life</span>
-            </div>
+            <Logo inverted={true} className="scale-110 origin-left" />
             <p className="text-slate-400 font-bold leading-relaxed text-sm">
               Creating value for you and <br /> a better tomorrow.
             </p>

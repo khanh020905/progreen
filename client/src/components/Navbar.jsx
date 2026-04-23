@@ -1,17 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Leaf } from 'lucide-react';
+import Logo from './Logo';
 
 const Navbar = () => {
   return (
-    <nav className="bg-white sticky top-0 z-50 h-[72px] flex items-center border-b border-slate-100">
+    <nav className="bg-white sticky top-0 z-50 h-[80px] flex items-center border-b border-slate-100 backdrop-blur-md bg-white/90">
       <div className="container mx-auto px-4 flex items-center justify-between">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2">
-          <div className="bg-brand-600 p-1.5 rounded-lg">
-            <Leaf className="text-white w-5 h-5" />
-          </div>
-          <span className="text-lg font-bold text-slate-900 tracking-tight">Pro Green Life</span>
+        {/* Official Logo */}
+        <Link to="/">
+          <Logo className="scale-90 origin-left" />
         </Link>
 
         {/* Center Navigation */}
