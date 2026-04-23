@@ -1,49 +1,50 @@
 import React from 'react';
-import { useLocation, Link, Navigate } from 'react-router-dom';
-import { CheckCircle, ArrowLeft, Download, Share2 } from 'lucide-react';
+import { useLocation, Link } from 'react-router-dom';
+import { CheckCircle, Home, ArrowRight, Leaf } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Success = () => {
   const location = useLocation();
-  const reference = location.state?.reference;
-
-  if (!reference) {
-    return <Navigate to="/redeem" replace />;
-  }
+  const reference = location.state?.reference || 'PGL-2026-XXXXXX';
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center py-20 px-4">
+    <div className="min-h-screen bg-white flex items-center justify-center p-4">
       <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
+        initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="card max-w-lg w-full text-center p-12"
+        className="max-w-xl w-full bg-white border border-slate-50 rounded-[3rem] p-12 text-center shadow-2xl shadow-slate-200/50"
       >
-        <div className="w-20 h-20 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center mx-auto mb-8">
-          <CheckCircle className="w-12 h-12" />
+        <div className="flex justify-center mb-10">
+          <motion.div 
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: 'spring', damping: 10, stiffness: 100 }}
+            className="w-24 h-24 bg-brand-50 text-brand-600 rounded-full flex items-center justify-center"
+          >
+            <CheckCircle className="w-12 h-12" />
+          </motion.div>
         </div>
-        
-        <h1 className="text-3xl font-bold text-slate-900 mb-4">Claim Successful!</h1>
-        <p className="text-slate-600 mb-8 leading-relaxed">
-          Your eco-friendly reward has been successfully claimed. Our team will verify your information and start the shipping process shortly.
+
+        <h1 className="text-4xl font-black text-slate-900 mb-4">Submission Successful!</h1>
+        <p className="text-slate-500 font-medium leading-relaxed mb-10">
+          Thank you! Your reward request has been received. <br />
+          We will contact you soon.
         </p>
-        
-        <div className="bg-slate-50 rounded-2xl p-6 mb-10 border border-dashed border-slate-200">
-          <p className="text-sm text-slate-500 uppercase tracking-widest font-bold mb-2">Claim Reference Number</p>
-          <p className="text-3xl font-mono font-bold text-brand-700">{reference}</p>
+
+        <div className="bg-slate-50 border border-slate-100 rounded-2xl p-8 mb-10">
+          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-3">Your Reference Number</p>
+          <p className="text-3xl font-black text-slate-900 tracking-tight">{reference}</p>
         </div>
-        
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link to="/" className="btn-primary flex items-center justify-center gap-2">
-            <ArrowLeft className="w-5 h-5" /> Back to Home
+
+        <div className="flex flex-col gap-4">
+          <Link to="/" className="w-full py-4 bg-brand-950 text-white rounded-xl font-bold hover:bg-black transition-colors flex items-center justify-center gap-2">
+            Back to Home <Home className="w-4 h-4" />
           </Link>
-          <button className="btn-secondary flex items-center justify-center gap-2">
-            <Download className="w-5 h-5" /> Save Receipt
-          </button>
+          <div className="flex items-center justify-center gap-2 text-brand-600 text-[10px] font-bold uppercase tracking-widest mt-4">
+            <Leaf className="w-3 h-3" /> 
+            Pro Green Life Rewards
+          </div>
         </div>
-        
-        <p className="mt-12 text-sm text-slate-400">
-          A confirmation email will be sent to you if provided. Need help? Contact us at support@progreenlife.com
-        </p>
       </motion.div>
     </div>
   );

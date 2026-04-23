@@ -39,12 +39,12 @@ const AdminLayout = ({ children }) => {
   return (
     <div className="flex min-h-screen bg-[#f8fafc]">
       {/* Modern Sidebar */}
-      <aside className="w-72 bg-white border-r border-slate-100 flex flex-col fixed h-full z-30 shadow-sm">
+      <aside className="w-72 bg-[#0e2114] text-white flex flex-col fixed h-full z-30 shadow-xl">
         <div className="p-8 flex items-center gap-3 mb-6">
-          <div className="bg-brand-600 p-2 rounded-xl shadow-lg shadow-brand-600/20">
+          <div className="bg-brand-600 p-2 rounded-xl">
             <Leaf className="text-white w-6 h-6" />
           </div>
-          <span className="text-xl font-black text-slate-900 tracking-tight">PGL Portal</span>
+          <span className="text-xl font-bold tracking-tight">Pro Green Life</span>
         </div>
 
         <nav className="flex-1 px-6 space-y-2">
@@ -55,12 +55,12 @@ const AdminLayout = ({ children }) => {
               to={item.path}
               className={`flex items-center justify-between p-4 rounded-2xl transition-all duration-300 group ${
                 location.pathname === item.path 
-                  ? 'bg-brand-600 text-white shadow-xl shadow-brand-600/20' 
-                  : 'text-slate-500 hover:bg-slate-50 hover:text-brand-600'
+                  ? 'bg-brand-600 text-white shadow-xl shadow-brand-600/40' 
+                  : 'text-slate-400 hover:bg-white/5 hover:text-white'
               }`}
             >
               <div className="flex items-center gap-4">
-                <item.icon className={`w-5 h-5 ${location.pathname === item.path ? 'text-white' : 'text-slate-400 group-hover:text-brand-600'}`} />
+                <item.icon className={`w-5 h-5 ${location.pathname === item.path ? 'text-white' : 'text-slate-500 group-hover:text-white'}`} />
                 <span className="font-bold text-sm">{item.name}</span>
               </div>
               {location.pathname === item.path && <ChevronRight className="w-4 h-4" />}
