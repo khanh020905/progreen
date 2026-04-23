@@ -13,67 +13,48 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #fcfdfc;
+  background-color: #ffffff;
   @apply text-slate-800 antialiased;
 }
 
 @layer components {
   .btn-primary {
-    @apply px-8 py-3 bg-brand-600 text-white rounded-full font-bold text-sm tracking-wide 
-           hover:bg-brand-700 hover:shadow-lg hover:shadow-brand-600/30 
+    @apply px-8 py-3 bg-brand-800 text-white rounded-xl font-bold text-sm tracking-wide 
+           hover:bg-brand-950 shadow-lg shadow-brand-900/10 
            active:scale-95 transition-all duration-300 flex items-center justify-center gap-2;
   }
   
   .btn-secondary {
-    @apply px-8 py-3 bg-white text-brand-600 border-2 border-brand-100 rounded-full font-bold text-sm tracking-wide
-           hover:border-brand-600 hover:bg-brand-50 transition-all duration-300 flex items-center justify-center gap-2;
-  }
-
-  .glass-card {
-    @apply bg-white/80 backdrop-blur-md border border-white rounded-[2rem] shadow-xl shadow-slate-200/50;
+    @apply px-8 py-3 bg-white text-slate-600 border border-slate-100 rounded-xl font-bold text-sm tracking-wide
+           hover:border-brand-500 hover:text-brand-700 transition-all duration-300 flex items-center justify-center gap-2 shadow-sm;
   }
 
   .premium-card {
-    @apply bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl hover:shadow-slate-200/60 
-           transition-all duration-500 hover:-translate-y-2;
+    @apply bg-white p-8 rounded-[2rem] border border-slate-50 shadow-xl shadow-slate-100/50 
+           transition-all duration-500 hover:-translate-y-1;
   }
 
   .input-field {
-    @apply w-full px-6 py-4 bg-slate-50 border-none rounded-2xl focus:bg-white focus:ring-2 focus:ring-brand-500/20 
-           outline-none transition-all duration-300 text-slate-700 placeholder:text-slate-400 font-medium;
-  }
-
-  .section-title {
-    @apply text-4xl md:text-5xl font-extrabold text-slate-900 leading-tight tracking-tight;
+    @apply w-full px-6 py-4 bg-slate-50 border border-transparent rounded-xl focus:bg-white focus:border-brand-500 
+           outline-none transition-all duration-300 text-slate-700 placeholder:text-slate-300 font-medium;
   }
 
   .badge-green {
-    @apply px-4 py-1.5 bg-brand-50 text-brand-700 rounded-full text-xs font-bold uppercase tracking-widest border border-brand-100;
+    @apply px-4 py-1.5 bg-white text-brand-600 rounded-full text-[10px] font-bold uppercase tracking-widest border border-brand-100 shadow-sm;
   }
-}
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  .sidebar-link {
+    @apply flex items-center justify-between p-4 rounded-xl transition-all duration-300 font-bold text-sm;
+  }
 }
 
 /* Animations */
 @keyframes float {
   0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-5px); }
   100% { transform: translateY(0px); }
 }
 
 .animate-float {
-  animation: float 6s ease-in-out infinite;
+  animation: float 4s ease-in-out infinite;
 }

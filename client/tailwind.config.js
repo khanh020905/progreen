@@ -8,17 +8,17 @@ export default {
     extend: {
       colors: {
         brand: {
-          50: '#f0f9f1',
-          100: '#dcf1df',
-          200: '#bbe1c2',
-          300: '#8cc998',
-          400: '#448438', // Secondary Green
-          500: '#388e4a',
-          600: '#287028', // Primary Forest Green
-          700: '#235b31',
-          800: '#1e492a',
-          900: '#1a3d25',
-          950: '#0e2114',
+          50: '#f0fdf4',
+          100: '#dcfce7',
+          200: '#bbf7d0',
+          300: '#86efac',
+          400: '#4ade80',
+          500: '#22c55e', // Vibrant Green
+          600: '#16a34a',
+          700: '#15803d',
+          800: '#166534', // Deep Forest Green
+          900: '#14532d',
+          950: '#052c16', // Dark Sidebar/Footer Green
         },
       },
       fontFamily: {
