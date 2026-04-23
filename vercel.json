@@ -17,6 +17,18 @@
       "destination": "/server/index.js"
     },
     {
+      "source": "/admin(.*)",
+      "destination": "/client/index.html"
+    },
+    {
+      "source": "/redeem(.*)",
+      "destination": "/client/index.html"
+    },
+    {
+      "source": "/success(.*)",
+      "destination": "/client/index.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/client/$1"
     }
