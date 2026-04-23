@@ -124,10 +124,8 @@ const AdminRewards = () => {
           ) : rewards.length === 0 ? (
             <div className="col-span-full py-20 text-center text-slate-400 font-bold">No rewards found. Start adding some!</div>
           ) : rewards.map((reward) => (
-            <motion.div 
+            <div 
               key={reward._id} 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
               className="bg-white rounded-[2.5rem] border border-slate-50 shadow-xl shadow-slate-100/40 overflow-hidden group hover:-translate-y-2 transition-all duration-500"
             >
               <div className="relative aspect-[4/3] overflow-hidden">
@@ -165,7 +163,7 @@ const AdminRewards = () => {
                   <ArrowUpRight className="w-5 h-5 text-slate-200 group-hover:text-brand-500 transition-colors" />
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

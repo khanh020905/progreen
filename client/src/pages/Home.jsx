@@ -237,53 +237,9 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-brand-950 text-white pt-32 pb-16">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20 mb-24">
-            <div className="space-y-8">
-              <div className="flex items-center gap-3">
-                <div className="bg-brand-500 p-2 rounded-xl"><Leaf className="text-white w-6 h-6" /></div>
-                <span className="text-2xl font-black tracking-tighter">Pro Green Life</span>
-              </div>
-              <p className="text-slate-400 font-bold leading-relaxed">
-                Creating value for you and <br /> a better tomorrow.
-              </p>
-            </div>
-            <div>
-              <h5 className="font-black mb-8 text-white uppercase tracking-widest text-xs">Company</h5>
-              <ul className="space-y-5 text-slate-400 text-sm font-bold">
-                <li><a href="#" className="hover:text-brand-400 transition-colors">About Us</a></li>
-                <li><a href="#" className="hover:text-brand-400 transition-colors">Careers</a></li>
-                <li><a href="#" className="hover:text-brand-400 transition-colors">Contact</a></li>
-              </ul>
-            </div>
-            <div>
-              <h5 className="font-black mb-8 text-white uppercase tracking-widest text-xs">Support</h5>
-              <ul className="space-y-5 text-slate-400 text-sm font-bold">
-                <li><a href="#" className="hover:text-brand-400 transition-colors">Help Center</a></li>
-                <li><a href="#" className="hover:text-brand-400 transition-colors">Terms & Conditions</a></li>
-                <li><a href="#" className="hover:text-brand-400 transition-colors">Privacy Policy</a></li>
-              </ul>
-            </div>
-            <div>
-              <h5 className="font-black mb-8 text-white uppercase tracking-widest text-xs">Follow Us</h5>
-              <div className="flex gap-5">
-                {[1,2,3,4].map(i => (
-                  <div key={i} className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-brand-500 transition-all cursor-pointer group shadow-sm">
-                    <Globe className="w-5 h-5 text-slate-500 group-hover:text-white" />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className="pt-12 border-t border-white/5 text-center text-slate-600 text-[10px] font-black uppercase tracking-[0.2em]">
-            © 2026 Pro Green Life. All rights reserved.
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };
 
 export default Home;
+
