@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Voucher = require('../models/Voucher');
 const Reward = require('../models/Reward');
 

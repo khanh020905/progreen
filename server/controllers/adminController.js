@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const AdminUser = require('../models/AdminUser');
 const Claim = require('../models/Claim');
 const Voucher = require('../models/Voucher');

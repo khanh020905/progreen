@@ -1,7 +1,7 @@
+const mongoose = require('mongoose');
 const Claim = require('../models/Claim');
 const Voucher = require('../models/Voucher');
 const Reward = require('../models/Reward');
-const { v4: uuidv4 } = require('uuid');
 
 exports.submitClaim = async (req, res) => {
   try {
