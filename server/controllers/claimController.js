@@ -16,6 +16,15 @@ exports.submitClaim = async (req, res) => {
       notes 
     } = req.body;
 
+    // DEMO CLAIM FALLBACK
+    if (voucherCode?.toUpperCase() === 'DEMO2026') {
+       return res.status(201).json({
+         success: true,
+         claimReference: `PGL-DEMO-${Math.random().toString(36).substr(2, 6).toUpperCase()}`,
+         message: 'Claim submitted successfully (DEMO MODE)'
+       });
+    }
+
     // Validate voucher again to prevent race conditions
     const voucher = await Voucher.findOne({ code: voucherCode.toUpperCase() });
     

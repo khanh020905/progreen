@@ -8,8 +8,22 @@ const jwt = require('jsonwebtoken');
 exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
-    const admin = await AdminUser.findOne({ username });
     
+    // HARDCODED DEMO FALLBACK (No DB required)
+    if (username === 'admin' && password === 'ProGreenLife@2026') {
+      const token = jwt.sign(
+        { id: 'demo-admin-id', username: 'admin' },
+        process.env.JWT_SECRET || 'secret_key',
+        { expiresIn: '24h' }
+      );
+      return res.json({
+        token,
+        admin: { id: 'demo-admin-id', username: 'admin', isDemo: true }
+      });
+    }
+
+    // Standard DB Check
+    const admin = await AdminUser.findOne({ username });
     if (!admin) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }

@@ -8,6 +8,20 @@ exports.validateVoucher = async (req, res) => {
       return res.status(400).json({ message: 'Voucher code is required' });
     }
 
+    // DEMO VOUCHER FALLBACK
+    if (code?.toUpperCase() === 'DEMO2026') {
+      return res.json({
+        valid: true,
+        voucher: {
+          code: 'DEMO2026',
+          rewards: [
+            { _id: 'r1', name: 'Premium Eco Bottle', description: 'Double-walled stainless steel', image: 'https://images.unsplash.com/photo-1602143399827-bd95968330b7?q=80&w=800' },
+            { _id: 'r2', name: 'Green Tote Bag', description: 'Eco-friendly reusable bag', image: 'https://images.unsplash.com/photo-1544816153-16ad4614ff98?q=80&w=800' }
+          ]
+        }
+      });
+    }
+
     const voucher = await Voucher.findOne({ code: code.toUpperCase() })
       .populate('rewards');
 
