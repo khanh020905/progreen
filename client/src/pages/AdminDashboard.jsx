@@ -154,7 +154,7 @@ const AdminDashboard = () => {
           </div>
         </div>
       </div>
-    </AdminDashboard>
+    </AdminLayout>
   );
 };
 

@@ -199,7 +199,7 @@ const AdminClaims = () => {
           </table>
         </div>
       </div>
-    </AdminClaims>
+    </AdminLayout>
   );
 };
 
