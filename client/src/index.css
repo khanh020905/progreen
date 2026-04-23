@@ -1,9 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@theme {
+  --font-sans: 'Inter', 'Montserrat', system-ui, sans-serif;
+}
 
 :root {
-  font-family: 'Montserrat', sans-serif;
   line-height: 1.6;
   font-weight: 400;
   color-scheme: light;
@@ -14,38 +16,114 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-color: #ffffff;
-  @apply text-slate-800 antialiased;
+  color: #1e293b;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-@layer components {
-  .btn-primary {
-    @apply px-8 py-3 bg-brand-800 text-white rounded-xl font-bold text-sm tracking-wide 
-           hover:bg-brand-950 shadow-lg shadow-brand-900/10 
-           active:scale-95 transition-all duration-300 flex items-center justify-center gap-2;
-  }
-  
-  .btn-secondary {
-    @apply px-8 py-3 bg-white text-slate-600 border border-slate-100 rounded-xl font-bold text-sm tracking-wide
-           hover:border-brand-500 hover:text-brand-700 transition-all duration-300 flex items-center justify-center gap-2 shadow-sm;
-  }
+/* ===== REUSABLE COMPONENT CLASSES ===== */
 
-  .premium-card {
-    @apply bg-white p-8 rounded-[2rem] border border-slate-50 shadow-xl shadow-slate-100/50 
-           transition-all duration-500 hover:-translate-y-1;
-  }
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 2rem;
+  background-color: #166534;
+  color: white;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.025em;
+  box-shadow: 0 10px 15px -3px rgba(20, 83, 45, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+}
+.btn-primary:hover {
+  background-color: #052c16;
+}
+.btn-primary:active {
+  transform: scale(0.95);
+}
 
-  .input-field {
-    @apply w-full px-6 py-4 bg-slate-50 border border-transparent rounded-xl focus:bg-white focus:border-brand-500 
-           outline-none transition-all duration-300 text-slate-700 placeholder:text-slate-300 font-medium;
-  }
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 2rem;
+  background-color: white;
+  color: #475569;
+  border: 1px solid #f1f5f9;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.025em;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.btn-secondary:hover {
+  border-color: #22c55e;
+  color: #15803d;
+}
 
-  .badge-green {
-    @apply px-4 py-1.5 bg-white text-brand-600 rounded-full text-[10px] font-bold uppercase tracking-widest border border-brand-100 shadow-sm;
-  }
+.premium-card {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 2rem;
+  border: 1px solid #f8fafc;
+  box-shadow: 0 20px 25px -5px rgba(241, 245, 249, 0.5);
+  transition: all 0.5s ease;
+}
+.premium-card:hover {
+  transform: translateY(-0.25rem);
+}
 
-  .sidebar-link {
-    @apply flex items-center justify-between p-4 rounded-xl transition-all duration-300 font-bold text-sm;
-  }
+.input-field {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background-color: #f8fafc;
+  border: 1px solid transparent;
+  border-radius: 0.75rem;
+  outline: none;
+  transition: all 0.3s ease;
+  color: #334155;
+  font-weight: 500;
+}
+.input-field::placeholder {
+  color: #cbd5e1;
+}
+.input-field:focus {
+  background-color: white;
+  border-color: #22c55e;
+}
+
+.badge-green {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 1rem;
+  background-color: white;
+  color: #16a34a;
+  border-radius: 9999px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border: 1px solid #dcfce7;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+  font-weight: 700;
+  font-size: 0.875rem;
 }
 
 /* Animations */

@@ -15,6 +15,9 @@ import AdminDashboard from './pages/AdminDashboard';
 import AdminClaims from './pages/AdminClaims';
 import AdminVouchers from './pages/AdminVouchers';
 import AdminRewards from './pages/AdminRewards';
+import AdminUsers from './pages/AdminUsers';
+import AdminReports from './pages/AdminReports';
+import AdminSettings from './pages/AdminSettings';
 
 function App() {
   return (
@@ -33,6 +36,9 @@ function App() {
           <Route path="/admin/claims" element={<AdminClaims />} />
           <Route path="/admin/vouchers" element={<AdminVouchers />} />
           <Route path="/admin/rewards" element={<AdminRewards />} />
+          <Route path="/admin/users" element={<AdminUsers />} />
+          <Route path="/admin/reports" element={<AdminReports />} />
+          <Route path="/admin/settings" element={<AdminSettings />} />
 
           {/* 404 Route */}
           <Route path="*" element={

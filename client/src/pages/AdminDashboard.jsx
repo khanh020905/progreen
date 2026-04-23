@@ -6,7 +6,8 @@ import {
   Clock, 
   CheckCircle2, 
   Download,
-  Eye
+  Eye,
+  Gift
 } from 'lucide-react';
 
 const AdminDashboard = () => {
