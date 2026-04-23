@@ -25,6 +25,11 @@ exports.submitClaim = async (req, res) => {
        });
     }
 
+    // Check DB status if not demo
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({ message: 'Database connection is currently unavailable. Please use the DEMO2026 code to test.' });
+    }
+
     // Validate voucher again to prevent race conditions
     const voucher = await Voucher.findOne({ code: voucherCode.toUpperCase() });
     

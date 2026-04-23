@@ -52,18 +52,16 @@ async function connectToDatabase() {
   }
 }
 
-// Ensure DB connection for API routes
+// Ensure DB connection for API routes (Non-blocking for demo support)
 app.use(async (req, res, next) => {
   if (req.path.startsWith('/api')) {
     try {
       await connectToDatabase();
       next();
     } catch (err) {
-      return res.status(503).json({ 
-        error: 'Backend Services Unavailable', 
-        message: err.message,
-        tip: 'Ensure MONGODB_URI is correctly configured in your Vercel Environment Variables.'
-      });
+      console.warn('Database connection failed, proceeding to controllers (Demo fallback mode):', err.message);
+      // We don't block the request here, controllers will handle DB-dependent logic or use demo fallbacks
+      next();
     }
   } else {
     next();

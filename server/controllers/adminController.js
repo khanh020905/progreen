@@ -22,6 +22,11 @@ exports.login = async (req, res) => {
       });
     }
 
+    // Check DB status if not demo
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({ message: 'Database connection is currently unavailable. Please use the default demo credentials.' });
+    }
+
     // Standard DB Check
     const admin = await AdminUser.findOne({ username });
     if (!admin) {
