@@ -30,57 +30,66 @@ const Home = () => {
   return (
     <div className="flex flex-col w-full bg-white">
       {/* Hero Section */}
-      <section className="relative pt-12 pb-24 lg:pt-20 lg:pb-32 overflow-hidden bg-[#f9fcf9]">
+      <section className="relative pt-8 pb-0 lg:pt-12 overflow-hidden" style={{background: 'linear-gradient(135deg, #f0fdf4 0%, #f9fefb 40%, #ffffff 100%)'}}>
         <div className="container mx-auto px-4">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-0">
+            {/* Left Content */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="flex-1 space-y-8 text-center lg:text-left"
+              className="flex-1 space-y-7 text-center lg:text-left lg:pr-8"
             >
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white shadow-sm border border-brand-100 text-[10px] font-bold uppercase tracking-[0.2em] text-brand-600">
-                <Leaf className="w-3 h-3" />
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 shadow-sm border border-brand-100 text-[11px] font-bold uppercase tracking-[0.15em] text-brand-700">
+                <span className="w-5 h-5 bg-brand-100 rounded-full flex items-center justify-center">
+                  <Leaf className="w-3 h-3 text-brand-600" />
+                </span>
                 <span>Special Rewards for you</span>
               </div>
               
-              <h1 className="text-5xl lg:text-[5rem] font-extrabold text-slate-900 leading-[1.05] tracking-tight">
+              <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold text-slate-900 leading-[1.15] tracking-tight">
                 Redeem Your Voucher <br />
-                Get <span className="text-brand-500">Amazing Rewards</span>
+                Get <span className="text-brand-600">Amazing Rewards</span>
               </h1>
               
-              <p className="text-lg text-slate-500 max-w-xl font-medium mx-auto lg:mx-0">
+              <p className="text-base text-slate-500 max-w-md font-medium mx-auto lg:mx-0 leading-relaxed">
                 Thank you for being a part of Pro Green Life. <br />
                 Enter your voucher code and choose your favorite reward.
               </p>
               
-              <div className="flex w-full max-w-lg mx-auto lg:mx-0 bg-white p-2 rounded-2xl shadow-2xl shadow-brand-900/10 border border-slate-50">
+              <div className="flex w-full max-w-md mx-auto lg:mx-0 bg-white p-1.5 rounded-xl shadow-xl shadow-slate-900/5 border border-slate-100">
                 <input 
                   type="text" 
                   placeholder="Enter your voucher code" 
-                  className="flex-1 px-6 outline-none text-slate-700 font-bold placeholder:text-slate-300 placeholder:font-medium"
+                  className="flex-1 px-5 outline-none text-sm text-slate-700 font-medium placeholder:text-slate-300"
                 />
-                <Link to="/redeem" className="btn-primary !rounded-xl !py-4 !px-8 text-sm whitespace-nowrap !bg-brand-800">
-                  Redeem Now <ArrowRight className="w-5 h-5 ml-1" />
+                <Link to="/redeem" className="px-6 py-3 bg-[#1a5c2e] text-white rounded-lg text-sm font-bold hover:bg-[#0e3d1c] transition-colors whitespace-nowrap flex items-center gap-2">
+                  Redeem Now <span className="text-base">🎁</span>
                 </Link>
               </div>
             </motion.div>
             
+            {/* Right Image - no frame, blends into background */}
             <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1 }}
               className="flex-1 relative"
             >
-              <div className="relative z-10 p-2 bg-white rounded-[3rem] shadow-2xl shadow-brand-900/5 overflow-hidden">
+              <div className="relative z-10">
                 <img 
                   src={heroGift} 
-                  alt="Hero Gift" 
-                  className="rounded-[2.8rem] w-full object-cover"
+                  alt="Pro Green Life Gift" 
+                  className="w-full max-w-lg mx-auto object-contain"
                 />
+                {/* Pro Green Life label overlay */}
+                <div className="absolute bottom-12 right-12 bg-white/60 backdrop-blur-md px-4 py-2 rounded-lg shadow-sm border border-white/80">
+                  <div className="flex items-center gap-2">
+                    <Leaf className="w-4 h-4 text-brand-600" />
+                    <span className="text-sm font-bold text-slate-800 italic">Pro Green Life</span>
+                  </div>
+                </div>
               </div>
-              {/* Decorative Blur elements from reference */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-brand-200/20 blur-[120px] -z-10" />
             </motion.div>
           </div>
         </div>
