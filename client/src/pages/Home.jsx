@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { CheckCircle2, Gift, Sparkles, ShieldCheck, ArrowRight, Star, Heart, Leaf } from 'lucide-react';
+import { CheckCircle2, Gift, Sparkles, ShieldCheck, ArrowRight, Star, Heart, Leaf, Ticket } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Home = () => {
