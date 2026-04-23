@@ -12,7 +12,7 @@ import {
 const AdminDashboard = () => {
   const stats = [
     { label: 'Total Vouchers', value: '1,250', trend: '+12% this month', icon: FileText, color: 'bg-brand-50 text-brand-600' },
-    { label: 'Redeemed', value: '860', trend: '+8% this month', icon: ArrowDownCircle, color: 'bg-emerald-50 text-emerald-600' },
+    { label: 'Redeemed', value: '860', trend: '+8% this month', icon: Gift, color: 'bg-emerald-50 text-emerald-600' },
     { label: 'Pending Claims', value: '126', trend: '+5% this month', icon: Clock, color: 'bg-amber-50 text-amber-500' },
     { label: 'Completed', value: '734', trend: '+15% this month', icon: CheckCircle2, color: 'bg-brand-50 text-brand-600' },
   ];

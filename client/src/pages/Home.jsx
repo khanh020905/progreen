@@ -140,48 +140,63 @@ const Home = () => {
       </section>
 
       {/* How it Works */}
-      <section id="how-it-works" className="py-32">
+      <section id="how-it-works" className="py-24 bg-white">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-24 space-y-4">
-            <h2 className="text-4xl lg:text-5xl font-black text-slate-900 tracking-tight">How It Works</h2>
-            <p className="text-slate-400 font-bold uppercase tracking-widest text-xs">Redeem your voucher in 3 simple steps</p>
+          <div className="text-center mb-20 space-y-3">
+            <h2 className="text-4xl font-extrabold text-slate-900 tracking-tight">How It Works</h2>
+            <p className="text-slate-400 font-medium text-sm">Redeem your voucher in 3 simple steps</p>
           </div>
           
-          <div className="flex flex-col md:flex-row items-center justify-between gap-16 max-w-6xl mx-auto px-10">
-            <div className="flex-1 text-center group">
-              <div className="w-24 h-24 mx-auto rounded-3xl bg-white shadow-2xl flex items-center justify-center text-brand-600 relative border border-slate-50 transition-transform group-hover:-translate-y-2">
-                <Ticket className="w-12 h-12" />
-                <span className="absolute -top-3 -right-3 w-10 h-10 bg-brand-800 text-white rounded-xl flex items-center justify-center text-xs font-black shadow-lg">1</span>
+          <div className="flex flex-col md:flex-row items-center justify-center gap-8 max-w-6xl mx-auto">
+            {/* Step 1 */}
+            <div className="flex-1 text-center space-y-6 max-w-xs">
+              <div className="relative inline-block">
+                <div className="w-16 h-16 bg-[#e9f5ed] rounded-2xl flex items-center justify-center text-brand-700 mx-auto">
+                  <Ticket className="w-8 h-8" />
+                </div>
+                <div className="absolute -bottom-2 -right-2 w-6 h-6 bg-[#166534] text-white rounded-full flex items-center justify-center text-[10px] font-bold border-2 border-white">
+                  1
+                </div>
               </div>
-              <div className="mt-10 space-y-3">
-                <h4 className="text-xl font-black text-slate-900">Enter Voucher Code</h4>
-                <p className="text-sm text-slate-400 leading-relaxed font-medium">Enter the code from your voucher card.</p>
-              </div>
-            </div>
-
-            <div className="hidden md:block w-32 border-t-2 border-dashed border-slate-200" />
-
-            <div className="flex-1 text-center group">
-              <div className="w-24 h-24 mx-auto rounded-3xl bg-white shadow-2xl flex items-center justify-center text-brand-600 relative border border-slate-50 transition-transform group-hover:-translate-y-2">
-                <Gift className="w-12 h-12" />
-                <span className="absolute -top-3 -right-3 w-10 h-10 bg-brand-800 text-white rounded-xl flex items-center justify-center text-xs font-black shadow-lg">2</span>
-              </div>
-              <div className="mt-10 space-y-3">
-                <h4 className="text-xl font-black text-slate-900">Choose Your Reward</h4>
-                <p className="text-sm text-slate-400 leading-relaxed font-medium">Select the reward you like from the available options.</p>
+              <div className="space-y-2">
+                <h4 className="text-lg font-bold text-slate-900">Enter Voucher Code</h4>
+                <p className="text-sm text-slate-500 leading-relaxed">Enter the code from your voucher card.</p>
               </div>
             </div>
 
-            <div className="hidden md:block w-32 border-t-2 border-dashed border-slate-200" />
+            <div className="hidden md:block w-20 border-t-2 border-dashed border-slate-100 mb-20" />
 
-            <div className="flex-1 text-center group">
-              <div className="w-24 h-24 mx-auto rounded-3xl bg-white shadow-2xl flex items-center justify-center text-brand-600 relative border border-slate-50 transition-transform group-hover:-translate-y-2">
-                <CheckCircle2 className="w-12 h-12" />
-                <span className="absolute -top-3 -right-3 w-10 h-10 bg-brand-800 text-white rounded-xl flex items-center justify-center text-xs font-black shadow-lg">3</span>
+            {/* Step 2 */}
+            <div className="flex-1 text-center space-y-6 max-w-xs">
+              <div className="relative inline-block">
+                <div className="w-16 h-16 bg-[#e9f5ed] rounded-2xl flex items-center justify-center text-brand-700 mx-auto">
+                  <Gift className="w-8 h-8" />
+                </div>
+                <div className="absolute -bottom-2 -right-2 w-6 h-6 bg-[#166534] text-white rounded-full flex items-center justify-center text-[10px] font-bold border-2 border-white">
+                  2
+                </div>
               </div>
-              <div className="mt-10 space-y-3">
-                <h4 className="text-xl font-black text-slate-900">Fill Information</h4>
-                <p className="text-sm text-slate-400 leading-relaxed font-medium">Provide your details and confirm to receive your reward.</p>
+              <div className="space-y-2">
+                <h4 className="text-lg font-bold text-slate-900">Choose Your Reward</h4>
+                <p className="text-sm text-slate-500 leading-relaxed">Select the reward you like from the available options.</p>
+              </div>
+            </div>
+
+            <div className="hidden md:block w-20 border-t-2 border-dashed border-slate-100 mb-20" />
+
+            {/* Step 3 */}
+            <div className="flex-1 text-center space-y-6 max-w-xs">
+              <div className="relative inline-block">
+                <div className="w-16 h-16 bg-[#e9f5ed] rounded-2xl flex items-center justify-center text-brand-700 mx-auto">
+                  <CheckCircle2 className="w-8 h-8" />
+                </div>
+                <div className="absolute -bottom-2 -right-2 w-6 h-6 bg-[#166534] text-white rounded-full flex items-center justify-center text-[10px] font-bold border-2 border-white">
+                  3
+                </div>
+              </div>
+              <div className="space-y-2">
+                <h4 className="text-lg font-bold text-slate-900">Fill Information</h4>
+                <p className="text-sm text-slate-500 leading-relaxed">Provide your details and confirm to receive your reward.</p>
               </div>
             </div>
           </div>
@@ -189,57 +204,55 @@ const Home = () => {
       </section>
 
       {/* Banner Section */}
-      <section className="py-24 bg-brand-950 relative overflow-hidden">
-        <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-20">
-          <div className="flex-1 space-y-8 z-10 text-center md:text-left">
-            <h2 className="text-4xl lg:text-5xl font-black text-white leading-[1.2] tracking-tight">
-              Together, Let's Build <br /> a Greener Future
-            </h2>
-            <p className="text-slate-400 max-w-md font-medium text-lg leading-relaxed mx-auto md:mx-0">
-              At Pro Green Life, we believe in giving back to our community and creating a sustainable world.
-            </p>
-            <button className="px-10 py-4 border-2 border-white/10 text-white rounded-2xl text-sm font-black hover:bg-white/5 transition-all">
-              Learn More About Us
-            </button>
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="bg-[#1a3821] rounded-[2.5rem] overflow-hidden flex flex-col md:row items-center">
+            <div className="flex-1 p-12 lg:p-20 space-y-8">
+              <h2 className="text-4xl lg:text-5xl font-extrabold text-white leading-tight">
+                Together, Let's Build <br /> a Greener Future
+              </h2>
+              <p className="text-emerald-100/70 max-w-md font-medium text-lg leading-relaxed">
+                At Pro Green Life, we believe in giving back to our community and creating a sustainable world.
+              </p>
+              <button className="px-10 py-3.5 border border-white/30 text-white rounded-xl text-sm font-bold hover:bg-white/10 transition-all">
+                Learn More About Us
+              </button>
+            </div>
+            <div className="flex-1 h-full flex justify-end items-end pr-0 pb-0">
+              <img src={plantBanner} alt="Sustainable Future" className="max-w-md w-full object-contain" />
+            </div>
           </div>
-          <div className="flex-1 z-10 flex justify-center md:justify-end">
-            <img src={plantBanner} alt="Plant" className="rounded-[2.5rem] shadow-[0_0_80px_rgba(34,197,94,0.15)] max-w-lg w-full" />
-          </div>
-          {/* Decorative blur */}
-          <div className="absolute top-0 right-0 w-[60%] h-full bg-brand-500/10 blur-[120px]" />
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="py-32 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-24">
-            <h2 className="text-4xl lg:text-5xl font-black text-slate-900 tracking-tight">Frequently Asked Questions</h2>
+      <section id="faq" className="py-24 bg-white">
+        <div className="container mx-auto px-4 max-w-6xl">
+          <div className="text-left mb-12">
+            <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Frequently Asked Questions</h2>
           </div>
-          <div className="flex flex-col lg:flex-row gap-20 items-start max-w-6xl mx-auto">
-            <div className="flex-[1.2] space-y-5 w-full">
+          <div className="flex flex-col lg:flex-row gap-16 items-start">
+            <div className="flex-1 space-y-4 w-full">
               {faqs.map((faq, i) => (
-                <div key={i} className="border border-slate-50 rounded-3xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow">
+                <div key={i} className="border border-slate-100 rounded-2xl overflow-hidden bg-white">
                   <button 
                     onClick={() => setActiveFaq(activeFaq === i ? null : i)}
-                    className="w-full flex items-center justify-between p-8 text-left group"
+                    className="w-full flex items-center justify-between p-6 text-left group"
                   >
-                    <span className="font-black text-slate-900 text-lg group-hover:text-brand-700 transition-colors">{faq.q}</span>
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${activeFaq === i ? 'bg-brand-800 text-white rotate-180' : 'bg-slate-50 text-slate-400 group-hover:bg-brand-50 group-hover:text-brand-600'}`}>
-                      <ChevronDown className="w-5 h-5" />
-                    </div>
+                    <span className="font-bold text-slate-800 text-base">{faq.q}</span>
+                    <Plus className={`w-5 h-5 text-slate-400 transition-transform ${activeFaq === i ? 'rotate-45' : ''}`} />
                   </button>
                   {activeFaq === i && (
-                    <div className="px-8 pb-8 text-slate-500 font-bold leading-relaxed text-sm animate-in fade-in slide-in-from-top-2">
+                    <div className="px-6 pb-6 text-slate-500 font-medium text-sm">
                       {faq.a}
                     </div>
                   )}
                 </div>
               ))}
             </div>
-            <div className="flex-1 w-full">
-              <div className="p-4 bg-slate-50 rounded-[3.5rem] shadow-inner">
-                <img src={faqGift} alt="FAQ Gift" className="rounded-[3rem] w-full shadow-2xl shadow-brand-900/5" />
+            <div className="flex-1 w-full flex justify-center">
+              <div className="bg-[#f8fcf9] p-8 rounded-[3rem] shadow-inner w-full max-w-md">
+                <img src={faqGift} alt="FAQ Reward" className="w-full h-auto drop-shadow-2xl" />
               </div>
             </div>
           </div>
