@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ShieldAlert, Loader2, Lock } from 'lucide-react';
 import toast from 'react-hot-toast';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000/api' : '/api');
 
 const AdminLogin = () => {
   const [username, setUsername] = useState('');

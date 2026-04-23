@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import AdminLayout from '../components/AdminLayout';
 import { 
   FileText, 
@@ -7,99 +8,151 @@ import {
   CheckCircle2, 
   Download,
   Eye,
-  Gift
+  Gift,
+  TrendingUp,
+  ArrowUpRight
 } from 'lucide-react';
 
+const API_URL = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000/api' : '/api');
+
 const AdminDashboard = () => {
-  const stats = [
-    { label: 'Total Vouchers', value: '1,250', trend: '+12% this month', icon: FileText, color: 'bg-brand-50 text-brand-600' },
-    { label: 'Redeemed', value: '860', trend: '+8% this month', icon: Gift, color: 'bg-emerald-50 text-emerald-600' },
-    { label: 'Pending Claims', value: '126', trend: '+5% this month', icon: Clock, color: 'bg-amber-50 text-amber-500' },
-    { label: 'Completed', value: '734', trend: '+15% this month', icon: CheckCircle2, color: 'bg-brand-50 text-brand-600' },
-  ];
+  const [stats, setStats] = useState({
+    totalVouchers: 0,
+    redeemedVouchers: 0,
+    pendingClaims: 0,
+    completedClaims: 0
+  });
+  const [recentClaims, setRecentClaims] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const recentClaims = [
-    { id: 1, ref: 'PGL-2024-000123', code: 'PGL-AB12-CD34-EF56', customer: 'Nguyen Van A', reward: 'Eco Bottle', status: 'Pending', date: '20/05/2024 10:30' },
-    { id: 2, ref: 'PGL-2024-000122', code: 'PGL-ZX99-YU78-TR51', customer: 'Tran Thi B', reward: 'Green Tote Bag', status: 'Shipping', date: '20/05/2024 09:15' },
-    { id: 3, ref: 'PGL-2024-000121', code: 'PGL-QW12-AS34-ZX56', customer: 'Le Van C', reward: 'Plant Gift Set', status: 'Completed', date: '19/05/2024 16:45' },
-    { id: 4, ref: 'PGL-2024-000120', code: 'PGL-MN78-SV60-PL12', customer: 'Pham Thi D', reward: 'Eco Bottle', status: 'Pending', date: '18/05/2024 14:20' },
-    { id: 5, ref: 'PGL-2024-000119', code: 'PGL-HJ34-KL56-ZX78', customer: 'Hoang Van E', reward: 'Green Tote Bag', status: 'Pending', date: '18/05/2024 11:05' },
-  ];
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
 
-  const getStatusStyle = (status) => {
-    switch (status) {
-      case 'Completed': return 'bg-emerald-50 text-emerald-600';
-      case 'Shipping': return 'bg-blue-50 text-blue-600';
-      case 'Pending': return 'bg-amber-50 text-amber-600';
-      default: return 'bg-slate-50 text-slate-600';
+  const fetchDashboardData = async () => {
+    try {
+      const token = localStorage.getItem('adminToken');
+      const headers = { Authorization: `Bearer ${token}` };
+      
+      const [statsRes, claimsRes] = await Promise.all([
+        axios.get(`${API_URL}/admin/stats`, { headers }),
+        axios.get(`${API_URL}/claims`, { headers })
+      ]);
+      
+      setStats(statsRes.data);
+      setRecentClaims(claimsRes.data.slice(0, 5));
+    } catch (err) {
+      console.error('Failed to fetch dashboard data');
+    } finally {
+      setLoading(false);
     }
   };
 
+  const statCards = [
+    { label: 'Total Vouchers', value: stats.totalVouchers, icon: FileText, color: 'bg-brand-50 text-brand-600', trend: '+12%', bg: 'bg-brand-50/50' },
+    { label: 'Redeemed', value: stats.redeemedVouchers, icon: Gift, color: 'bg-emerald-50 text-emerald-600', trend: '+8%', bg: 'bg-emerald-50/50' },
+    { label: 'Pending Claims', value: stats.pendingClaims, icon: Clock, color: 'bg-amber-50 text-amber-500', trend: '-3%', bg: 'bg-amber-50/50' },
+    { label: 'Success Ships', value: stats.completedClaims, icon: CheckCircle2, color: 'bg-blue-50 text-blue-600', trend: '+15%', bg: 'bg-blue-50/50' },
+  ];
+
   return (
     <AdminLayout>
-      <div className="space-y-8">
-        {/* Stats Cards - 4 in a row like reference */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {stats.map((stat) => (
-            <div key={stat.label} className="bg-white p-6 rounded-2xl border border-slate-100">
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <p className="text-xs text-slate-400 font-semibold mb-1">{stat.label}</p>
-                  <h3 className="text-3xl font-bold text-slate-900">{stat.value}</h3>
+      <div className="space-y-12">
+        <div>
+          <h1 className="text-4xl font-black text-slate-900 tracking-tight">Executive Overview</h1>
+          <p className="text-slate-400 font-bold mt-2 text-sm uppercase tracking-widest">Real-time performance metrics</p>
+        </div>
+
+        {/* Premium Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {statCards.map((stat) => (
+            <div key={stat.label} className="bg-white p-8 rounded-[2.5rem] border border-slate-50 shadow-xl shadow-slate-100/50 relative overflow-hidden group">
+              <div className="relative z-10">
+                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:scale-110 duration-500 ${stat.color}`}>
+                  <stat.icon className="w-7 h-7" />
                 </div>
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${stat.color}`}>
-                  <stat.icon className="w-6 h-6" />
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{stat.label}</p>
+                <div className="flex items-end gap-3">
+                  <h3 className="text-3xl font-black text-slate-900">{stat.value}</h3>
+                  <span className={`text-xs font-bold mb-1 flex items-center ${stat.trend.startsWith('+') ? 'text-emerald-500' : 'text-rose-500'}`}>
+                    {stat.trend} <TrendingUp className="w-3 h-3 ml-1" />
+                  </span>
                 </div>
               </div>
-              <p className="text-xs text-brand-600 font-semibold">{stat.trend}</p>
+              <div className={`absolute top-0 right-0 w-32 h-32 ${stat.bg} blur-3xl -z-0 translate-x-10 -translate-y-10`} />
             </div>
           ))}
         </div>
 
-        {/* Recent Claims Table */}
-        <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden">
-          <div className="p-6 flex justify-between items-center border-b border-slate-100">
-            <h3 className="text-lg font-bold text-slate-900">Recent Claims</h3>
-            <div className="flex gap-3">
-              <button className="px-4 py-2 text-xs font-bold text-slate-600 bg-slate-50 hover:bg-slate-100 rounded-lg transition-colors flex items-center gap-2 border border-slate-200">
-                <Download className="w-3.5 h-3.5" /> Export CSV
-              </button>
-              <button className="px-4 py-2 text-xs font-bold text-white bg-brand-600 hover:bg-brand-700 rounded-lg transition-colors flex items-center gap-2">
-                View All
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+          {/* Main Table Area */}
+          <div className="lg:col-span-2 bg-white rounded-[2.5rem] border border-slate-50 shadow-2xl shadow-slate-100/50 overflow-hidden">
+            <div className="p-10 border-b border-slate-50 flex justify-between items-center bg-slate-50/30">
+              <h3 className="text-xl font-black text-slate-900 tracking-tight">Recent Activity</h3>
+              <button className="text-xs font-black text-brand-600 uppercase tracking-widest flex items-center gap-2 hover:gap-3 transition-all">
+                View Reports <ArrowUpRight className="w-4 h-4" />
               </button>
             </div>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
-              <thead>
-                <tr className="bg-slate-50 border-b border-slate-100">
-                  <th className="px-6 py-4 text-xs font-bold text-slate-500">#</th>
-                  <th className="px-6 py-4 text-xs font-bold text-slate-500">Reference</th>
-                  <th className="px-6 py-4 text-xs font-bold text-slate-500">Voucher Code</th>
-                  <th className="px-6 py-4 text-xs font-bold text-slate-500">Customer</th>
-                  <th className="px-6 py-4 text-xs font-bold text-slate-500">Reward</th>
-                  <th className="px-6 py-4 text-xs font-bold text-slate-500">Status</th>
-                  <th className="px-6 py-4 text-xs font-bold text-slate-500">Date</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-50">
-                {recentClaims.map((claim) => (
-                  <tr key={claim.id} className="hover:bg-slate-50/50 transition-colors">
-                    <td className="px-6 py-4 text-sm text-slate-400">{claim.id}</td>
-                    <td className="px-6 py-4 text-sm font-semibold text-slate-700">{claim.ref}</td>
-                    <td className="px-6 py-4 text-sm font-mono text-slate-500">{claim.code}</td>
-                    <td className="px-6 py-4 text-sm font-semibold text-slate-900">{claim.customer}</td>
-                    <td className="px-6 py-4 text-sm text-slate-600">{claim.reward}</td>
-                    <td className="px-6 py-4">
-                      <span className={`px-3 py-1 rounded-full text-xs font-bold ${getStatusStyle(claim.status)}`}>
-                        {claim.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-sm text-slate-400">{claim.date}</td>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="bg-slate-50/50">
+                    <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Customer</th>
+                    <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Reward</th>
+                    <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Status</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-slate-50">
+                  {loading ? (
+                     <tr><td colSpan="3" className="px-10 py-20 text-center text-slate-400 font-bold">Loading activity...</td></tr>
+                  ) : recentClaims.length === 0 ? (
+                    <tr><td colSpan="3" className="px-10 py-20 text-center text-slate-400 font-bold">No recent claims.</td></tr>
+                  ) : recentClaims.map((claim) => (
+                    <tr key={claim._id} className="hover:bg-slate-50/30 transition-colors">
+                      <td className="px-10 py-6">
+                        <p className="font-black text-slate-900 text-sm">{claim.fullName}</p>
+                        <p className="text-[10px] text-slate-400 font-bold">{claim.email}</p>
+                      </td>
+                      <td className="px-10 py-6 text-sm text-slate-500 font-bold">{claim.rewardId?.name || 'N/A'}</td>
+                      <td className="px-10 py-6">
+                        <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest ${
+                          claim.status === 'Completed' ? 'bg-emerald-50 text-emerald-600' : 
+                          claim.status === 'Shipping' ? 'bg-blue-50 text-blue-600' : 'bg-amber-50 text-amber-600'
+                        }`}>
+                          {claim.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Quick Actions / Summary */}
+          <div className="space-y-8">
+            <div className="bg-brand-950 rounded-[2.5rem] p-10 text-white relative overflow-hidden">
+               <h3 className="text-xl font-black mb-2 relative z-10">Campaign Pulse</h3>
+               <p className="text-brand-400 text-xs font-bold uppercase tracking-widest mb-8 relative z-10">Voucher Engagement</p>
+               <div className="space-y-6 relative z-10">
+                 <div className="flex justify-between items-end">
+                    <span className="text-[10px] font-black text-white/50 uppercase tracking-widest">Redemption Rate</span>
+                    <span className="text-xl font-black">{(stats.redeemedVouchers / (stats.totalVouchers || 1) * 100).toFixed(1)}%</span>
+                 </div>
+                 <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                    <div className="h-full bg-brand-500" style={{ width: `${(stats.redeemedVouchers / (stats.totalVouchers || 1) * 100)}%` }}></div>
+                 </div>
+               </div>
+               <div className="absolute top-0 right-0 w-32 h-32 bg-brand-500/10 blur-3xl" />
+            </div>
+
+            <div className="bg-white rounded-[2.5rem] border border-slate-50 shadow-xl p-10 space-y-6">
+               <h4 className="text-sm font-black text-slate-900 uppercase tracking-tight">System Status</h4>
+               <div className="flex items-center gap-4 p-4 bg-emerald-50 rounded-2xl">
+                 <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                 <span className="text-[10px] font-black text-emerald-600 uppercase tracking-widest">All services operational</span>
+               </div>
+            </div>
           </div>
         </div>
       </div>

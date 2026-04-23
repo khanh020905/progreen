@@ -8,7 +8,7 @@ import bottleImg from '../assets/rewards/bottle.png';
 import toteImg from '../assets/rewards/tote.png';
 import plantImg from '../assets/rewards/plant.png';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000/api' : '/api');
 
 const Redeem = () => {
   const navigate = useNavigate();
