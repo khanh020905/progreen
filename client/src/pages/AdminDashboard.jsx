@@ -1,156 +1,153 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import AdminLayout from '../components/AdminLayout';
 import { 
-  Users, 
-  Ticket, 
-  CheckCircle2, 
+  FileText, 
+  ArrowDownCircle, 
   Clock, 
+  CheckCircle2, 
   TrendingUp,
-  ArrowUpRight,
-  Activity,
-  Zap
+  Download,
+  Eye
 } from 'lucide-react';
-import toast from 'react-hot-toast';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+import { motion } from 'framer-motion';
 
 const AdminDashboard = () => {
-  const [stats, setStats] = useState({
-    totalVouchers: 0,
-    redeemedVouchers: 0,
-    pendingClaims: 0,
-    completedClaims: 0
-  });
-  const [loading, setLoading] = useState(true);
+  const stats = [
+    { 
+      label: 'Total Vouchers', 
+      value: '1,250', 
+      trend: '+12%', 
+      icon: FileText, 
+      color: 'text-brand-600 bg-brand-50',
+      trendColor: 'text-brand-600'
+    },
+    { 
+      label: 'Redeemed', 
+      value: '860', 
+      trend: '+8%', 
+      icon: ArrowDownCircle, 
+      color: 'text-emerald-600 bg-emerald-50',
+      trendColor: 'text-emerald-600'
+    },
+    { 
+      label: 'Pending Claims', 
+      value: '126', 
+      trend: '+5%', 
+      icon: Clock, 
+      color: 'text-amber-500 bg-amber-50',
+      trendColor: 'text-amber-500'
+    },
+    { 
+      label: 'Completed', 
+      value: '734', 
+      trend: '+15%', 
+      icon: CheckCircle2, 
+      color: 'text-brand-600 bg-brand-50',
+      trendColor: 'text-brand-600'
+    }
+  ];
 
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const token = localStorage.getItem('adminToken');
-        const response = await axios.get(`${API_URL}/admin/dashboard`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        setStats(response.data);
-      } catch (err) {
-        toast.error('Không thể tải dữ liệu thống kê');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchStats();
-  }, []);
-
-  const statCards = [
-    { label: 'Tổng Voucher', value: stats.totalVouchers, icon: Ticket, color: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-100' },
-    { label: 'Đã Đổi Quà', value: stats.redeemedVouchers, icon: CheckCircle2, color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-100' },
-    { label: 'Yêu Cầu Chờ', value: stats.pendingClaims, icon: Clock, color: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-100' },
-    { label: 'Hoàn Thành', value: stats.completedClaims, icon: Zap, color: 'text-brand-600', bg: 'bg-brand-50', border: 'border-brand-100' },
+  const recentClaims = [
+    { id: 1, ref: 'PGL-2026-000123', code: 'PGL-AB12-CD34-EF56', customer: 'Nguyen Van A', reward: 'Eco Bottle', status: 'Pending', date: '20/05/2026 10:30' },
+    { id: 2, ref: 'PGL-2026-000122', code: 'PGL-ZX99-YU78-TR51', customer: 'Tran Thi B', reward: 'Green Tote Bag', status: 'Shipping', date: '20/05/2026 09:15' },
+    { id: 3, ref: 'PGL-2026-000121', code: 'PGL-QW12-AS34-ZX56', customer: 'Le Van C', reward: 'Plant Gift Set', status: 'Completed', date: '19/05/2026 16:45' },
+    { id: 4, ref: 'PGL-2026-000120', code: 'PGL-MN78-SV60-PL12', customer: 'Pham Thi D', reward: 'Eco Bottle', status: 'Pending', date: '18/05/2026 14:20' },
+    { id: 5, ref: 'PGL-2026-000119', code: 'PGL-HJ34-KL56-ZX78', customer: 'Hoang Van E', reward: 'Green Tote Bag', status: 'Pending', date: '18/05/2026 11:05' },
   ];
 
   return (
     <AdminLayout>
-      <div className="flex justify-between items-end mb-12">
-        <div>
-          <h1 className="text-4xl font-black text-slate-900 tracking-tight">Tổng Quan Hệ Thống</h1>
-          <p className="text-slate-400 font-medium mt-2">Theo dõi hiệu suất chiến dịch và tiến độ giao quà.</p>
-        </div>
-        <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-2xl shadow-sm border border-slate-100 text-xs font-bold text-slate-500">
-          <Activity className="w-4 h-4 text-brand-500" />
-          Dữ liệu thời gian thực
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-        {statCards.map((stat) => (
-          <div key={stat.label} className={`p-8 rounded-[2.5rem] bg-white border ${stat.border} shadow-sm hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-500 group`}>
-            <div className="flex items-start justify-between mb-6">
-              <div className={`${stat.bg} ${stat.color} p-4 rounded-2xl group-hover:scale-110 transition-transform duration-500`}>
-                <stat.icon className="w-6 h-6" />
-              </div>
-              <div className="flex items-center gap-1 text-emerald-500 text-xs font-black">
-                <ArrowUpRight className="w-4 h-4" />
-                +12%
-              </div>
-            </div>
-            <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">{stat.label}</p>
-            <h3 className="text-4xl font-black text-slate-900 tracking-tight">{stat.value}</h3>
+      <div className="space-y-12">
+        <div className="flex justify-between items-end">
+          <div>
+            <h1 className="text-4xl font-black text-slate-900 tracking-tight">Dashboard</h1>
+            <p className="text-slate-400 font-bold mt-2 text-sm uppercase tracking-widest">Campaign Overview & Real-time Stats</p>
           </div>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 glass-card p-10">
-          <div className="flex items-center justify-between mb-10">
-            <h3 className="text-xl font-black text-slate-900">Hoạt động mới nhất</h3>
-            <button className="text-brand-600 text-xs font-black uppercase tracking-widest flex items-center gap-2 hover:translate-x-1 transition-transform">
-              Xem tất cả <ArrowUpRight className="w-4 h-4" />
+          <div className="flex gap-4">
+            <button className="btn-secondary !py-2.5 !px-5 !text-xs !rounded-xl">
+              <Download className="w-4 h-4" /> Export CSV
+            </button>
+            <button className="btn-primary !py-2.5 !px-5 !text-xs !rounded-xl !bg-brand-950">
+              View All
             </button>
           </div>
-          <div className="space-y-6">
-            {[1, 2, 3, 4, 5].map((i) => (
-              <div key={i} className="flex items-center gap-6 p-4 hover:bg-slate-50 rounded-[1.5rem] transition-all duration-300 border border-transparent hover:border-slate-100 group">
-                <div className="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center border border-slate-50 group-hover:scale-110 transition-transform">
-                  <Users className="w-6 h-6 text-slate-400" />
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-bold text-slate-800">Khách hàng vừa đổi quà thành công</p>
-                  <p className="text-xs text-slate-400 mt-1">ID giao dịch: #PGL-923{i} • Bộ quà tặng Xanh</p>
-                </div>
-                <span className="text-xs font-bold text-slate-300">2 phút trước</span>
-              </div>
-            ))}
-          </div>
         </div>
 
-        <div className="lg:col-span-1 space-y-8">
-          <div className="glass-card p-10 bg-slate-900 text-white border-none shadow-brand-900/20">
-            <h3 className="text-lg font-black mb-8 flex items-center gap-3">
-              <Activity className="w-5 h-5 text-brand-400" /> Sức khỏe chiến dịch
-            </h3>
-            <div className="space-y-10">
-              <div>
-                <div className="flex justify-between mb-3 text-xs font-bold uppercase tracking-widest text-slate-400">
-                  <span>Tỉ lệ đổi Voucher</span>
-                  <span className="text-white">
-                    {stats.totalVouchers > 0 ? Math.round((stats.redeemedVouchers / stats.totalVouchers) * 100) : 0}%
-                  </span>
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {stats.map((stat, i) => (
+            <motion.div 
+              key={stat.label}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1 }}
+              className="bg-white p-8 rounded-[2.5rem] border border-slate-50 shadow-xl shadow-slate-100/40 relative overflow-hidden group"
+            >
+              <div className="flex justify-between items-start relative z-10">
+                <div className="space-y-4">
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{stat.label}</p>
+                  <h3 className="text-3xl font-black text-slate-900 tracking-tight">{stat.value}</h3>
+                  <div className="flex items-center gap-2">
+                    <span className={`text-[10px] font-black ${stat.trendColor} bg-white px-2 py-0.5 rounded-lg border border-slate-50 shadow-sm`}>
+                      {stat.trend}
+                    </span>
+                    <span className="text-[10px] font-bold text-slate-300 uppercase tracking-widest">this month</span>
+                  </div>
                 </div>
-                <div className="w-full h-2.5 bg-white/10 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-brand-500 shadow-[0_0_20px_rgba(40,112,40,0.5)] transition-all duration-1000" 
-                    style={{ width: `${stats.totalVouchers > 0 ? (stats.redeemedVouchers / stats.totalVouchers) * 100 : 0}%` }}
-                  />
-                </div>
-              </div>
-              <div>
-                <div className="flex justify-between mb-3 text-xs font-bold uppercase tracking-widest text-slate-400">
-                  <span>Tỉ lệ hoàn tất giao quà</span>
-                  <span className="text-white">
-                    {stats.redeemedVouchers > 0 ? Math.round((stats.completedClaims / stats.redeemedVouchers) * 100) : 0}%
-                  </span>
-                </div>
-                <div className="w-full h-2.5 bg-white/10 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-emerald-400 shadow-[0_0_20px_rgba(52,211,153,0.5)] transition-all duration-1000" 
-                    style={{ width: `${stats.redeemedVouchers > 0 ? (stats.completedClaims / stats.redeemedVouchers) * 100 : 0}%` }}
-                  />
+                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-500 ${stat.color}`}>
+                  <stat.icon className="w-7 h-7" />
                 </div>
               </div>
-            </div>
-            <div className="mt-12 pt-8 border-t border-white/10">
-              <p className="text-[10px] text-slate-500 font-bold leading-relaxed">
-                * Tỉ lệ dựa trên dữ liệu thực tế được cập nhật vào lúc {new Date().toLocaleTimeString()}
-              </p>
-            </div>
+              <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-slate-50/50 rounded-full blur-3xl" />
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Recent Activity Table */}
+        <div className="bg-white rounded-[2.5rem] border border-slate-50 shadow-2xl shadow-slate-100/50 overflow-hidden">
+          <div className="p-10 flex justify-between items-center border-b border-slate-50">
+            <h3 className="text-xl font-black text-slate-900 tracking-tight">Recent Claims</h3>
+            <button className="text-xs font-black text-brand-600 uppercase tracking-widest hover:text-brand-800 transition-colors">View All Activities</button>
           </div>
-          
-          <div className="premium-card !bg-brand-600 text-white border-none shadow-lg shadow-brand-600/30">
-            <h4 className="font-black mb-2 text-lg">Mẹo hệ thống</h4>
-            <p className="text-xs text-brand-100 leading-relaxed font-medium">
-              Bạn có thể xuất file CSV để quản lý đơn hàng nhanh hơn trong tab "Danh sách Claim".
-            </p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left">
+              <thead>
+                <tr className="bg-slate-50/50">
+                  <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">#</th>
+                  <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Reference</th>
+                  <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Voucher Code</th>
+                  <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Customer</th>
+                  <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Reward</th>
+                  <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Status</th>
+                  <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Date</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-50">
+                {recentClaims.map((claim) => (
+                  <tr key={claim.id} className="hover:bg-slate-50/30 transition-colors">
+                    <td className="px-10 py-6 text-xs font-bold text-slate-400">{claim.id}</td>
+                    <td className="px-10 py-6">
+                      <span className="text-xs font-black text-slate-700 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">
+                        {claim.ref}
+                      </span>
+                    </td>
+                    <td className="px-10 py-6 text-xs font-mono font-bold text-slate-500">{claim.code}</td>
+                    <td className="px-10 py-6 text-sm font-black text-slate-900">{claim.customer}</td>
+                    <td className="px-10 py-6 text-sm font-bold text-slate-600">{claim.reward}</td>
+                    <td className="px-10 py-6">
+                      <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border ${
+                        claim.status === 'Completed' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
+                        claim.status === 'Shipping' ? 'bg-blue-50 text-blue-600 border-blue-100' :
+                        'bg-amber-50 text-amber-600 border-amber-100'
+                      }`}>
+                        {claim.status}
+                      </span>
+                    </td>
+                    <td className="px-10 py-6 text-xs font-bold text-slate-400">{claim.date}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
