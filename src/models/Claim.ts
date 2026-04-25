@@ -1,4 +1,19 @@
-import mongoose from 'mongoose';
+import mongoose, { Document, Model, Types } from 'mongoose';
+
+export interface IClaim extends Document {
+  voucherCode: string;
+  rewardName: string;
+  rewardId: Types.ObjectId;
+  customerName: string;
+  phone: string;
+  email?: string;
+  address: string;
+  provinceCity?: string;
+  notes?: string;
+  status: 'Pending' | 'Confirmed' | 'Shipping' | 'Completed' | 'Rejected';
+  claimReference: string;
+  createdAt: Date;
+}
 
 const claimSchema = new mongoose.Schema({
   voucherCode: {
@@ -53,4 +68,5 @@ const claimSchema = new mongoose.Schema({
   }
 });
 
-export default mongoose.models.Claim || mongoose.model('Claim', claimSchema);
+const Claim: Model<IClaim> = mongoose.models.Claim || mongoose.model<IClaim>('Claim', claimSchema);
+export default Claim;

@@ -1,4 +1,13 @@
-import mongoose from 'mongoose';
+import mongoose, { Document, Model, Types } from 'mongoose';
+
+export interface IVoucher extends Document {
+  code: string;
+  rewards: Types.ObjectId[];
+  isRedeemed: boolean;
+  redeemedAt?: Date;
+  isActive: boolean;
+  createdAt: Date;
+}
 
 const voucherSchema = new mongoose.Schema({
   code: {
@@ -29,4 +38,5 @@ const voucherSchema = new mongoose.Schema({
   }
 });
 
-export default mongoose.models.Voucher || mongoose.model('Voucher', voucherSchema);
+const Voucher: Model<IVoucher> = mongoose.models.Voucher || mongoose.model<IVoucher>('Voucher', voucherSchema);
+export default Voucher;
