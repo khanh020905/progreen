@@ -1,18 +1,33 @@
 {
-  "name": "progreenlife-monorepo",
+  "name": "progreenlife",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "client-install": "npm install --prefix client",
-    "server-install": "npm install --prefix server",
-    "install-all": "npm run client-install && npm run server-install",
-    "client": "npm run dev --prefix client",
-    "server": "npm start --prefix server",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "build": "npm run build --prefix client",
-    "seed": "node server/seed.js"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "axios": "^1.15.2",
+    "bcryptjs": "^3.0.3",
+    "clsx": "^2.1.1",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "framer-motion": "^12.38.0",
+    "jsonwebtoken": "^9.0.3",
+    "lucide-react": "^1.11.0",
+    "mongoose": "^9.5.0",
+    "next": "^15.1.0",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "react-hot-toast": "^2.6.0",
+    "tailwind-merge": "^3.5.0"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^4.0.0"
   }
 }
