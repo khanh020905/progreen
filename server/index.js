@@ -4,6 +4,14 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
 const bcrypt = require('bcryptjs');
+const dns = require('dns');
+
+// Fix for MongoDB Atlas connection issues on some networks
+if (dns.setDefaultResultOrder) {
+  dns.setDefaultResultOrder('ipv4first');
+}
+// Force Google DNS for SRV record resolution (fixes networks that block SRV lookups)
+dns.setServers(['8.8.8.8', '8.8.4.4']);
 
 // Pre-import models to avoid runtime require issues
 const AdminUser = require('./models/AdminUser');

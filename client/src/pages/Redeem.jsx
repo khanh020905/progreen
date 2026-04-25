@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Leaf, CheckCircle, ArrowRight, Loader2, AlertCircle, Package } from 'lucide-react';
+import { CheckCircle, ArrowRight, Loader2, AlertCircle, Package } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
+import LeafIcon from '../components/LeafIcon';
 import bottleImg from '../assets/rewards/bottle.png';
-import toteImg from '../assets/rewards/tote.png';
-import plantImg from '../assets/rewards/plant.png';
+import socksImg from '../assets/rewards/socks.png';
+import toothpasteImg from '../assets/rewards/toothpaste.png';
+import cableImg from '../assets/rewards/cable.png';
+import tshirtImg from '../assets/rewards/tshirt.png';
+import capImg from '../assets/rewards/cap.png';
 
 const API_URL = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000/api' : '/api');
 
@@ -22,10 +26,7 @@ const Redeem = () => {
   const [customerInfo, setCustomerInfo] = useState({
     customerName: '',
     phone: '',
-    email: '',
-    address: '',
-    provinceCity: '',
-    notes: ''
+    address: ''
   });
 
   const handleValidateVoucher = async (e) => {
@@ -39,8 +40,8 @@ const Redeem = () => {
       if (response.data.voucher.rewards.length === 1) setSelectedReward(response.data.voucher.rewards[0]);
       setStep(2);
     } catch (err) {
-      setError(err.response?.data?.message || 'Invalid voucher code.');
-      toast.error('Validation failed!');
+      setError(err.response?.data?.message || 'Mã số thẻ không hợp lệ');
+      toast.error('Xác thực thất bại!');
     } finally {
       setLoading(false);
     }
@@ -54,7 +55,7 @@ const Redeem = () => {
       const response = await axios.post(`${API_URL}/claims`, payload);
       navigate('/success', { state: { reference: response.data.claimReference } });
     } catch (err) {
-      toast.error(err.response?.data?.message || 'An error occurred.');
+      toast.error(err.response?.data?.message || 'Đã có lỗi xảy ra.');
     } finally {
       setLoading(false);
     }
@@ -72,7 +73,7 @@ const Redeem = () => {
           <span className={`absolute -bottom-8 text-[10px] font-black uppercase tracking-widest whitespace-nowrap transition-colors duration-500 ${
             step >= s ? 'text-brand-800' : 'text-slate-300'
           }`}>
-            {s === 1 ? 'Enter Code' : s === 2 ? 'Choose Reward' : 'Your Information'}
+            {s === 1 ? 'Nhập mã' : s === 2 ? 'Chọn quà' : 'Nhận quà'}
           </span>
           {s < 3 && (
             <div className={`absolute left-12 top-6 w-24 h-[1px] ${step > s ? 'bg-brand-500' : 'bg-slate-100'}`} />
@@ -86,8 +87,10 @@ const Redeem = () => {
     <div className="min-h-screen py-24 bg-white">
       <div className="container mx-auto px-4 max-w-5xl">
         <div className="text-center mb-16">
-          <div className="flex justify-center mb-4"><Leaf className="text-brand-500 w-8 h-8" /></div>
-          <h2 className="text-4xl font-black text-slate-900 tracking-tight">Redeem Voucher</h2>
+          <div className="flex justify-center mb-4"><LeafIcon className="text-brand-500 w-8 h-8" /></div>
+          <h2 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight uppercase leading-tight">
+            HOÀN THÀNH 3 BƯỚC ĐƠN GIẢN ĐỂ NHẬN QUÀ
+          </h2>
         </div>
 
         <StepIndicator />
@@ -97,26 +100,26 @@ const Redeem = () => {
             {step === 1 && (
               <motion.div key="1" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="text-center max-w-md mx-auto space-y-12">
                 <div className="flex justify-center">
-                  <div className="w-24 h-24 bg-brand-50 rounded-[2rem] flex items-center justify-center text-brand-600">
+                  <div className="w-24 h-24 bg-brand-50 rounded-2xl flex items-center justify-center text-brand-600">
                     <Package className="w-12 h-12" />
                   </div>
                 </div>
                 <div className="space-y-4">
-                  <h3 className="text-2xl font-black text-slate-900">Enter Your Voucher Code</h3>
+                  <h3 className="text-2xl font-black text-slate-900">Nhập mã giảm giá của bạn</h3>
                   <p className="text-slate-400 font-bold text-sm leading-relaxed px-10">
-                    Please enter the 12-character code from your voucher.
+                    Vui lòng nhập mã số trên thẻ quét mã QR để được nhận quà.
                   </p>
                 </div>
                 <form onSubmit={handleValidateVoucher} className="space-y-8">
                   <input 
                     className="w-full px-8 py-5 bg-slate-50 border-2 border-transparent rounded-2xl text-center text-2xl font-black tracking-[0.2em] uppercase outline-none focus:bg-white focus:border-brand-500 transition-all shadow-inner" 
-                    placeholder="PGL-AB12-CD34-EF56"
+                    placeholder="PGL-XXXX-XXXX"
                     value={voucherCode}
                     onChange={(e) => setVoucherCode(e.target.value.toUpperCase())}
                   />
                   {error && <p className="text-xs text-red-500 font-black uppercase tracking-widest">{error}</p>}
                   <button type="submit" className="w-full py-5 bg-brand-800 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-brand-950 transition-all shadow-xl shadow-brand-900/10">
-                    {loading ? <Loader2 className="w-6 h-6 animate-spin mx-auto" /> : 'Validate Code'}
+                    {loading ? <Loader2 className="w-6 h-6 animate-spin mx-auto" /> : 'Xác thực mã số thẻ'}
                   </button>
                 </form>
               </motion.div>
@@ -125,14 +128,19 @@ const Redeem = () => {
             {step === 2 && (
               <motion.div key="2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-16">
                 <div className="text-center space-y-4">
-                  <h3 className="text-3xl font-black text-slate-900">Choose Your Reward</h3>
-                  <p className="text-slate-400 font-bold uppercase tracking-[0.2em] text-[10px]">Select your favorite reward</p>
+                  <h3 className="text-3xl font-black text-slate-900">Chọn phần quà của bạn</h3>
+                  <p className="text-slate-400 font-bold uppercase tracking-[0.2em] text-[10px]">Chọn món quà bạn yêu thích nhất</p>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-3xl mx-auto">
                   {voucherData?.rewards.map((reward) => {
-                    const displayImage = reward.name.toLowerCase().includes('bottle') ? bottleImg : 
-                                       reward.name.toLowerCase().includes('tote') ? toteImg : 
-                                       reward.name.toLowerCase().includes('plant') ? plantImg : reward.image;
+                    let displayImage = reward.image;
+                    const name = reward.name.toLowerCase();
+                    if (name.includes('tất')) displayImage = socksImg;
+                    else if (name.includes('bình')) displayImage = bottleImg;
+                    else if (name.includes('kem')) displayImage = toothpasteImg;
+                    else if (name.includes('sạc')) displayImage = cableImg;
+                    else if (name.includes('áo')) displayImage = tshirtImg;
+                    else if (name.includes('mũ')) displayImage = capImg;
                     return (
                       <div 
                         key={reward._id} 
@@ -156,7 +164,7 @@ const Redeem = () => {
                         <button className={`w-full py-4 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
                           selectedReward?._id === reward._id ? 'bg-brand-800 text-white shadow-lg' : 'bg-slate-50 text-slate-400 group-hover:bg-brand-50 group-hover:text-brand-700'
                         }`}>
-                          {selectedReward?._id === reward._id ? 'Selected' : 'Select'}
+                          {selectedReward?._id === reward._id ? 'Đã chọn' : 'Chọn'}
                         </button>
                       </div>
                     );
@@ -164,11 +172,11 @@ const Redeem = () => {
                 </div>
                 <div className="flex flex-col items-center gap-10 pt-10 border-t border-slate-50">
                    <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest flex items-center gap-2">
-                     <CheckCircle className="w-3 h-3 text-brand-500" /> You can only choose one reward.
+                     <CheckCircle className="w-3 h-3 text-brand-500" /> Bạn chỉ có thể chọn một phần quà.
                    </p>
                   <div className="flex justify-between w-full">
-                    <button onClick={() => setStep(1)} className="text-xs font-black text-slate-400 uppercase tracking-widest hover:text-brand-600 transition-colors">Back</button>
-                    <button onClick={() => setStep(3)} disabled={!selectedReward} className="px-12 py-4 bg-brand-800 text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-brand-900/10 disabled:opacity-50">Next Step</button>
+                    <button onClick={() => setStep(1)} className="text-xs font-black text-slate-400 uppercase tracking-widest hover:text-brand-600 transition-colors">Quay lại</button>
+                    <button onClick={() => setStep(3)} disabled={!selectedReward} className="px-12 py-4 bg-brand-800 text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-brand-900/10 disabled:opacity-50">Tiếp theo</button>
                   </div>
                 </div>
               </motion.div>
@@ -177,47 +185,44 @@ const Redeem = () => {
             {step === 3 && (
               <motion.div key="3" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-16">
                 <div className="text-center space-y-4">
-                  <h3 className="text-3xl font-black text-slate-900">Your Information</h3>
-                  <p className="text-slate-400 font-bold uppercase tracking-[0.2em] text-[10px]">Please fill in your information to receive your reward.</p>
+                  <h3 className="text-3xl font-black text-slate-900">Thông tin nhận quà</h3>
+                  <p className="text-slate-400 font-bold uppercase tracking-[0.2em] text-[10px]">Vui lòng điền thông tin để chúng tôi gửi quà đến bạn.</p>
                 </div>
                 <form onSubmit={handleSubmitClaim} className="space-y-10">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="space-y-3">
-                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Full Name *</label>
-                      <input className="input-field !py-5" placeholder="Nguyen Van A" required onChange={(e) => setCustomerInfo({...customerInfo, customerName: e.target.value})} />
-                    </div>
-                    <div className="space-y-3">
-                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Phone Number *</label>
-                      <input className="input-field !py-5" placeholder="0901 234 567" required onChange={(e) => setCustomerInfo({...customerInfo, phone: e.target.value})} />
-                    </div>
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Họ và tên *</label>
+                    <input 
+                      className="w-full px-8 py-5 bg-slate-50 border-2 border-transparent rounded-2xl font-bold outline-none focus:bg-white focus:border-brand-500 transition-all shadow-inner" 
+                      placeholder="Nguyễn Văn A" 
+                      required 
+                      value={customerInfo.customerName}
+                      onChange={(e) => setCustomerInfo({...customerInfo, customerName: e.target.value})} 
+                    />
                   </div>
                   <div className="space-y-3">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Email</label>
-                    <input className="input-field !py-5" placeholder="nguyenvana@gmail.com" type="email" onChange={(e) => setCustomerInfo({...customerInfo, email: e.target.value})} />
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Số điện thoại *</label>
+                    <input 
+                      className="w-full px-8 py-5 bg-slate-50 border-2 border-transparent rounded-2xl font-bold outline-none focus:bg-white focus:border-brand-500 transition-all shadow-inner" 
+                      placeholder="0901 234 567" 
+                      required 
+                      value={customerInfo.phone}
+                      onChange={(e) => setCustomerInfo({...customerInfo, phone: e.target.value})} 
+                    />
                   </div>
                   <div className="space-y-3">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Address *</label>
-                    <input className="input-field !py-5" placeholder="123 Green Street, District 1" required onChange={(e) => setCustomerInfo({...customerInfo, address: e.target.value})} />
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="space-y-3">
-                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Province / City *</label>
-                      <select className="input-field !py-5 appearance-none cursor-pointer" required onChange={(e) => setCustomerInfo({...customerInfo, provinceCity: e.target.value})}>
-                        <option value="">Select City</option>
-                        <option value="Ho Chi Minh City">Ho Chi Minh City</option>
-                        <option value="Ha Noi">Ha Noi</option>
-                        <option value="Da Nang">Da Nang</option>
-                      </select>
-                    </div>
-                    <div className="space-y-3">
-                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Notes (optional)</label>
-                      <input className="input-field !py-5" placeholder="Leave a note for delivery (optional)" onChange={(e) => setCustomerInfo({...customerInfo, notes: e.target.value})} />
-                    </div>
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Địa chỉ nhận quà *</label>
+                    <textarea 
+                      className="w-full px-8 py-5 bg-slate-50 border-2 border-transparent rounded-2xl font-bold outline-none focus:bg-white focus:border-brand-500 transition-all shadow-inner min-h-[120px]" 
+                      placeholder="Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành phố" 
+                      required 
+                      value={customerInfo.address}
+                      onChange={(e) => setCustomerInfo({...customerInfo, address: e.target.value})} 
+                    />
                   </div>
                   <div className="flex justify-between items-center pt-12 border-t border-slate-50">
-                    <button type="button" onClick={() => setStep(2)} className="text-xs font-black text-slate-400 uppercase tracking-widest hover:text-brand-600 transition-colors flex items-center gap-2">Back</button>
+                    <button type="button" onClick={() => setStep(2)} className="text-xs font-black text-slate-400 uppercase tracking-widest hover:text-brand-600 transition-colors flex items-center gap-2">Quay lại</button>
                     <button type="submit" className="px-16 py-5 bg-brand-800 text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-2xl shadow-brand-900/20 hover:bg-brand-950 transition-all">
-                      Confirm & Submit
+                      {loading ? <Loader2 className="w-6 h-6 animate-spin mx-auto" /> : 'Xác nhận & Hoàn thành'}
                     </button>
                   </div>
                 </form>

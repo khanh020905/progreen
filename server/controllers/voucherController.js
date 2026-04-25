@@ -32,15 +32,15 @@ exports.validateVoucher = async (req, res) => {
       .populate('rewards');
 
     if (!voucher) {
-      return res.status(404).json({ message: 'Voucher code not found' });
+      return res.status(404).json({ message: 'Mã số thẻ không hợp lệ' });
     }
 
     if (!voucher.isActive) {
-      return res.status(400).json({ message: 'This voucher is currently inactive' });
+      return res.status(400).json({ message: 'Mã số thẻ không hợp lệ' });
     }
 
     if (voucher.isRedeemed) {
-      return res.status(400).json({ message: 'This voucher has already been redeemed' });
+      return res.status(400).json({ message: 'Rất tiếc, mã thẻ này đã được sử dụng' });
     }
 
     res.json({

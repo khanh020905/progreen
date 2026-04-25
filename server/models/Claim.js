@@ -33,7 +33,7 @@ const claimSchema = new mongoose.Schema({
   },
   provinceCity: {
     type: String,
-    required: true
+    required: false
   },
   notes: {
     type: String
