@@ -43,7 +43,7 @@ async function connectToDatabase() {
 
   try {
     await mongoose.connect(MONGODB_URI, {
-      serverSelectionTimeoutMS: 5000, // Timeout after 5s
+      serverSelectionTimeoutMS: 5000,
     });
     isConnected = true;
     console.log('MongoDB Connected');
@@ -53,6 +53,28 @@ async function connectToDatabase() {
     if (adminCount === 0) {
       const hashedPassword = await bcrypt.hash('ProGreenLife@2026', 10);
       await AdminUser.create({ username: 'admin', password: hashedPassword });
+      console.log('Admin user seeded');
+    }
+
+    // Auto-seed Vouchers & Rewards if empty
+    const voucherCount = await Voucher.countDocuments();
+    if (voucherCount === 0) {
+      console.log('Database empty, seeding rewards and vouchers...');
+      const rewards = await Reward.insertMany([
+        { name: '3 đôi tất', description: 'Tất cotton cao cấp, thấm hút mồ hôi' },
+        { name: 'Bình đựng nước nhựa 550 ml Delites TH08771', description: 'Nhựa an toàn BPA Free' },
+        { name: 'Kem đánh răng Close up 100gr', description: 'Hơi thở thơm mát, răng trắng sáng' },
+        { name: 'Dây Sạc Nhanh 3 đầu (Lightning-Micro-TypeC)', description: 'Sạc nhanh đa năng 3 trong 1' },
+        { name: 'Áo Velosar', description: 'Áo phông thương hiệu Velosar cao cấp' },
+        { name: 'Mũ lưỡi trai', description: 'Mũ thời trang Pro Green Life' }
+      ]);
+
+      await Voucher.create([
+        { code: 'PGL300', rewards: [rewards[0]._id, rewards[1]._id], isActive: true },
+        { code: 'PGL500', rewards: [rewards[2]._id, rewards[3]._id], isActive: true },
+        { code: 'PGL1TR', rewards: [rewards[4]._id, rewards[5]._id], isActive: true }
+      ]);
+      console.log('Rewards and Vouchers seeded successfully');
     }
   } catch (err) {
     isConnected = false;
