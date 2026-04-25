@@ -17,8 +17,8 @@
       "destination": "server/index.js"
     },
     {
-      "source": "/((?!api/|assets/|favicon.ico|seo-image.png|media__|clean_|premium_).*)",
-      "destination": "client/index.html"
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
     }
   ]
 }
