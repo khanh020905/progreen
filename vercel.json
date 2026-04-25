@@ -14,19 +14,16 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "server/index.js"
-    },
-    {
-      "src": "/assets/(.*)",
-      "dest": "/assets/$1",
-      "continue": true
-    },
-    {
-      "handle": "filesystem"
+      "dest": "/server/index.js"
     },
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "/client/$1",
+      "continue": true
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/client/index.html"
     }
   ]
 }
