@@ -21,6 +21,7 @@ export default function AdminClaimsPage() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
+  const [selectedClaim, setSelectedClaim] = useState<any>(null);
 
   useEffect(() => {
     fetchClaims();
@@ -207,20 +208,29 @@ export default function AdminClaimsPage() {
                       </div>
                     </td>
                     <td className="px-10 py-6 text-right">
-                      <div className="relative inline-block">
-                        <select 
-                          className="text-xs font-black bg-white border border-slate-100 rounded-xl p-2.5 pr-8 outline-none hover:border-green-500 transition-colors appearance-none cursor-pointer shadow-sm"
-                          value={claim.status}
-                          onChange={(e) => handleUpdateStatus(claim._id, e.target.value)}
+                      <div className="flex items-center justify-end gap-3">
+                        <button 
+                          onClick={() => setSelectedClaim(claim)}
+                          className="p-2.5 bg-slate-50 hover:bg-slate-100 text-slate-600 rounded-xl transition-all"
+                          title="View Details"
                         >
-                          <option value="Pending">Pending</option>
-                          <option value="Confirmed">Confirmed</option>
-                          <option value="Shipping">Shipping</option>
-                          <option value="Completed">Completed</option>
-                          <option value="Rejected">Rejected</option>
-                        </select>
-                        <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                          <ChevronRight className="w-3.5 h-3.5 text-slate-300 rotate-90" />
+                          <ChevronRight className="w-5 h-5" />
+                        </button>
+                        <div className="relative inline-block">
+                          <select 
+                            className="text-xs font-black bg-white border border-slate-100 rounded-xl p-2.5 pr-8 outline-none hover:border-green-500 transition-colors appearance-none cursor-pointer shadow-sm"
+                            value={claim.status}
+                            onChange={(e) => handleUpdateStatus(claim._id, e.target.value)}
+                          >
+                            <option value="Pending">Pending</option>
+                            <option value="Confirmed">Confirmed</option>
+                            <option value="Shipping">Shipping</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Rejected">Rejected</option>
+                          </select>
+                          <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                            <ChevronRight className="w-3.5 h-3.5 text-slate-300 rotate-90" />
+                          </div>
                         </div>
                       </div>
                     </td>
@@ -230,6 +240,76 @@ export default function AdminClaimsPage() {
             </table>
           </div>
         </div>
+
+        {/* Details Modal */}
+        {selectedClaim && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-300">
+            <div className="bg-white rounded-[3rem] w-full max-w-xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300">
+              <div className="p-10 border-b border-slate-50 flex justify-between items-center bg-slate-50/30">
+                <h3 className="text-xl font-black text-slate-900">Claim Details</h3>
+                <button onClick={() => setSelectedClaim(null)} className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-slate-400 hover:text-slate-900 transition-colors">×</button>
+              </div>
+              <div className="p-10 space-y-8 max-h-[60vh] overflow-y-auto">
+                <div className="grid grid-cols-2 gap-8">
+                  <div>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Customer Name</p>
+                    <p className="font-bold text-slate-900">{selectedClaim.customerName}</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Phone Number</p>
+                    <p className="font-bold text-slate-900">{selectedClaim.phone}</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Email Address</p>
+                    <p className="font-bold text-slate-900 break-all">{selectedClaim.email || 'N/A'}</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Voucher Code</p>
+                    <p className="font-bold text-green-600">{selectedClaim.voucherCode}</p>
+                  </div>
+                </div>
+                
+                <div>
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Selected Reward</p>
+                  <div className="p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
+                    <p className="font-black text-emerald-900">{selectedClaim.rewardName}</p>
+                  </div>
+                </div>
+
+                <div>
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Shipping Address</p>
+                  <p className="font-bold text-slate-900 leading-relaxed bg-slate-50 p-6 rounded-2xl">{selectedClaim.address}, {selectedClaim.provinceCity}</p>
+                </div>
+
+                {selectedClaim.notes && (
+                  <div>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Order Notes</p>
+                    <p className="text-sm text-slate-500 font-bold italic">"{selectedClaim.notes}"</p>
+                  </div>
+                )}
+                
+                <div className="flex items-center justify-between p-6 bg-slate-50 rounded-2xl border border-slate-100">
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Current Status</span>
+                  </div>
+                  <span className="font-black text-slate-900 uppercase text-[10px] tracking-widest">{selectedClaim.status}</span>
+                </div>
+              </div>
+              <div className="p-10 bg-slate-50/50 flex justify-end">
+                <button 
+                  onClick={() => setSelectedClaim(null)}
+                  className="px-8 py-4 bg-[#0e2114] text-white text-xs font-black uppercase tracking-widest rounded-2xl hover:scale-105 transition-all shadow-xl shadow-green-900/20"
+                >
+                  Close View
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </AdminLayout>
   );

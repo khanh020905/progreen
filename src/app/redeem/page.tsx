@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import { CheckCircle, Loader2, Package } from 'lucide-react';
+import { formatVoucherCode } from '@/utils/voucher';
 import toast from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
 import LeafIcon from '@/components/LeafIcon';
@@ -24,7 +25,10 @@ function RedeemContent() {
   const [customerInfo, setCustomerInfo] = useState({
     customerName: '',
     phone: '',
-    address: ''
+    email: '',
+    address: '',
+    provinceCity: '',
+    notes: ''
   });
 
   useEffect(() => {
@@ -58,7 +62,12 @@ function RedeemContent() {
     e.preventDefault();
     setLoading(true);
     try {
-      const payload = { ...customerInfo, voucherCode: voucherData.code, rewardId: selectedReward._id };
+      const payload = { 
+        ...customerInfo, 
+        voucherCode: voucherData.code, 
+        rewardId: selectedReward._id,
+        rewardName: selectedReward.name
+      };
       const response = await axios.post('/api/claims', payload);
       // Using router.push with state isn't direct in Next.js like React Router, 
       // but we can use query params or a global state. For now, simple redirect.
@@ -124,7 +133,7 @@ function RedeemContent() {
                     className="w-full px-8 py-5 bg-slate-50 border-2 border-transparent rounded-2xl text-center text-2xl font-black tracking-[0.2em] uppercase outline-none focus:bg-white focus:border-green-500 transition-all shadow-inner" 
                     placeholder="PGL-XXXX-XXXX"
                     value={voucherCode}
-                    onChange={(e) => setVoucherCode(e.target.value.toUpperCase())}
+                    onChange={(e) => setVoucherCode(formatVoucherCode(e.target.value))}
                   />
                   {error && <p className="text-xs text-red-500 font-black uppercase tracking-widest">{error}</p>}
                   <button type="submit" className="w-full py-5 bg-green-800 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-green-950 transition-all shadow-xl shadow-green-900/10">
@@ -145,12 +154,12 @@ function RedeemContent() {
                     // Mapping image logic
                     let displayImage = reward.image;
                     const name = reward.name.toLowerCase();
-                    if (name.includes('tất')) displayImage = "/socks.png";
-                    else if (name.includes('bình')) displayImage = "/bottle.png";
-                    else if (name.includes('kem')) displayImage = "/toothpaste.png";
-                    else if (name.includes('sạc')) displayImage = "/cable.png";
-                    else if (name.includes('áo')) displayImage = "/tshirt.png";
-                    else if (name.includes('mũ')) displayImage = "/cap.png";
+                    if (name.includes('tất')) displayImage = "/rewards/socks.png";
+                    else if (name.includes('bình')) displayImage = "/rewards/bottle.png";
+                    else if (name.includes('kem')) displayImage = "/rewards/toothpaste.png";
+                    else if (name.includes('sạc')) displayImage = "/rewards/cable.png";
+                    else if (name.includes('áo')) displayImage = "/rewards/tshirt.png";
+                    else if (name.includes('mũ')) displayImage = "/rewards/cap.png";
                     
                     return (
                       <div 
@@ -223,6 +232,16 @@ function RedeemContent() {
                       required 
                       value={customerInfo.phone}
                       onChange={(e) => setCustomerInfo({...customerInfo, phone: e.target.value})} 
+                    />
+                  </div>
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Email (Không bắt buộc)</label>
+                    <input 
+                      type="email"
+                      className="w-full px-8 py-5 bg-slate-50 border-2 border-transparent rounded-2xl font-bold outline-none focus:bg-white focus:border-green-500 transition-all shadow-inner" 
+                      placeholder="example@gmail.com" 
+                      value={customerInfo.email}
+                      onChange={(e) => setCustomerInfo({...customerInfo, email: e.target.value})} 
                     />
                   </div>
                   <div className="space-y-3">

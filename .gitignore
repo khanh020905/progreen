@@ -8,5 +8,13 @@ server/node_modules/
 client/node_modules/
 client/dist/
 
-.vercel
+.vercel/
 .worktrees/
+.next/
+build/
+dist/
+*.log
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

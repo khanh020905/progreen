@@ -21,6 +21,7 @@ export default function AdminDashboardPage() {
   });
   const [recentClaims, setRecentClaims] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedClaim, setSelectedClaim] = useState<any>(null);
 
   useEffect(() => {
     fetchDashboardData();
@@ -97,13 +98,14 @@ export default function AdminDashboardPage() {
                     <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Customer</th>
                     <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Reward</th>
                     <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Status</th>
+                    <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Action</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-50">
                   {loading ? (
-                    <tr><td colSpan={3} className="px-10 py-20 text-center text-slate-400 font-bold">Loading activity...</td></tr>
+                    <tr><td colSpan={4} className="px-10 py-20 text-center text-slate-400 font-bold">Loading activity...</td></tr>
                   ) : recentClaims.length === 0 ? (
-                    <tr><td colSpan={3} className="px-10 py-20 text-center text-slate-400 font-bold">No recent claims.</td></tr>
+                    <tr><td colSpan={4} className="px-10 py-20 text-center text-slate-400 font-bold">No recent claims.</td></tr>
                   ) : recentClaims.map((claim) => (
                     <tr key={claim._id} className="hover:bg-slate-50/30 transition-colors">
                       <td className="px-10 py-6">
@@ -118,6 +120,14 @@ export default function AdminDashboardPage() {
                         }`}>
                           {claim.status}
                         </span>
+                      </td>
+                      <td className="px-10 py-6">
+                        <button 
+                          onClick={() => setSelectedClaim(claim)}
+                          className="px-4 py-2 bg-slate-50 hover:bg-slate-100 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all"
+                        >
+                          Details
+                        </button>
                       </td>
                     </tr>
                   ))}
@@ -152,6 +162,76 @@ export default function AdminDashboardPage() {
             </div>
           </div>
         </div>
+
+        {/* Details Modal */}
+        {selectedClaim && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-300">
+            <div className="bg-white rounded-[3rem] w-full max-w-xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300">
+              <div className="p-10 border-b border-slate-50 flex justify-between items-center bg-slate-50/30">
+                <h3 className="text-xl font-black text-slate-900">Claim Details</h3>
+                <button onClick={() => setSelectedClaim(null)} className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-slate-400 hover:text-slate-900 transition-colors">×</button>
+              </div>
+              <div className="p-10 space-y-8 max-h-[60vh] overflow-y-auto">
+                <div className="grid grid-cols-2 gap-8">
+                  <div>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Customer Name</p>
+                    <p className="font-bold text-slate-900">{selectedClaim.customerName}</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Phone Number</p>
+                    <p className="font-bold text-slate-900">{selectedClaim.phone}</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Email Address</p>
+                    <p className="font-bold text-slate-900 break-all">{selectedClaim.email || 'N/A'}</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Voucher Code</p>
+                    <p className="font-bold text-green-600">{selectedClaim.voucherCode}</p>
+                  </div>
+                </div>
+                
+                <div>
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Selected Reward</p>
+                  <div className="p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
+                    <p className="font-black text-emerald-900">{selectedClaim.rewardName}</p>
+                  </div>
+                </div>
+
+                <div>
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Shipping Address</p>
+                  <p className="font-bold text-slate-900 leading-relaxed bg-slate-50 p-6 rounded-2xl">{selectedClaim.address}, {selectedClaim.provinceCity}</p>
+                </div>
+
+                {selectedClaim.notes && (
+                  <div>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Order Notes</p>
+                    <p className="text-sm text-slate-500 font-bold italic">"{selectedClaim.notes}"</p>
+                  </div>
+                )}
+                
+                <div className="flex items-center justify-between p-6 bg-slate-50 rounded-2xl border border-slate-100">
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Current Status</span>
+                  </div>
+                  <span className="font-black text-slate-900 uppercase text-[10px] tracking-widest">{selectedClaim.status}</span>
+                </div>
+              </div>
+              <div className="p-10 bg-slate-50/50 flex justify-end">
+                <button 
+                  onClick={() => setSelectedClaim(null)}
+                  className="px-8 py-4 bg-[#0e2114] text-white text-xs font-black uppercase tracking-widest rounded-2xl hover:scale-105 transition-all shadow-xl shadow-green-900/20"
+                >
+                  Close View
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </AdminLayout>
   );

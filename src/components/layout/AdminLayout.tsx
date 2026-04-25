@@ -57,8 +57,10 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
     <div className="flex min-h-screen bg-[#f8faf9]">
       {/* Sidebar */}
       <aside className="w-64 bg-[#0e2114] text-white flex flex-col fixed h-full z-30">
-        <div className="px-6 pt-8 pb-10 flex items-center gap-3 border-b border-white/5 mb-4">
-          <Logo inverted={true} className="scale-110 origin-left" />
+        <div className="px-6 pt-8 pb-10 flex items-center justify-center border-b border-white/5 mb-4">
+          <div className="bg-white p-4 rounded-2xl w-full flex justify-center shadow-lg">
+            <Logo className="scale-110" />
+          </div>
         </div>
 
         <nav className="flex-1 px-4 space-y-1">

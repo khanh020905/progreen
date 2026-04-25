@@ -19,6 +19,7 @@ export async function POST(request: Request) {
     const { 
       voucherCode, 
       rewardId, 
+      rewardName: bodyRewardName,
       customerName, 
       phone, 
       email, 
@@ -27,13 +28,35 @@ export async function POST(request: Request) {
       notes 
     } = await request.json();
 
-    // 1. DEMO CLAIM FALLBACK
-    if (voucherCode?.toUpperCase() === 'DEMO2026') {
-       return NextResponse.json({
-         success: true,
-         claimReference: `PGL-DEMO-${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
-         message: 'Claim submitted successfully (DEMO MODE)'
-       }, { status: 201 });
+    // 1. TEST MODE LOGIC
+    const upperCode = voucherCode?.toUpperCase();
+    const isTestCode = upperCode === 'DEMO2026' || upperCode === 'PGL300' || upperCode === 'PGL500' || upperCode === 'PGL1TR';
+    
+    if (isTestCode) {
+      await connectToDatabase();
+      const claimReference = `PGL-TEST-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+      
+      const testClaim = new Claim({
+        voucherCode: upperCode,
+        rewardName: bodyRewardName || (rewardId?.startsWith('r') ? 'Test Reward' : rewardId),
+        rewardId: undefined, // Don't set rewardId for test codes to avoid CastError
+        customerName,
+        phone,
+        email,
+        address,
+        provinceCity,
+        notes,
+        claimReference,
+        status: 'Pending'
+      });
+      
+      await testClaim.save();
+
+      return NextResponse.json({
+        success: true,
+        claimReference,
+        message: 'Claim submitted successfully (TEST MODE)'
+      }, { status: 201 });
     }
 
     // 2. Database Connection
