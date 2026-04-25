@@ -14,23 +14,11 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/server/index.js"
+      "destination": "server/index.js"
     },
     {
-      "source": "/admin(.*)",
-      "destination": "/client/index.html"
-    },
-    {
-      "source": "/redeem(.*)",
-      "destination": "/client/index.html"
-    },
-    {
-      "source": "/success(.*)",
-      "destination": "/client/index.html"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/client/$1"
+      "source": "/((?!api/).*)",
+      "destination": "client/index.html"
     }
   ]
 }
