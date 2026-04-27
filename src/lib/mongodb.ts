@@ -19,13 +19,13 @@ interface MongooseCache {
 }
 
 declare global {
-  var mongoose: MongooseCache | undefined;
+  var _mongoose: MongooseCache | undefined;
 }
 
-let cached = global.mongoose;
+let cached = global._mongoose;
 
 if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
+  cached = global._mongoose = { conn: null, promise: null };
 }
 
 async function connectToDatabase() {
