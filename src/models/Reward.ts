@@ -5,6 +5,13 @@ export interface IReward extends Document {
   description: string;
   image: string;
   isActive: boolean;
+  stock: number;
+  stockHistory: Array<{
+    date: Date;
+    change: number;
+    reason: string;
+    type: 'manual' | 'automatic';
+  }>;
   createdAt: Date;
 }
 
@@ -26,6 +33,16 @@ const rewardSchema = new mongoose.Schema({
     type: Boolean,
     default: true
   },
+  stock: {
+    type: Number,
+    default: 0
+  },
+  stockHistory: [{
+    date: { type: Date, default: Date.now },
+    change: Number,
+    reason: String,
+    type: { type: String, enum: ['manual', 'automatic'] }
+  }],
   createdAt: {
     type: Date,
     default: Date.now
