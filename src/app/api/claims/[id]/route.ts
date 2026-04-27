@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
 import Claim from '@/models/Claim';
+import Reward from '@/models/Reward';
+import mongoose from 'mongoose';
 
 export async function PUT(
   request: Request,
@@ -23,9 +25,26 @@ export async function PUT(
     );
 
     // If status changed to Confirmed, decrement stock
-    if (status === 'Confirmed' && oldClaim.status !== 'Confirmed' && claim?.rewardId) {
+    if (status === 'Confirmed' && oldClaim.status !== 'Confirmed') {
       try {
-        const reward = await Reward.findById(claim.rewardId);
+        let reward = null;
+        
+        // Try to find by ID first if it's a valid ObjectId
+        if (claim?.rewardId && mongoose.Types.ObjectId.isValid(claim.rewardId)) {
+          reward = await Reward.findById(claim.rewardId);
+        }
+        
+        // Fallback: try to find by Name (important for demo vouchers)
+        if (!reward && claim?.rewardName) {
+          reward = await Reward.findOne({ 
+            name: { $regex: new RegExp(claim.rewardName.split(' ')[0], 'i') } 
+          }).or([
+            { name: { $regex: new RegExp(claim.rewardName.replace(' phông', ''), 'i') } },
+            { name: { $regex: new RegExp(claim.rewardName.replace(' cao cấp', ''), 'i') } },
+            { name: claim.rewardName }
+          ]);
+        }
+
         if (reward) {
           reward.stock = Math.max(0, (reward.stock || 0) - 1);
           if (!reward.stockHistory) reward.stockHistory = [];
@@ -35,11 +54,14 @@ export async function PUT(
             reason: `Claim Confirmed (Ref: ${claim.claimReference})`,
             type: 'automatic'
           });
+          
+          reward.markModified('stock');
+          reward.markModified('stockHistory');
           await reward.save();
+          console.log(`Stock decremented for ${reward.name}. New stock: ${reward.stock}`);
         }
       } catch (error) {
         console.error('Failed to decrement stock:', error);
-        // We continue because the claim update was successful
       }
     }
 
