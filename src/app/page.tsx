@@ -116,27 +116,30 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="relative w-full max-w-2xl"
+                className="flex flex-col sm:flex-row items-center gap-6"
               >
-                <div className="flex flex-col sm:flex-row items-center bg-white p-2 rounded-[3rem] sm:rounded-full shadow-[0_20px_50px_rgba(45,90,39,0.12)] border border-slate-50 group transition-all duration-500 focus-within:shadow-[0_25px_80px_rgba(45,90,39,0.18)] focus-within:border-green-100/50">
-                  <div className="hidden sm:flex pl-8 text-slate-300 group-focus-within:text-[#2d5a27] transition-colors">
-                    <Ticket className="w-7 h-7" />
+                <Link
+                  href="/redeem"
+                  className="group relative inline-flex items-center justify-center px-12 py-6 bg-[#2d5a27] text-white rounded-full text-sm font-black uppercase tracking-[0.2em] shadow-[0_20px_40px_rgba(45,90,39,0.25)] hover:bg-[#1e3d1a] hover:shadow-[0_25px_60px_rgba(45,90,39,0.35)] transition-all duration-500 hover:-translate-y-1 active:scale-95"
+                >
+                  <span className="relative z-10 flex items-center gap-4">
+                    Đổi phiếu giảm giá ngay
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-500" />
+                  </span>
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white/0 via-white/5 to-white/0 opacity-0 group-hover:opacity-100 group-hover:translate-x-full transition-all duration-1000 ease-in-out -translate-x-full"></div>
+                </Link>
+
+                <div className="flex -space-x-3">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-slate-100 overflow-hidden ring-4 ring-[#2d5a27]/5">
+                      <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="User" className="w-full h-full object-cover" />
+                    </div>
+                  ))}
+                  <div className="w-10 h-10 rounded-full border-2 border-white bg-[#e9f5ed] flex items-center justify-center text-[10px] font-black text-[#2d5a27] ring-4 ring-[#2d5a27]/5">
+                    +2k
                   </div>
-                  <input
-                    type="text"
-                    placeholder="Nhập mã số thẻ quà tặng"
-                    className="w-full sm:flex-1 h-14 sm:h-18 px-8 sm:px-6 outline-none text-lg sm:text-xl font-black text-[#0e2114] uppercase tracking-[0.15em] placeholder:text-slate-200 placeholder:normal-case placeholder:tracking-normal placeholder:font-bold"
-                    value={code}
-                    onChange={(e) => setCode(e.target.value.toUpperCase())}
-                  />
-                  <Link
-                    href={code ? `/redeem?code=${code}` : "/redeem"}
-                    className="w-full sm:w-auto h-14 sm:h-18 px-12 bg-[#2d5a27] text-white rounded-[2rem] sm:rounded-full text-[13px] font-black uppercase tracking-widest flex items-center justify-center gap-3 transition-all duration-300 hover:bg-[#1e3d1a] hover:shadow-2xl hover:shadow-green-900/30 active:scale-95 group/btn mt-2 sm:mt-0"
-                  >
-                    Đổi phiếu giảm giá ngay{" "}
-                    <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1.5 transition-transform" />
-                  </Link>
                 </div>
+              </motion.div>
 
                 {/* Trust Indicators Under Input (Glassmorphic Cards) */}
                 <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
