@@ -134,7 +134,7 @@ function RedeemContent() {
               <motion.div key="1" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="text-center max-w-md mx-auto space-y-12">
 
                 <div className="space-y-4">
-                  <h3 className="text-2xl font-black text-slate-900">Nhập mã giảm giá của bạn</h3>
+                  <h3 className="text-2xl font-black text-slate-900">Nhập mã số thẻ của bạn</h3>
                   <p className="text-slate-400 font-bold text-sm leading-relaxed px-10">
                     Vui lòng nhập mã số trên thẻ quét mã QR để được nhận quà.
                   </p>

@@ -27,8 +27,8 @@ export default function Home() {
 
   const faqs = [
     {
-      q: "Phiếu giảm giá Pro Green Life là gì?",
-      a: "Phiếu giảm giá Pro Green Life là một mã phần thưởng đặc biệt cho phép bạn nhận các món quà thân thiện với môi trường từ bộ sưu tập của chúng tôi.",
+      q: "Thẻ quà tặng Pro Green Life là gì?",
+      a: "Thẻ quà tặng Pro Green Life là một mã phần thưởng đặc biệt cho phép bạn nhận các món quà thân thiện với môi trường từ bộ sưu tập của chúng tôi.",
     },
     {
       q: "Tôi có thể tìm mã số ở đâu?",
@@ -123,7 +123,7 @@ export default function Home() {
                   className="group relative inline-flex items-center justify-center px-12 py-6 bg-[#2d5a27] text-white rounded-full text-sm font-black uppercase tracking-[0.2em] shadow-[0_20px_40px_rgba(45,90,39,0.25)] hover:bg-[#1e3d1a] hover:shadow-[0_25px_60px_rgba(45,90,39,0.35)] transition-all duration-500 hover:-translate-y-1 active:scale-95"
                 >
                   <span className="relative z-10 flex items-center gap-4">
-                    Đổi phiếu giảm giá ngay
+                    Nhận quà tại đây
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-500" />
                   </span>
                   <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white/0 via-white/5 to-white/0 opacity-0 group-hover:opacity-100 group-hover:translate-x-full transition-all duration-1000 ease-in-out -translate-x-full"></div>
@@ -323,7 +323,7 @@ export default function Home() {
               <div className="relative">
                 <div className="w-full max-w-[550px] relative z-10">
                   <Image
-                    src="/premium_product_cluster_realistic.png"
+                    src="/product-finall.jpg"
                     alt="Pro Green Life Products"
                     width={550}
                     height={550}
