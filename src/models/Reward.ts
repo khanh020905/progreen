@@ -49,5 +49,10 @@ const rewardSchema = new mongoose.Schema({
   }
 });
 
+// Handle Next.js hot-reloading: if the model exists but doesn't have the new fields, we need to re-register it.
+if (mongoose.models.Reward && !mongoose.models.Reward.schema.paths.stock) {
+  delete mongoose.models.Reward;
+}
+
 const Reward: Model<IReward> = mongoose.models.Reward || mongoose.model<IReward>('Reward', rewardSchema);
 export default Reward;

@@ -16,25 +16,27 @@ export async function POST(
 
     const currentStock = reward.stock || 0;
     const change = quantity - currentStock;
-    
-    reward.stock = quantity;
-    if (!reward.stockHistory) reward.stockHistory = [];
-    
-    reward.stockHistory.push({
+
+    const historyEntry = {
       date: new Date(),
       change,
       reason: reason || 'Manual Update',
-      type: 'manual'
-    });
+      type: 'manual' as const
+    };
 
-    // Explicitly mark as modified for Mongoose
-    reward.markModified('stock');
-    reward.markModified('stockHistory');
+    const updatedReward = await Reward.findOneAndUpdate(
+      { _id: id },
+      { 
+        $set: { stock: quantity },
+        $push: { stockHistory: historyEntry }
+      },
+      { new: true, runValidators: true }
+    );
 
-    const savedReward = await reward.save();
-    console.log(`Stock updated for ${id}: ${savedReward.stock} (Change: ${change})`);
-    
-    return NextResponse.json(savedReward);
+    if (!updatedReward) return NextResponse.json({ message: 'Update failed' }, { status: 500 });
+
+    console.log(`Stock updated for ${id}: ${updatedReward.stock} (Change: ${change})`);
+    return NextResponse.json(updatedReward);
   } catch (error: any) {
     console.error('Stock Update Error:', error);
     return NextResponse.json({ message: error.message }, { status: 500 });
