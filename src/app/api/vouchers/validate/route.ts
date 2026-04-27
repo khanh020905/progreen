@@ -18,24 +18,24 @@ export async function POST(request: Request) {
       
       if (upperCode === 'PGL300') {
         rewards = [
-          { _id: 'r300_1', name: 'Tất cotton Pro Green Life', description: 'Chất liệu cotton cao cấp, thấm hút mồ hôi', image: '/rewards/socks.png' },
-          { _id: 'r300_2', name: 'Bình nước thân thiện môi trường', description: 'Bình nhựa lúa mạch an toàn cho sức khỏe', image: '/rewards/binh-nuoc.jpg' }
+          { _id: 'r300_1', name: 'Tất cotton Pro Green Life', description: 'Chất liệu cotton cao cấp, thấm hút mồ hôi', image: '/rewards/socks.png', stock: 100 },
+          { _id: 'r300_2', name: 'Bình nước thân thiện môi trường', description: 'Bình nhựa lúa mạch an toàn cho sức khỏe', image: '/rewards/binh-nuoc.jpg', stock: 100 }
         ];
       } else if (upperCode === 'PGL500') {
         rewards = [
-          { _id: 'r500_1', name: 'Kem đánh răng thảo dược', description: 'Chiết xuất từ thiên nhiên, bảo vệ nướu', image: '/rewards/toothpaste.png' },
-          { _id: 'r500_2', name: 'Dây sạc 3 đầu đa năng', description: 'Tương thích với mọi thiết bị di động', image: '/rewards/day-sac.jpg' }
+          { _id: 'r500_1', name: 'Kem đánh răng thảo dược', description: 'Chiết xuất từ thiên nhiên, bảo vệ nướu', image: '/rewards/toothpaste.png', stock: 100 },
+          { _id: 'r500_2', name: 'Dây sạc 3 đầu đa năng', description: 'Tương thích với mọi thiết bị di động', image: '/rewards/day-sac.jpg', stock: 100 }
         ];
       } else if (upperCode === 'PGL1TR') {
         rewards = [
-          { _id: 'r1000_1', name: 'Áo phông Velosar', description: 'Thiết kế thời trang, chất liệu thoáng mát', image: '/rewards/tshirt.png' },
-          { _id: 'r1000_2', name: 'Mũ lưỡi trai cao cấp', description: 'Kiểu dáng năng động, logo thêu tinh xảo', image: '/rewards/mu-luoi-trai.jpg' }
+          { _id: 'r1000_1', name: 'Áo phông Velosar', description: 'Thiết kế thời trang, chất liệu thoáng mát', image: '/rewards/tshirt.png', stock: 100 },
+          { _id: 'r1000_2', name: 'Mũ lưỡi trai cao cấp', description: 'Kiểu dáng năng động, logo thêu tinh xảo', image: '/rewards/mu-luoi-trai.jpg', stock: 100 }
         ];
       } else {
         // DEMO2026
         rewards = [
-          { _id: 'r1', name: 'Premium Eco Bottle', description: 'Double-walled stainless steel', image: '/rewards/binh-nuoc.jpg' },
-          { _id: 'r2', name: 'Green Tote Bag', description: 'Eco-friendly reusable bag', image: '/rewards/tote.png' }
+          { _id: 'r1', name: 'Premium Eco Bottle', description: 'Double-walled stainless steel', image: '/rewards/binh-nuoc.jpg', stock: 100 },
+          { _id: 'r2', name: 'Green Tote Bag', description: 'Eco-friendly reusable bag', image: '/rewards/tote.png', stock: 100 }
         ];
       }
 

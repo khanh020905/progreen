@@ -184,7 +184,7 @@ function RedeemContent() {
                             </div>
                           ) : (
                             <div className="bg-white/90 backdrop-blur-md text-[#2d5a27] px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border border-green-100 shadow-sm">
-                              Còn lại: {reward.stock ?? '∞'}
+                              Còn lại: {reward.stock ?? 0}
                             </div>
                           )}
                         </div>
