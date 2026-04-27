@@ -27,8 +27,14 @@ export async function POST(
       type: 'manual'
     });
 
-    await reward.save();
-    return NextResponse.json(reward);
+    // Explicitly mark as modified for Mongoose
+    reward.markModified('stock');
+    reward.markModified('stockHistory');
+
+    const savedReward = await reward.save();
+    console.log(`Stock updated for ${id}: ${savedReward.stock} (Change: ${change})`);
+    
+    return NextResponse.json(savedReward);
   } catch (error: any) {
     console.error('Stock Update Error:', error);
     return NextResponse.json({ message: error.message }, { status: 500 });

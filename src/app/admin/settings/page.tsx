@@ -49,7 +49,8 @@ export default function ProductSettingsPage() {
 
   const fetchRewards = async () => {
     try {
-      const response = await axios.get('/api/rewards');
+      // Add timestamp to bypass cache
+      const response = await axios.get(`/api/rewards?t=${Date.now()}`);
       setRewards(response.data);
       const initialInputs: {[key: string]: number} = {};
       response.data.forEach((r: Reward) => {
