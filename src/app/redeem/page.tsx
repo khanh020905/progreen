@@ -4,8 +4,8 @@ import React, { useState, useEffect, Suspense } from 'react';
 import axios from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
-import { CheckCircle, Loader2, Package } from 'lucide-react';
-import { formatVoucherCode, getRewardImage } from '@/utils/voucher';
+import { CheckCircle, Loader2, Package, ChevronLeft, ChevronRight, AlertCircle } from 'lucide-react';
+import { formatVoucherCode, getRewardImages } from '@/utils/voucher';
 import toast from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
 import LeafIcon from '@/components/LeafIcon';
@@ -22,6 +22,7 @@ function RedeemContent() {
   const [voucherCode, setVoucherCode] = useState('');
   const [voucherData, setVoucherData] = useState<any>(null);
   const [selectedReward, setSelectedReward] = useState<any>(null);
+  const [carouselIndexes, setCarouselIndexes] = useState<{[key: string]: number}>({});
   const [customerInfo, setCustomerInfo] = useState({
     customerName: '',
     phone: '',
@@ -69,14 +70,28 @@ function RedeemContent() {
         rewardName: selectedReward.name
       };
       const response = await axios.post('/api/claims', payload);
-      // Using router.push with state isn't direct in Next.js like React Router, 
-      // but we can use query params or a global state. For now, simple redirect.
       router.push(`/success?ref=${response.data.claimReference}`);
     } catch (err: any) {
       toast.error(err.response?.data?.message || 'Đã có lỗi xảy ra.');
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleNextImage = (e: React.MouseEvent, id: string, images: string[]) => {
+    e.stopPropagation();
+    setCarouselIndexes(prev => ({
+      ...prev,
+      [id]: (prev[id] === undefined ? 0 : prev[id] + 1) % images.length
+    }));
+  };
+
+  const handlePrevImage = (e: React.MouseEvent, id: string, images: string[]) => {
+    e.stopPropagation();
+    setCarouselIndexes(prev => ({
+      ...prev,
+      [id]: (prev[id] === undefined ? 0 : prev[id] - 1 + images.length) % images.length
+    }));
   };
 
   const StepIndicator = () => (
@@ -147,26 +162,76 @@ function RedeemContent() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-3xl mx-auto">
                   {voucherData?.rewards.map((reward: any) => {
-                    // Mapping image logic using tested utility
-                    const displayImage = getRewardImage(reward.name, reward.image);
+                    const images = getRewardImages(reward.name);
+                    const currentIndex = carouselIndexes[reward._id] || 0;
+                    const displayImage = images[currentIndex];
+                    const isOutOfStock = reward.stock !== undefined && reward.stock <= 0;
                     
                     return (
                       <div 
                         key={reward._id} 
-                        className={`group p-4 bg-white rounded-[2.5rem] border-2 transition-all duration-500 cursor-pointer flex flex-col ${
+                        className={`group p-4 bg-white rounded-[2.5rem] border-2 transition-all duration-500 flex flex-col relative ${
+                          isOutOfStock ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'
+                        } ${
                           selectedReward?._id === reward._id ? 'border-green-500 shadow-2xl shadow-green-900/10' : 'border-slate-50 hover:border-green-200'
                         }`} 
-                        onClick={() => setSelectedReward(reward)}
+                        onClick={() => !isOutOfStock && setSelectedReward(reward)}
                       >
+                        <div className="absolute top-8 right-8 z-20">
+                          {isOutOfStock ? (
+                            <div className="bg-red-600 text-white px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg">
+                              Hết hàng
+                            </div>
+                          ) : (
+                            <div className="bg-white/90 backdrop-blur-md text-[#2d5a27] px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border border-green-100 shadow-sm">
+                              Còn lại: {reward.stock ?? '∞'}
+                            </div>
+                          )}
+                        </div>
+
                         <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden mb-8">
-                          <Image 
-                            src={displayImage} 
-                            alt={reward.name} 
-                            fill
-                            className="object-cover group-hover:scale-110 transition-transform duration-700" 
-                          />
+                          <AnimatePresence mode="wait">
+                            <motion.div
+                              key={displayImage}
+                              initial={{ opacity: 0, x: 20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              exit={{ opacity: 0, x: -20 }}
+                              transition={{ duration: 0.3 }}
+                              className="absolute inset-0"
+                            >
+                              <Image 
+                                src={displayImage} 
+                                alt={reward.name} 
+                                fill
+                                className={`object-cover transition-all duration-700 ${isOutOfStock ? 'grayscale' : 'group-hover:scale-110'}`} 
+                              />
+                            </motion.div>
+                          </AnimatePresence>
+
+                          {images.length > 1 && (
+                            <>
+                              <button 
+                                onClick={(e) => handlePrevImage(e, reward._id, images)}
+                                className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/20 hover:bg-white/40 backdrop-blur-md rounded-full text-white transition-all z-10"
+                              >
+                                <ChevronLeft className="w-5 h-5" />
+                              </button>
+                              <button 
+                                onClick={(e) => handleNextImage(e, reward._id, images)}
+                                className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/20 hover:bg-white/40 backdrop-blur-md rounded-full text-white transition-all z-10"
+                              >
+                                <ChevronRight className="w-5 h-5" />
+                              </button>
+                              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+                                {images.map((_, i) => (
+                                  <div key={i} className={`w-1.5 h-1.5 rounded-full transition-all ${i === currentIndex ? 'bg-white w-4' : 'bg-white/40'}`} />
+                                ))}
+                              </div>
+                            </>
+                          )}
+
                           {selectedReward?._id === reward._id && (
-                            <div className="absolute inset-0 bg-green-500/10 backdrop-blur-[2px] flex items-center justify-center">
+                            <div className="absolute inset-0 bg-green-500/10 backdrop-blur-[2px] flex items-center justify-center pointer-events-none">
                               <div className="bg-white text-green-600 rounded-full p-3 shadow-xl"><CheckCircle className="w-8 h-8" /></div>
                             </div>
                           )}
@@ -176,9 +241,13 @@ function RedeemContent() {
                           <p className="text-[11px] text-slate-400 font-bold leading-relaxed">{reward.description}</p>
                         </div>
                         <button className={`w-full py-4 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                          selectedReward?._id === reward._id ? 'bg-green-800 text-white shadow-lg' : 'bg-slate-50 text-slate-400 group-hover:bg-green-50 group-hover:text-green-700'
+                          isOutOfStock 
+                            ? 'bg-slate-100 text-slate-300' 
+                            : selectedReward?._id === reward._id 
+                              ? 'bg-green-800 text-white shadow-lg' 
+                              : 'bg-slate-50 text-slate-400 group-hover:bg-green-50 group-hover:text-green-700'
                         }`}>
-                          {selectedReward?._id === reward._id ? 'Đã chọn' : 'Chọn'}
+                          {isOutOfStock ? 'Tạm hết hàng' : selectedReward?._id === reward._id ? 'Đã chọn' : 'Chọn'}
                         </button>
                       </div>
                     );

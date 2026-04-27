@@ -38,3 +38,40 @@ export const getRewardImage = (rewardName: string, fallback: string = ''): strin
 
   return fallback;
 };
+
+/**
+ * Returns an array of images for carousel-enabled rewards.
+ * @param rewardName Name of the reward
+ * @returns Array of image paths
+ */
+export const getRewardImages = (rewardName: string): string[] => {
+  const name = rewardName.toLowerCase();
+  
+  if (name.includes('velosar')) {
+    const isNam = name.includes('nam');
+    // If it's a specific variation (e.g. "Mẫu 2"), just show that one in a 1-item array
+    // UNLESS the user wants to see all variations in the carousel.
+    // Based on user feedback, "áo này có để dạng carousel" suggests viewing all.
+    if (isNam) {
+      return [
+        "/rewards/velosar-nam-1.jpg",
+        "/rewards/velosar-nam-2.jpg",
+        "/rewards/velosar-nam-3.jpg",
+        "/rewards/velosar-nam-4.jpg",
+        "/rewards/velosar-nam-5.jpg"
+      ];
+    } else {
+      return [
+        "/rewards/velosar-nu-1.jpg",
+        "/rewards/velosar-nu-2.jpg",
+        "/rewards/velosar-nu-3.jpg",
+        "/rewards/velosar-nu-4.jpg",
+        "/rewards/velosar-nu-5.jpg",
+        "/rewards/velosar-nu-6.jpg"
+      ];
+    }
+  }
+
+  // Default: return single image as an array
+  return [getRewardImage(rewardName)];
+};
