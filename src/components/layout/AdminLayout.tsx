@@ -48,7 +48,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
     { name: 'Rewards', icon: Gift, path: '/admin/rewards' },
     { name: 'Users', icon: Users, path: '/admin/users' },
     { name: 'Reports', icon: FileText, path: '/admin/reports' },
-    { name: 'Settings', icon: Settings, path: '/admin/settings' },
+    { name: 'Setting Product', icon: Settings, path: '/admin/settings' },
   ];
 
   if (!isLoaded || !token) return <div className="min-h-screen bg-[#f8faf9]" />;
