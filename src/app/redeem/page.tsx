@@ -257,9 +257,9 @@ function RedeemContent() {
                    <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest flex items-center gap-2">
                      <CheckCircle className="w-3 h-3 text-green-500" /> Bạn chỉ có thể chọn một phần quà.
                    </p>
-                  <div className="flex justify-between w-full">
-                    <button onClick={() => setStep(1)} className="text-xs font-black text-slate-400 uppercase tracking-widest hover:text-green-600 transition-colors">Quay lại</button>
-                    <button onClick={() => setStep(3)} disabled={!selectedReward} className="px-12 py-4 bg-green-800 text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-green-900/10 disabled:opacity-50">Tiếp theo</button>
+                  <div className="flex flex-col md:flex-row justify-between items-center w-full gap-6">
+                    <button onClick={() => setStep(1)} className="text-xs font-black text-slate-400 uppercase tracking-widest hover:text-green-600 transition-colors order-2 md:order-1">Quay lại</button>
+                    <button onClick={() => setStep(3)} disabled={!selectedReward} className="w-full md:w-auto px-12 py-4 bg-green-800 text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-green-900/10 disabled:opacity-50 order-1 md:order-2">Tiếp theo</button>
                   </div>
                 </div>
               </motion.div>
@@ -312,9 +312,9 @@ function RedeemContent() {
                       onChange={(e) => setCustomerInfo({...customerInfo, address: e.target.value})} 
                     />
                   </div>
-                  <div className="flex justify-between items-center pt-12 border-t border-slate-50">
+                  <div className="flex flex-col-reverse md:flex-row justify-between items-center pt-12 border-t border-slate-50 gap-6">
                     <button type="button" onClick={() => setStep(2)} className="text-xs font-black text-slate-400 uppercase tracking-widest hover:text-green-600 transition-colors flex items-center gap-2">Quay lại</button>
-                    <button type="submit" className="px-16 py-5 bg-green-800 text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-2xl shadow-green-900/20 hover:bg-green-950 transition-all">
+                    <button type="submit" className="w-full md:w-auto px-16 py-5 bg-green-800 text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-2xl shadow-green-900/20 hover:bg-green-950 transition-all">
                       {loading ? <Loader2 className="w-6 h-6 animate-spin mx-auto" /> : 'Xác nhận & Hoàn thành'}
                     </button>
                   </div>
