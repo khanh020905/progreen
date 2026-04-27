@@ -116,25 +116,25 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="relative w-full max-w-xl"
+                className="relative w-full max-w-2xl"
               >
-                <div className="flex flex-col sm:flex-row items-center bg-white p-2 rounded-3xl sm:rounded-full shadow-[0_20px_50px_rgba(45,90,39,0.1)] border border-slate-50 group transition-all duration-500 focus-within:shadow-[0_25px_80px_rgba(45,90,39,0.15)] focus-within:border-green-100/50">
-                  <div className="hidden sm:flex pl-6 text-slate-300 group-focus-within:text-[#2d5a27] transition-colors">
-                    <Ticket className="w-6 h-6" />
+                <div className="flex flex-col sm:flex-row items-center bg-white p-2 rounded-[3rem] sm:rounded-full shadow-[0_20px_50px_rgba(45,90,39,0.12)] border border-slate-50 group transition-all duration-500 focus-within:shadow-[0_25px_80px_rgba(45,90,39,0.18)] focus-within:border-green-100/50">
+                  <div className="hidden sm:flex pl-8 text-slate-300 group-focus-within:text-[#2d5a27] transition-colors">
+                    <Ticket className="w-7 h-7" />
                   </div>
                   <input
                     type="text"
                     placeholder="Nhập mã số thẻ quà tặng"
-                    className="w-full sm:flex-1 h-14 sm:h-16 px-6 sm:px-5 outline-none text-lg sm:text-xl font-black text-[#0e2114] uppercase tracking-[0.15em] placeholder:text-slate-200 placeholder:normal-case placeholder:tracking-normal placeholder:font-bold"
+                    className="w-full sm:flex-1 h-14 sm:h-18 px-8 sm:px-6 outline-none text-lg sm:text-xl font-black text-[#0e2114] uppercase tracking-[0.15em] placeholder:text-slate-200 placeholder:normal-case placeholder:tracking-normal placeholder:font-bold"
                     value={code}
                     onChange={(e) => setCode(e.target.value.toUpperCase())}
                   />
                   <Link
                     href={code ? `/redeem?code=${code}` : "/redeem"}
-                    className="w-full sm:w-auto h-14 sm:h-16 px-10 bg-[#3a6934] text-white rounded-2xl sm:rounded-full text-sm font-black uppercase tracking-widest flex items-center justify-center gap-3 transition-all duration-300 hover:bg-[#2d5a27] hover:shadow-lg hover:shadow-green-900/20 active:scale-95 group/btn mt-2 sm:mt-0"
+                    className="w-full sm:w-auto h-14 sm:h-18 px-12 bg-[#2d5a27] text-white rounded-[2rem] sm:rounded-full text-[13px] font-black uppercase tracking-widest flex items-center justify-center gap-3 transition-all duration-300 hover:bg-[#1e3d1a] hover:shadow-2xl hover:shadow-green-900/30 active:scale-95 group/btn mt-2 sm:mt-0"
                   >
-                    Xác thực{" "}
-                    <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                    Đổi phiếu giảm giá ngay{" "}
+                    <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1.5 transition-transform" />
                   </Link>
                 </div>
 
