@@ -117,11 +117,7 @@ function RedeemContent() {
           <AnimatePresence mode="wait">
             {step === 1 && (
               <motion.div key="1" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="text-center max-w-md mx-auto space-y-12">
-                <div className="flex justify-center">
-                  <div className="w-24 h-24 bg-green-50 rounded-2xl flex items-center justify-center text-green-600">
-                    <Package className="w-12 h-12" />
-                  </div>
-                </div>
+
                 <div className="space-y-4">
                   <h3 className="text-2xl font-black text-slate-900">Nhập mã giảm giá của bạn</h3>
                   <p className="text-slate-400 font-bold text-sm leading-relaxed px-10">
