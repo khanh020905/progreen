@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import { CheckCircle, Loader2, Package } from 'lucide-react';
-import { formatVoucherCode } from '@/utils/voucher';
+import { formatVoucherCode, getRewardImage } from '@/utils/voucher';
 import toast from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
 import LeafIcon from '@/components/LeafIcon';
@@ -151,15 +151,8 @@ function RedeemContent() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-3xl mx-auto">
                   {voucherData?.rewards.map((reward: any) => {
-                    // Mapping image logic
-                    let displayImage = reward.image;
-                    const name = reward.name.toLowerCase();
-                    if (name.includes('tất')) displayImage = "/rewards/socks.png";
-                    else if (name.includes('bình')) displayImage = "/rewards/bottle.png";
-                    else if (name.includes('kem')) displayImage = "/rewards/toothpaste.png";
-                    else if (name.includes('sạc')) displayImage = "/rewards/cable.png";
-                    else if (name.includes('áo')) displayImage = "/rewards/tshirt.png";
-                    else if (name.includes('mũ')) displayImage = "/rewards/cap.png";
+                    // Mapping image logic using tested utility
+                    const displayImage = getRewardImage(reward.name, reward.image);
                     
                     return (
                       <div 

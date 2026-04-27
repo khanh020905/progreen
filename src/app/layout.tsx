@@ -13,8 +13,41 @@ const montserrat = Montserrat({
 });
 
 export const metadata = {
-  title: 'ProGreenLife - Quét Voucher, Nhận Quà Xanh',
-  description: 'Nền tảng đổi quà và quản lý voucher thân thiện với môi trường của ProGreenLife.',
+  title: 'Pro Green Life - Mỗi lần quét mã là một trải nghiệm xứng đáng',
+  description: 'Pro Green Life mang đến cho bạn hệ thống thẻ quà tặng điện tử tinh tế, dễ sử dụng và đầy cảm hứng. Đổi voucher nhận ngay những phần quà sức khỏe cao cấp.',
+  keywords: ['Pro Green Life', 'voucher', 'quà tặng', 'sức khỏe', 'thẻ quà tặng', 'redeem rewards'],
+  authors: [{ name: 'Pro Green Life Team' }],
+  openGraph: {
+    title: 'Pro Green Life - Mỗi lần quét mã là một trải nghiệm xứng đáng',
+    description: 'Hệ thống đổi quà tặng điện tử cao cấp từ Pro Green Life.',
+    url: 'https://progreenlife.vercel.app',
+    siteName: 'Pro Green Life',
+    images: [
+      {
+        url: '/seo-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Pro Green Life Premium Rewards',
+      },
+    ],
+    locale: 'vi_VN',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Pro Green Life - Đổi Voucher Nhận Quà Xanh',
+    description: 'Hệ thống đổi quà tặng điện tử cao cấp từ Pro Green Life.',
+    images: ['/seo-image.png'],
+  },
+  metadataBase: new URL('https://progreenlife.vercel.app'),
+  icons: {
+    icon: '/logo-final.png',
+    apple: '/logo-final.png',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({ children }) {

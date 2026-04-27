@@ -2,9 +2,9 @@
 
 @theme {
   --font-sans: 'Inter', 'Montserrat', system-ui, sans-serif;
-  --color-brand-primary: #004d3d;
-  --color-brand-primary-hover: #00362b;
-  --color-brand-accent: #15803d;
+  --color-brand-primary: #0e2114;
+  --color-brand-secondary: #2d5a27;
+  --color-brand-accent: #3a6934;
   --color-brand-accent-soft: #f0fdf4;
 }
 
@@ -143,4 +143,30 @@ body {
 
 .animate-float {
   animation: float 4s ease-in-out infinite;
+}
+
+/* ===== CUSTOM SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f8faf9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2d5a27;
+  border-radius: 20px;
+  border: 3px solid #f8faf9;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3a6934;
+}
+
+/* Firefox support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #2d5a27 #f8faf9;
 }

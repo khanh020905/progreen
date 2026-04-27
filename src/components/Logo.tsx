@@ -9,7 +9,7 @@ const Logo = ({ className = "h-12", inverted = false }: LogoProps) => {
   return (
     <div className={`flex items-center ${className}`}>
       <Image 
-        src="/logo.png" 
+        src="/logo-final.png" 
         alt="Pro Green Life Logo" 
         width={180}
         height={48}
