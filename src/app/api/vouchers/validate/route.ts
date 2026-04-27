@@ -10,46 +10,56 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: 'Voucher code is required' }, { status: 400 });
     }
 
-    // 1. DEMO VOUCHER FALLBACK
+    // 1. Database Connection (Move up for demo lookup)
+    await connectToDatabase();
+    const Reward = (await import('@/models/Reward')).default;
+
+    // 2. DEMO VOUCHER FALLBACK
     const upperCode = code.toUpperCase();
     
     if (upperCode === 'DEMO2026' || upperCode === 'PGL300' || upperCode === 'PGL500' || upperCode === 'PGL1TR') {
-      let rewards = [];
+      let mockRewards = [];
       
       if (upperCode === 'PGL300') {
-        rewards = [
-          { _id: 'r300_1', name: 'Tất cotton Pro Green Life', description: 'Chất liệu cotton cao cấp, thấm hút mồ hôi', image: '/rewards/socks.png', stock: 100 },
-          { _id: 'r300_2', name: 'Bình nước thân thiện môi trường', description: 'Bình nhựa lúa mạch an toàn cho sức khỏe', image: '/rewards/binh-nuoc.jpg', stock: 100 }
+        mockRewards = [
+          { name: 'Tất cotton Pro Green Life', description: 'Chất liệu cotton cao cấp, thấm hút mồ hôi', image: '/rewards/socks.png' },
+          { name: 'Bình nước thân thiện môi trường', description: 'Bình nhựa lúa mạch an toàn cho sức khỏe', image: '/rewards/binh-nuoc.jpg' }
         ];
       } else if (upperCode === 'PGL500') {
-        rewards = [
-          { _id: 'r500_1', name: 'Kem đánh răng thảo dược', description: 'Chiết xuất từ thiên nhiên, bảo vệ nướu', image: '/rewards/toothpaste.png', stock: 100 },
-          { _id: 'r500_2', name: 'Dây sạc 3 đầu đa năng', description: 'Tương thích với mọi thiết bị di động', image: '/rewards/day-sac.jpg', stock: 100 }
+        mockRewards = [
+          { name: 'Kem đánh răng thảo dược', description: 'Chiết xuất từ thiên nhiên, bảo vệ nướu', image: '/rewards/toothpaste.png' },
+          { name: 'Dây sạc 3 đầu đa năng', description: 'Tương thích với mọi thiết bị di động', image: '/rewards/day-sac.jpg' }
         ];
       } else if (upperCode === 'PGL1TR') {
-        rewards = [
-          { _id: 'r1000_1', name: 'Áo phông Velosar', description: 'Thiết kế thời trang, chất liệu thoáng mát', image: '/rewards/tshirt.png', stock: 100 },
-          { _id: 'r1000_2', name: 'Mũ lưỡi trai cao cấp', description: 'Kiểu dáng năng động, logo thêu tinh xảo', image: '/rewards/mu-luoi-trai.jpg', stock: 100 }
+        mockRewards = [
+          { name: 'Áo phông Velosar', description: 'Thiết kế thời trang, chất liệu thoáng mát', image: '/rewards/tshirt.png' },
+          { name: 'Mũ lưỡi trai cao cấp', description: 'Kiểu dáng năng động, logo thêu tinh xảo', image: '/rewards/mu-luoi-trai.jpg' }
         ];
       } else {
-        // DEMO2026
-        rewards = [
-          { _id: 'r1', name: 'Premium Eco Bottle', description: 'Double-walled stainless steel', image: '/rewards/binh-nuoc.jpg', stock: 100 },
-          { _id: 'r2', name: 'Green Tote Bag', description: 'Eco-friendly reusable bag', image: '/rewards/tote.png', stock: 100 }
+        mockRewards = [
+          { name: 'Premium Eco Bottle', description: 'Double-walled stainless steel', image: '/rewards/binh-nuoc.jpg' },
+          { name: 'Green Tote Bag', description: 'Eco-friendly reusable bag', image: '/rewards/tote.png' }
         ];
       }
+
+      // Fetch real stock for each mock reward
+      const rewardsWithStock = await Promise.all(mockRewards.map(async (m) => {
+        const dbReward = await Reward.findOne({ name: m.name });
+        return {
+          ...m,
+          _id: dbReward?._id || `mock_${m.name}`,
+          stock: dbReward ? dbReward.stock : 0
+        };
+      }));
 
       return NextResponse.json({
         valid: true,
         voucher: {
           code: upperCode,
-          rewards: rewards
+          rewards: rewardsWithStock
         }
       });
     }
-
-    // 2. Database Connection
-    await connectToDatabase();
 
     // 3. Find Voucher
     const voucher = await Voucher.findOne({ code: code.toUpperCase() })
