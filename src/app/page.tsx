@@ -70,7 +70,7 @@ export default function Home() {
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/80 backdrop-blur-md shadow-[0_4px_20px_rgba(45,90,39,0.08)] border border-white"
+                  className="hidden lg:inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/80 backdrop-blur-md shadow-[0_4px_20px_rgba(45,90,39,0.08)] border border-white"
                 >
                   <div className="w-5 h-5 bg-[#2d5a27] rounded-full flex items-center justify-center">
                     <LeafIcon className="w-3 h-3 text-white" />
