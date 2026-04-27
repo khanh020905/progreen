@@ -58,7 +58,7 @@ export default function AdminRewardsPage() {
       }
       setShowModal(false);
       setEditingReward(null);
-      setFormData({ name: '', description: '', image: '', isActive: true });
+      setFormData({ name: '', description: '', image: '', isActive: true, stock: 100 });
       fetchRewards();
     } catch (err) {
       toast.error('Failed to save reward');
