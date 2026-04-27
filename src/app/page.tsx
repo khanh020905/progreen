@@ -63,7 +63,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-white/40 lg:hidden backdrop-blur-[2px]" />
         </div>
 
-        <div className="container mx-auto px-4 relative z-10 pt-10 pb-40 lg:pb-0">
+        <div className="container mx-auto px-4 relative z-10 pt-28 sm:pt-36 lg:pt-10 pb-40 lg:pb-0">
           <div className="flex flex-col lg:flex-row items-center">
             <div className="w-full lg:w-[65%] space-y-8 lg:space-y-10">
               <div className="space-y-6">
