@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
+import { getRewardImage } from '@/utils/voucher';
 
 interface StockHistory {
   date: string;
@@ -122,7 +123,11 @@ export default function ProductSettingsPage() {
                   <td className="py-6 pl-4">
                     <div className="flex items-center gap-4">
                       <div className="w-14 h-14 rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
-                        <img src={reward.image} alt={reward.name} className="w-full h-full object-cover" />
+                        <img 
+                          src={getRewardImage(reward.name, reward.image)} 
+                          alt={reward.name} 
+                          className="w-full h-full object-cover" 
+                        />
                       </div>
                       <div>
                         <p className="font-bold text-slate-900">{reward.name}</p>
