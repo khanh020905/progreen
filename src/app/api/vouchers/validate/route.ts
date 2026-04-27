@@ -42,9 +42,17 @@ export async function POST(request: Request) {
         ];
       }
 
-      // Fetch real stock for each mock reward
+      // Fetch real stock for each mock reward using flexible regex matching
       const rewardsWithStock = await Promise.all(mockRewards.map(async (m) => {
-        const dbReward = await Reward.findOne({ name: m.name });
+        // Try to find a reward that contains the name (case-insensitive)
+        const dbReward = await Reward.findOne({ 
+          name: { $regex: new RegExp(m.name.split(' ')[0], 'i') } 
+        }).or([
+          { name: { $regex: new RegExp(m.name.replace(' phông', ''), 'i') } },
+          { name: { $regex: new RegExp(m.name.replace(' cao cấp', ''), 'i') } },
+          { name: m.name }
+        ]);
+
         return {
           ...m,
           _id: dbReward?._id || `mock_${m.name}`,
