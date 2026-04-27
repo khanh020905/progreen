@@ -128,17 +128,6 @@ export default function Home() {
                   </span>
                   <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white/0 via-white/5 to-white/0 opacity-0 group-hover:opacity-100 group-hover:translate-x-full transition-all duration-1000 ease-in-out -translate-x-full"></div>
                 </Link>
-
-                <div className="flex -space-x-3">
-                  {[1, 2, 3, 4].map((i) => (
-                    <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-slate-100 overflow-hidden ring-4 ring-[#2d5a27]/5">
-                      <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="User" className="w-full h-full object-cover" />
-                    </div>
-                  ))}
-                  <div className="w-10 h-10 rounded-full border-2 border-white bg-[#e9f5ed] flex items-center justify-center text-[10px] font-black text-[#2d5a27] ring-4 ring-[#2d5a27]/5">
-                    +2k
-                  </div>
-                </div>
               </motion.div>
 
                 {/* Trust Indicators Under Input (Glassmorphic Cards) */}
