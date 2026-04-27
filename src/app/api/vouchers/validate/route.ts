@@ -94,8 +94,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: 'Mã số thẻ không hợp lệ' }, { status: 404 });
 
   } catch (error: any) {
-
-  } catch (error: any) {
     console.error('Validate Voucher Error:', error);
     return NextResponse.json({ message: error.message || 'Internal Server Error' }, { status: 500 });
   }
