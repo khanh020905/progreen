@@ -10,13 +10,35 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: 'Voucher code is required' }, { status: 400 });
     }
 
-    // 1. Database Connection (Move up for demo lookup)
+    // 1. Database Connection
     await connectToDatabase();
     const Reward = (await import('@/models/Reward')).default;
 
-    // 2. DEMO VOUCHER FALLBACK
     const upperCode = code.toUpperCase();
-    
+
+    // 2. Try to find real Voucher in DB first
+    const voucher = await Voucher.findOne({ code: upperCode })
+      .populate('rewards');
+
+    if (voucher) {
+      if (!voucher.isActive) {
+        return NextResponse.json({ message: 'Mã số thẻ không hợp lệ' }, { status: 400 });
+      }
+
+      if (voucher.isRedeemed) {
+        return NextResponse.json({ message: 'Rất tiếc, mã thẻ này đã được sử dụng' }, { status: 400 });
+      }
+
+      return NextResponse.json({
+        valid: true,
+        voucher: {
+          code: voucher.code,
+          rewards: voucher.rewards
+        }
+      });
+    }
+
+    // 3. DEMO VOUCHER FALLBACK (if not found in DB)
     if (upperCode === 'DEMO2026' || upperCode === 'PGL300' || upperCode === 'PGL500' || upperCode === 'PGL1TR') {
       let mockRewards = [];
       
@@ -44,14 +66,14 @@ export async function POST(request: Request) {
 
       // Fetch real stock for each mock reward using flexible regex matching
       const rewardsWithStock = await Promise.all(mockRewards.map(async (m) => {
-        // Try to find a reward that contains the name (case-insensitive)
-        const dbReward = await Reward.findOne({ 
-          name: { $regex: new RegExp(m.name.split(' ')[0], 'i') } 
-        }).or([
-          { name: { $regex: new RegExp(m.name.replace(' phông', ''), 'i') } },
-          { name: { $regex: new RegExp(m.name.replace(' cao cấp', ''), 'i') } },
-          { name: m.name }
-        ]);
+        const dbReward = await Reward.findOne({
+          $or: [
+            { name: { $regex: new RegExp(m.name.split(' ')[0], 'i') } },
+            { name: { $regex: new RegExp(m.name.replace(' phông', ''), 'i') } },
+            { name: { $regex: new RegExp(m.name.replace(' cao cấp', ''), 'i') } },
+            { name: m.name }
+          ]
+        });
 
         return {
           ...m,
@@ -69,29 +91,9 @@ export async function POST(request: Request) {
       });
     }
 
-    // 3. Find Voucher
-    const voucher = await Voucher.findOne({ code: code.toUpperCase() })
-      .populate('rewards');
+    return NextResponse.json({ message: 'Mã số thẻ không hợp lệ' }, { status: 404 });
 
-    if (!voucher) {
-      return NextResponse.json({ message: 'Mã số thẻ không hợp lệ' }, { status: 404 });
-    }
-
-    if (!voucher.isActive) {
-      return NextResponse.json({ message: 'Mã số thẻ không hợp lệ' }, { status: 400 });
-    }
-
-    if (voucher.isRedeemed) {
-      return NextResponse.json({ message: 'Rất tiếc, mã thẻ này đã được sử dụng' }, { status: 400 });
-    }
-
-    return NextResponse.json({
-      valid: true,
-      voucher: {
-        code: voucher.code,
-        rewards: voucher.rewards
-      }
-    });
+  } catch (error: any) {
 
   } catch (error: any) {
     console.error('Validate Voucher Error:', error);

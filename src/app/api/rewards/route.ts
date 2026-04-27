@@ -19,13 +19,14 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     await connectToDatabase();
-    const { name, description, image, isActive } = await request.json();
+    const { name, description, image, isActive, stock } = await request.json();
     
     const reward = new Reward({
       name,
       description,
       image,
-      isActive: isActive !== undefined ? isActive : true
+      isActive: isActive !== undefined ? isActive : true,
+      stock: stock !== undefined ? stock : 100
     });
 
     await reward.save();

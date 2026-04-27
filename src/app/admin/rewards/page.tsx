@@ -24,7 +24,8 @@ export default function AdminRewardsPage() {
     name: '',
     description: '',
     image: '',
-    isActive: true
+    isActive: true,
+    stock: 100
   });
 
   useEffect(() => {
@@ -70,7 +71,8 @@ export default function AdminRewardsPage() {
       name: reward.name,
       description: reward.description,
       image: reward.image,
-      isActive: reward.isActive
+      isActive: reward.isActive,
+      stock: reward.stock || 0
     });
     setShowModal(true);
   };
@@ -86,7 +88,7 @@ export default function AdminRewardsPage() {
           <button 
             onClick={() => {
               setEditingReward(null);
-              setFormData({ name: '', description: '', image: '', isActive: true });
+              setFormData({ name: '', description: '', image: '', isActive: true, stock: 100 });
               setShowModal(true);
             }}
             className="px-6 py-3 bg-[#0e2114] text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-black transition-all flex items-center gap-2"
@@ -159,7 +161,10 @@ export default function AdminRewardsPage() {
                     <div className="w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center text-slate-400">
                       <Package className="w-4 h-4" />
                     </div>
-                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Stock ID: {reward._id.substring(reward._id.length - 6)}</span>
+                    <div>
+                      <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block leading-tight">Stock: {reward.stock ?? 0}</span>
+                      <span className="text-[10px] font-bold text-slate-300 uppercase tracking-widest block leading-tight">ID: {reward._id.substring(reward._id.length - 6)}</span>
+                    </div>
                   </div>
                   <ArrowUpRight className="w-5 h-5 text-slate-200 group-hover:text-green-500 transition-colors" />
                 </div>
@@ -206,6 +211,18 @@ export default function AdminRewardsPage() {
                   placeholder="https://images.unsplash.com/..."
                   value={formData.image}
                   onChange={(e) => setFormData({...formData, image: e.target.value})}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Current Stock</label>
+                <input 
+                  type="number" 
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 transition-all font-medium text-slate-900" 
+                  placeholder="100"
+                  value={formData.stock}
+                  onChange={(e) => setFormData({...formData, stock: parseInt(e.target.value) || 0})}
+                  required
                 />
               </div>
 
