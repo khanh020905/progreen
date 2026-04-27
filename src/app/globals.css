@@ -2,12 +2,20 @@
 
 @theme {
   --font-sans: 'Inter', 'Montserrat', system-ui, sans-serif;
+  --color-brand-primary: #004d3d;
+  --color-brand-primary-hover: #00362b;
+  --color-brand-accent: #15803d;
+  --color-brand-accent-soft: #f0fdf4;
 }
 
 :root {
   line-height: 1.6;
   font-weight: 400;
   color-scheme: light;
+  --primary: var(--color-brand-primary);
+  --primary-hover: var(--color-brand-primary-hover);
+  --accent: var(--color-brand-accent);
+  --accent-soft: var(--color-brand-accent-soft);
 }
 
 body {
