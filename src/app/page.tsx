@@ -169,7 +169,7 @@ export default function Home() {
                     </motion.div>
                   ))}
                 </div>
-              </motion.div>
+              </div>
             </div>
           </div>
         </div>
