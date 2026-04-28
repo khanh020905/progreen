@@ -20,7 +20,7 @@ export const metadata = {
   openGraph: {
     title: 'Pro Green Life - Tặng quà tri ân khách hàng',
     description: 'Hệ thống đổi quà tặng điện tử cao cấp từ Pro Green Life.',
-    url: 'https://progreenlife.vercel.app',
+    url: 'https://progreen-psi.vercel.app',
     siteName: 'Pro Green Life',
     images: [
       {
@@ -35,11 +35,11 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Pro Green Life - Đổi Voucher Nhận Quà Xanh',
+    title: 'Pro Green Life - Tặng quà tri ân khách hàng',
     description: 'Hệ thống đổi quà tặng điện tử cao cấp từ Pro Green Life.',
     images: ['/seo-image.png'],
   },
-  metadataBase: new URL('https://progreenlife.vercel.app'),
+  metadataBase: new URL('https://progreen-psi.vercel.app'),
   icons: {
     icon: '/logo-final.png',
     apple: '/logo-final.png',
