@@ -24,7 +24,7 @@ describe('Redeem Page Integration', () => {
     const mockVoucher = {
       code: 'PGL300',
       rewards: [
-        { _id: 'r1', name: 'Tất cotton' },
+        { _id: 'r1', name: 'Sét 3 đôi Tất Nam Nữ' },
         { _id: 'r2', name: 'Bình nước' }
       ]
     };
@@ -54,7 +54,7 @@ describe('Redeem Page Integration', () => {
       expect(screen.getByText(/Chọn phần quà của bạn/i)).toBeInTheDocument();
     });
 
-    expect(screen.getByText(/Tất cotton/i)).toBeInTheDocument();
+    expect(screen.getByText(/Sét 3 đôi Tất Nam Nữ/i)).toBeInTheDocument();
     expect(screen.getByText(/Bình nước/i)).toBeInTheDocument();
   });
 });

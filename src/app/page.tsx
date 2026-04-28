@@ -76,7 +76,7 @@ export default function Home() {
                     <LeafIcon className="w-3 h-3 text-white" />
                   </div>
                   <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#2d5a27]">
-                    Premium Reward Experience
+                    QUÀ TẶNG CHẤT LƯỢNG
                   </span>
                 </motion.div>
 
@@ -191,7 +191,7 @@ export default function Home() {
                   Nhập mã số thẻ
                 </h4>
                 <p className="text-sm text-slate-500 leading-relaxed">
-                  Điền mã số 12 ký tự từ thẻ của bạn.
+                  Điền mã số trên thẻ quét mã QR của bạn
                 </p>
               </div>
             </div>
@@ -275,21 +275,21 @@ export default function Home() {
 
           <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
             {/* Features Grid */}
-            <div className="w-full lg:w-1/3 space-y-16">
+            <div className="w-full lg:w-[27%] space-y-16">
               {[
                 {
                   title: "Thương hiệu uy tín",
-                  desc: "Giải thưởng chất lượng vàng vì sức khỏe cộng đồng 2020, 2021, 2022 do Hiệp hội thực phẩm chức năng Việt Nam trao tặng.",
+                  desc: "Giải thưởng chất lượng vàng vì sức khỏe cộng đồng trong nhiều năm liên tiếp do Hiệp hội thực phẩm chức năng Việt Nam trao tặng.",
                   icon: ShieldCheck,
                 },
                 {
                   title: "Chuỗi phân phối",
-                  desc: "Nhãn hiệu PGL được phân phối chính thức tại chuỗi các nhà thuốc Pharmacity và FPT Long Châu.",
+                  desc: "Các sản phẩm của PGL được phân phối độc quyền tại các chuỗi nhà thuốc uy tín trên cả nước như: FPT Long Châu, Pharmacity và Trung Sơn Pharma.",
                   icon: Globe,
                 },
                 {
                   title: "Tôn trọng khách hàng",
-                  desc: "Bồi hoàn 100% đơn hàng nếu lỗi do nhà sản xuất hoặc giao hàng trễ hẹn.",
+                  desc: "Bồi hoàn 100% đơn hàng nếu lỗi do nhà sản xuất.",
                   icon: CheckCircle2,
                 },
               ].map((f, i) => (
@@ -318,15 +318,15 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              className="w-full lg:w-1/3 flex justify-center py-10 order-first lg:order-none"
+              className="w-full lg:w-[46%] flex justify-center py-10 order-first lg:order-none"
             >
               <div className="relative">
-                <div className="w-full max-w-[550px] relative z-10">
+                <div className="w-full max-w-[750px] relative z-10">
                   <Image
-                    src="/product-finall.jpg"
+                    src="/product-finalll.png"
                     alt="Pro Green Life Products"
-                    width={550}
-                    height={550}
+                    width={750}
+                    height={750}
                     className="w-full h-auto drop-shadow-[0_40px_80px_rgba(14,33,20,0.15)]"
                   />
                 </div>
@@ -334,7 +334,7 @@ export default function Home() {
               </div>
             </motion.div>
 
-            <div className="w-full lg:w-1/3 space-y-16">
+            <div className="w-full lg:w-[27%] space-y-16">
               {[
                 {
                   title: "Xuất xứ rõ ràng",

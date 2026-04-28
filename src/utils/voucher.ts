@@ -26,7 +26,7 @@ export const getRewardImage = (rewardName: string, fallback: string = ''): strin
   if (name.includes('kem')) return "/rewards/toothpaste.png";
   if (name.includes('sạc')) return "/rewards/day-sac.jpg";
   if (name.includes('áo')) return "/rewards/tshirt.png";
-  if (name.includes('mũ')) return "/rewards/mu-luoi-trai.jpg";
+  if (name.includes('mũ')) return "/rewards/mu.jpg";
   
   // Velosar variations
   if (name.includes('velosar')) {
@@ -47,8 +47,8 @@ export const getRewardImage = (rewardName: string, fallback: string = ''): strin
 export const getRewardImages = (rewardName: string): string[] => {
   const name = rewardName.toLowerCase();
   
-  if (name.includes('velosar')) {
-    const isNam = name.includes('nam');
+  if (name.includes('velosar') || name.includes('áo thể thao')) {
+    const isNam = name.includes('nam') && !name.includes('nữ');
     // If it's a specific variation (e.g. "Mẫu 2"), just show that one in a 1-item array
     // UNLESS the user wants to see all variations in the carousel.
     // Based on user feedback, "áo này có để dạng carousel" suggests viewing all.

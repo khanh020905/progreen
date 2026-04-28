@@ -44,18 +44,18 @@ export async function POST(request: Request) {
       
       if (upperCode === 'PGL300') {
         mockRewards = [
-          { name: 'Tất cotton Pro Green Life', description: 'Chất liệu cotton cao cấp, thấm hút mồ hôi', image: '/rewards/socks.png' },
+          { name: 'Sét 3 đôi Tất Nam Nữ', description: 'chất cotton cao cấp, thấm hút mồ hôi', image: '/rewards/socks.png' },
           { name: 'Bình nước thân thiện môi trường', description: 'Bình nhựa lúa mạch an toàn cho sức khỏe', image: '/rewards/binh-nuoc.jpg' }
         ];
       } else if (upperCode === 'PGL500') {
         mockRewards = [
-          { name: 'Kem đánh răng thảo dược', description: 'Chiết xuất từ thiên nhiên, bảo vệ nướu', image: '/rewards/toothpaste.png' },
+          { name: 'Kem đánh răng Close up 100gr', description: 'Bảo vệ khoang miệng, mang lại hơi thở thơm mát và hàm răng chắc khỏe', image: '/rewards/toothpaste.png' },
           { name: 'Dây sạc 3 đầu đa năng', description: 'Tương thích với mọi thiết bị di động', image: '/rewards/day-sac.jpg' }
         ];
       } else if (upperCode === 'PGL1TR') {
         mockRewards = [
-          { name: 'Áo phông Velosar', description: 'Thiết kế thời trang, chất liệu thoáng mát', image: '/rewards/tshirt.png' },
-          { name: 'Mũ lưỡi trai cao cấp', description: 'Kiểu dáng năng động, logo thêu tinh xảo', image: '/rewards/mu-luoi-trai.jpg' }
+          { name: 'Áo Velosar', description: 'Áo thể thao Nam/Nữ đa năng nhẹ nhàng, thoáng khí nhanh khô, thoải mái', image: '/rewards/tshirt.png' },
+          { name: 'Mũ Procumin-E', description: 'Mũ lưỡi trai Procumin-E. Quà tặng độc quyền của Pro Green Life', image: '/rewards/mu.jpg' }
         ];
       } else {
         mockRewards = [

@@ -65,7 +65,7 @@ const Navbar = () => {
                 isScrolled ? 'scale-95' : 'scale-100'
               }`}
             >
-              Đổi phiếu giảm giá
+              nhận quà tại đây
             </Link>
 
             {/* Mobile Menu Toggle */}
@@ -115,7 +115,7 @@ const Navbar = () => {
                 onClick={() => setIsMenuOpen(false)}
                 className="flex items-center justify-center w-full py-4 bg-[#3a6934] text-white rounded-2xl font-bold text-sm shadow-xl shadow-green-900/10"
               >
-                Đổi phiếu giảm giá
+                nhận quà tại đây
               </Link>
             </div>
           </div>
