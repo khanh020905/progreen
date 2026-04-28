@@ -13,12 +13,12 @@ const montserrat = Montserrat({
 });
 
 export const metadata = {
-  title: 'Pro Green Life - Mỗi lần quét mã là một trải nghiệm xứng đáng',
-  description: 'Pro Green Life mang đến cho bạn hệ thống thẻ quà tặng điện tử tinh tế, dễ sử dụng và đầy cảm hứng. Đổi voucher nhận ngay những phần quà sức khỏe cao cấp.',
+  title: 'Pro Green Life - Tặng quà tri ân khách hàng',
+  description: 'Chương trình Tặng quà tri ân khách hàng từ Pro Green Life. Nhận ngay những phần quà sức khỏe cao cấp.',
   keywords: ['Pro Green Life', 'voucher', 'quà tặng', 'sức khỏe', 'thẻ quà tặng', 'redeem rewards'],
   authors: [{ name: 'Pro Green Life Team' }],
   openGraph: {
-    title: 'Pro Green Life - Mỗi lần quét mã là một trải nghiệm xứng đáng',
+    title: 'Pro Green Life - Tặng quà tri ân khách hàng',
     description: 'Hệ thống đổi quà tặng điện tử cao cấp từ Pro Green Life.',
     url: 'https://progreenlife.vercel.app',
     siteName: 'Pro Green Life',

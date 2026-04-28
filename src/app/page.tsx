@@ -9,12 +9,10 @@ import {
   ArrowRight,
   Ticket,
   ShieldCheck,
-  RotateCcw,
   Globe,
   Plus,
   Users,
   CreditCard,
-  Star,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import LeafIcon from "@/components/LeafIcon";
@@ -63,53 +61,43 @@ export default function Home() {
           <div className="absolute inset-0 bg-white/40 lg:hidden backdrop-blur-[2px]" />
         </div>
 
-        <div className="container mx-auto px-4 relative z-10 pt-28 sm:pt-36 lg:pt-10 pb-40 lg:pb-0">
+        <div className="container mx-auto px-4 relative z-10 pt-16 sm:pt-36 lg:pt-10 pb-40 lg:pb-0">
           <div className="flex flex-col lg:flex-row items-center">
-            <div className="w-full lg:w-[65%] space-y-8 lg:space-y-10">
+            <div className="w-full lg:w-[65%] space-y-16 lg:space-y-10">
               <div className="space-y-6">
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  className="hidden lg:inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/80 backdrop-blur-md shadow-[0_4px_20px_rgba(45,90,39,0.08)] border border-white"
-                >
-                  <div className="w-5 h-5 bg-[#2d5a27] rounded-full flex items-center justify-center">
-                    <LeafIcon className="w-3 h-3 text-white" />
-                  </div>
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#2d5a27]">
-                    QUÀ TẶNG CHẤT LƯỢNG
-                  </span>
-                </motion.div>
+                <div className="flex justify-center lg:justify-start">
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/80 backdrop-blur-md shadow-[0_4px_20px_rgba(45,90,39,0.08)] border border-white"
+                  >
+                    <div className="w-5 h-5 bg-[#2d5a27] rounded-full flex items-center justify-center">
+                      <LeafIcon className="w-3 h-3 text-white" />
+                    </div>
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#2d5a27]">
+                      QUÀ TẶNG CHẤT LƯỢNG
+                    </span>
+                  </motion.div>
+                </div>
 
                 <motion.h1
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
-                  className="text-3xl sm:text-5xl lg:text-6xl xl:text-[4.5rem] font-black text-[#0e2114] leading-[1.1] tracking-[-0.02em]"
+                  className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0e2114] leading-[1.2] tracking-tight"
                 >
-                  Mỗi lần quét mã <br /> là một trải nghiệm <br />
+                  Chào mừng bạn tới chương <br /> trình Tặng quà tri ân khách <br />
                   <span className="text-[#3a6934] relative">
-                    xứng đáng.
+                    hàng của Pro Green Life
                     <motion.span
                       initial={{ width: 0 }}
                       animate={{ width: "100%" }}
                       transition={{ delay: 1, duration: 0.8 }}
-                      className="absolute -bottom-2 left-0 h-1.5 bg-[#3a6934]/20 rounded-full"
+                      className="absolute -bottom-1 left-0 h-1 bg-[#3a6934]/20 rounded-full"
                     />
                   </span>
                 </motion.h1>
 
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="text-base md:text-lg text-[#0e2114]/60 font-medium max-w-xl leading-relaxed"
-                >
-                  <span className="text-[#3a6934] font-bold">
-                    Pro Green Life
-                  </span>{" "}
-                  mang đến cho bạn hệ thống thẻ quà tặng điện tử tinh tế, dễ sử
-                  dụng và đầy cảm hứng – cho mọi khoảnh khắc tri ân.
-                </motion.p>
               </div>
 
               <motion.div
@@ -130,34 +118,6 @@ export default function Home() {
                 </Link>
               </motion.div>
 
-                {/* Trust Indicators Under Input (Glassmorphic Cards) */}
-                <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
-                  {[
-                    { icon: ShieldCheck, label: "Chính hãng", sub: "Verified" },
-                    { icon: RotateCcw, label: "Dễ dàng nhận", sub: "Simple" },
-                    { icon: Star, label: "98% Hài lòng", sub: "Trustworthy" },
-                  ].map((item, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.8 + i * 0.1 }}
-                      className="flex-1 min-w-[140px] bg-white/40 backdrop-blur-xl border border-white/20 rounded-2xl p-4 shadow-[0_8px_32px_rgba(45,90,39,0.08)] flex items-center gap-4 group hover:bg-white/60 transition-all duration-300"
-                    >
-                      <div className="w-10 h-10 rounded-xl bg-[#2d5a27]/10 flex items-center justify-center text-[#2d5a27] group-hover:scale-110 transition-transform">
-                        <item.icon className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <p className="text-[10px] font-black text-[#0e2114] uppercase tracking-widest whitespace-nowrap">
-                          {item.label}
-                        </p>
-                        <p className="text-[8px] text-[#0e2114]/40 font-bold uppercase tracking-wider">
-                          {item.sub}
-                        </p>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
               </div>
           </div>
         </div>

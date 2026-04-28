@@ -44,8 +44,8 @@ export async function POST(request: Request) {
       
       if (upperCode === 'PGL300') {
         mockRewards = [
-          { name: 'Sét 3 đôi Tất Nam Nữ', description: 'chất cotton cao cấp, thấm hút mồ hôi', image: '/rewards/socks.png' },
-          { name: 'Bình nước thân thiện môi trường', description: 'Bình nhựa lúa mạch an toàn cho sức khỏe', image: '/rewards/binh-nuoc.jpg' }
+          { name: 'Set 3 đôi tất thể thao', description: 'chất cotton cao cấp, thấm hút mồ hôi', image: '/rewards/socks.png' },
+          { name: 'Bình đựng nước thể thao', description: 'Bình nhựa lúa mạch an toàn cho sức khỏe', image: '/rewards/binh-nuoc.jpg' }
         ];
       } else if (upperCode === 'PGL500') {
         mockRewards = [

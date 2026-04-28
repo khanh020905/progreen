@@ -95,7 +95,7 @@ function RedeemContent() {
   };
 
   const StepIndicator = () => (
-    <div className="flex items-center justify-center gap-12 mb-16 relative">
+    <div className="flex items-center justify-center gap-12 mb-10 relative">
       {[1, 2, 3].map((s) => (
         <div key={s} className="relative flex flex-col items-center">
           <div className={`w-12 h-12 rounded-full flex items-center justify-center font-black text-sm z-10 transition-all duration-500 ${
@@ -117,9 +117,9 @@ function RedeemContent() {
   );
 
   return (
-    <div className="min-h-screen py-24 bg-white">
+    <div className="min-h-screen py-10 md:py-16 bg-white">
       <div className="container mx-auto px-4 max-w-5xl">
-        <div className="text-center mb-16">
+        <div className="text-center mb-8">
           <div className="flex justify-center mb-4"><LeafIcon className="text-green-500 w-8 h-8" /></div>
           <h2 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight uppercase leading-tight">
             HOÀN THÀNH 3 BƯỚC ĐƠN GIẢN ĐỂ NHẬN QUÀ
@@ -128,7 +128,7 @@ function RedeemContent() {
 
         <StepIndicator />
 
-        <div className="bg-white border border-slate-50 rounded-[3rem] p-12 md:p-20 shadow-2xl shadow-slate-100/50 mt-10">
+        <div className="bg-white border border-slate-50 rounded-[3rem] p-6 md:p-12 shadow-2xl shadow-slate-100/50 mt-6">
           <AnimatePresence mode="wait">
             {step === 1 && (
               <motion.div key="1" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="text-center max-w-md mx-auto space-y-12">
@@ -155,12 +155,12 @@ function RedeemContent() {
             )}
 
             {step === 2 && (
-              <motion.div key="2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-16">
-                <div className="text-center space-y-4">
+              <motion.div key="2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-10">
+                <div className="text-center space-y-2">
                   <h3 className="text-3xl font-black text-slate-900">Chọn phần quà của bạn</h3>
                   <p className="text-slate-400 font-bold uppercase tracking-[0.2em] text-[10px]">Chọn món quà bạn yêu thích nhất</p>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-3xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
                   {voucherData?.rewards.map((reward: any) => {
                     const images = getRewardImages(reward.name);
                     const currentIndex = carouselIndexes[reward._id] || 0;
@@ -189,7 +189,7 @@ function RedeemContent() {
                           )}
                         </div>
 
-                        <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden mb-8">
+                        <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden mb-4">
                           <AnimatePresence mode="wait">
                             <motion.div
                               key={displayImage}
@@ -236,7 +236,7 @@ function RedeemContent() {
                             </div>
                           )}
                         </div>
-                        <div className="px-4 flex-1 text-center space-y-2 mb-10">
+                        <div className="px-4 flex-1 text-center space-y-2 mb-6">
                           <h4 className="font-black text-slate-900 text-lg leading-tight">{reward.name}</h4>
                           <p className="text-[11px] text-slate-400 font-bold leading-relaxed">{reward.description}</p>
                         </div>
