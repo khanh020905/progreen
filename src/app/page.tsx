@@ -228,8 +228,8 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               className="text-4xl md:text-5xl font-black text-[#0e2114]"
             >
-              Thương hiệu{" "}
-              <span className="text-[#3a6934] underline decoration-green-200 underline-offset-8">
+              Thương hiệu <br className="md:hidden" />
+              <span className="text-[#3a6934] underline decoration-green-200 underline-offset-8 whitespace-nowrap">
                 Pro Green Life
               </span>
             </motion.h2>
