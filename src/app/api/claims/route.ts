@@ -22,7 +22,6 @@ export async function POST(request: Request) {
       rewardName: bodyRewardName,
       customerName, 
       phone, 
-      email, 
       address, 
       provinceCity, 
       notes 
@@ -42,7 +41,6 @@ export async function POST(request: Request) {
         rewardId: undefined, // Don't set rewardId for test codes to avoid CastError
         customerName,
         phone,
-        email,
         address,
         provinceCity,
         notes,
@@ -83,7 +81,6 @@ export async function POST(request: Request) {
       rewardId: reward._id,
       customerName,
       phone,
-      email,
       address,
       provinceCity,
       notes,

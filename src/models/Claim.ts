@@ -6,7 +6,6 @@ export interface IClaim extends Document {
   rewardId: Types.ObjectId;
   customerName: string;
   phone: string;
-  email?: string;
   address: string;
   provinceCity?: string;
   notes?: string;
@@ -36,10 +35,6 @@ const claimSchema = new mongoose.Schema({
   phone: {
     type: String,
     required: true,
-    trim: true
-  },
-  email: {
-    type: String,
     trim: true
   },
   address: {

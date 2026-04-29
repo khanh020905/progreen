@@ -261,16 +261,10 @@ export default function AdminClaimsPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div>
-                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Email Address</p>
-                    <p className="font-bold text-slate-900 break-all">{selectedClaim.email || 'N/A'}</p>
-                  </div>
                   <div>
                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Voucher Code</p>
                     <p className="font-bold text-green-600">{selectedClaim.voucherCode}</p>
                   </div>
-                </div>
                 
                 <div>
                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Selected Reward</p>

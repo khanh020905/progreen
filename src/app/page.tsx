@@ -69,7 +69,7 @@ export default function Home() {
                   <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/80 backdrop-blur-md shadow-[0_4px_20px_rgba(45,90,39,0.08)] border border-white"
+                    className="hidden md:inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/80 backdrop-blur-md shadow-[0_4px_20px_rgba(45,90,39,0.08)] border border-white"
                   >
                     <div className="w-5 h-5 bg-[#2d5a27] rounded-full flex items-center justify-center">
                       <LeafIcon className="w-3 h-3 text-white" />
@@ -84,11 +84,13 @@ export default function Home() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
-                  className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0e2114] leading-[1.2] tracking-tight"
+                  className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0e2114] leading-[1.3] tracking-tight"
                 >
-                  Chào mừng bạn tới chương <br /> trình Tặng quà tri ân khách <br />
-                  <span className="text-[#3a6934] relative">
-                    hàng của Pro Green Life
+                  Chào mừng bạn đến với <br className="md:hidden" />
+                  chương trình tặng quà <br className="md:hidden" />
+                  tri ân khách hàng của <br className="md:hidden" />
+                  <span className="text-[#3a6934] relative whitespace-nowrap">
+                    Pro Green Life
                     <motion.span
                       initial={{ width: 0 }}
                       animate={{ width: "100%" }}

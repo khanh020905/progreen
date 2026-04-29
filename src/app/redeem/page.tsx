@@ -26,7 +26,6 @@ function RedeemContent() {
   const [customerInfo, setCustomerInfo] = useState({
     customerName: '',
     phone: '',
-    email: '',
     address: '',
     provinceCity: '',
     notes: ''
@@ -290,16 +289,6 @@ function RedeemContent() {
                       required 
                       value={customerInfo.phone}
                       onChange={(e) => setCustomerInfo({...customerInfo, phone: e.target.value})} 
-                    />
-                  </div>
-                  <div className="space-y-3">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Email (Không bắt buộc)</label>
-                    <input 
-                      type="email"
-                      className="w-full px-8 py-5 bg-slate-50 border-2 border-transparent rounded-2xl font-bold outline-none focus:bg-white focus:border-green-500 transition-all shadow-inner" 
-                      placeholder="example@gmail.com" 
-                      value={customerInfo.email}
-                      onChange={(e) => setCustomerInfo({...customerInfo, email: e.target.value})} 
                     />
                   </div>
                   <div className="space-y-3">

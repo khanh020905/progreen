@@ -110,7 +110,7 @@ export default function AdminDashboardPage() {
                     <tr key={claim._id} className="hover:bg-slate-50/30 transition-colors">
                       <td className="px-10 py-6">
                         <p className="font-black text-slate-900 text-sm">{claim.customerName}</p>
-                        <p className="text-[10px] text-slate-400 font-bold">{claim.email || claim.phone}</p>
+                        <p className="text-[10px] text-slate-400 font-bold">{claim.phone}</p>
                       </td>
                       <td className="px-10 py-6 text-sm text-slate-500 font-bold">{claim.rewardName || 'N/A'}</td>
                       <td className="px-10 py-6">
@@ -183,16 +183,10 @@ export default function AdminDashboardPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div>
-                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Email Address</p>
-                    <p className="font-bold text-slate-900 break-all">{selectedClaim.email || 'N/A'}</p>
-                  </div>
                   <div>
                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Voucher Code</p>
                     <p className="font-bold text-green-600">{selectedClaim.voucherCode}</p>
                   </div>
-                </div>
                 
                 <div>
                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Selected Reward</p>
