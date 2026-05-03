@@ -44,8 +44,8 @@ export async function POST(request: Request) {
       
       if (upperCode === 'PGL300') {
         mockRewards = [
-          { name: 'Set 3 đôi tất thể thao', description: 'chất cotton cao cấp, thấm hút mồ hôi', image: '/rewards/socks.png' },
-          { name: 'Bình đựng nước thể thao', description: 'Bình nhựa lúa mạch an toàn cho sức khỏe', image: '/rewards/binh-nuoc.jpg' }
+          { name: 'Set 3 đôi tất thể thao', description: 'chất cotton cao cấp, thấm hút mồ hôi', image: '/rewards/new-sock/z7784889641726_db0599a60ae270e4fc1bb50d5b196f25.jpg' },
+          { name: 'Bình đựng nước thể thao', description: 'Bình nhựa lúa mạch an toàn cho sức khỏe', image: '/rewards/new-water-bottle/z7784889641728_d918a4f4a06858487d8b33f8cce40f8a.jpg' }
         ];
       } else if (upperCode === 'PGL500') {
         mockRewards = [
@@ -54,12 +54,12 @@ export async function POST(request: Request) {
         ];
       } else if (upperCode === 'PGL1TR') {
         mockRewards = [
-          { name: 'Áo Velosar', description: 'Áo thể thao Nam/Nữ đa năng nhẹ nhàng, thoáng khí nhanh khô, thoải mái', image: '/rewards/tshirt.png' },
+          { name: 'Áo Velosar', description: 'Áo thể thao Nam/Nữ đa năng nhẹ nhàng, thoáng khí nhanh khô, thoải mái', image: '/rewards/new-shirt/female/z7784889640199_756c04b5a92bd3aed069659453487c93.jpg' },
           { name: 'Mũ Procumin-E', description: 'Mũ lưỡi trai Procumin-E. Quà tặng độc quyền của Pro Green Life', image: '/rewards/mu.jpg' }
         ];
       } else {
         mockRewards = [
-          { name: 'Premium Eco Bottle', description: 'Double-walled stainless steel', image: '/rewards/binh-nuoc.jpg' },
+          { name: 'Premium Eco Bottle', description: 'Double-walled stainless steel', image: '/rewards/new-water-bottle/z7784889641728_d918a4f4a06858487d8b33f8cce40f8a.jpg' },
           { name: 'Green Tote Bag', description: 'Eco-friendly reusable bag', image: '/rewards/tote.png' }
         ];
       }

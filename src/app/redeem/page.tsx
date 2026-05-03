@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import { CheckCircle, Loader2, Package, ChevronLeft, ChevronRight, AlertCircle } from 'lucide-react';
-import { formatVoucherCode, getRewardImages } from '@/utils/voucher';
+import { formatVoucherCode, getRewardImages, isShirtReward } from '@/utils/voucher';
 import toast from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
 import LeafIcon from '@/components/LeafIcon';
@@ -23,6 +23,7 @@ function RedeemContent() {
   const [voucherData, setVoucherData] = useState<any>(null);
   const [selectedReward, setSelectedReward] = useState<any>(null);
   const [carouselIndexes, setCarouselIndexes] = useState<{[key: string]: number}>({});
+  const [genderSelections, setGenderSelections] = useState<{[key: string]: 'nam' | 'nu'}>({});
   const [customerInfo, setCustomerInfo] = useState({
     customerName: '',
     phone: '',
@@ -161,9 +162,11 @@ function RedeemContent() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
                   {voucherData?.rewards.map((reward: any) => {
-                    const images = getRewardImages(reward.name);
+                    const isShirt = isShirtReward(reward.name);
+                    const gender = genderSelections[reward._id] || 'nu';
+                    const images = getRewardImages(reward.name, isShirt ? gender : undefined);
                     const currentIndex = carouselIndexes[reward._id] || 0;
-                    const displayImage = images[currentIndex];
+                    const displayImage = images[currentIndex % images.length];
                     const isOutOfStock = reward.stock !== undefined && reward.stock <= 0;
                     
                     return (
@@ -187,6 +190,41 @@ function RedeemContent() {
                             </div>
                           )}
                         </div>
+
+                        {isShirt && (
+                          <div className="absolute top-8 left-8 z-20">
+                            <div className="flex bg-white/90 backdrop-blur-md rounded-full p-0.5 border border-green-100 shadow-sm">
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setGenderSelections(prev => ({ ...prev, [reward._id]: 'nu' }));
+                                  setCarouselIndexes(prev => ({ ...prev, [reward._id]: 0 }));
+                                }}
+                                className={`px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${
+                                  gender === 'nu'
+                                    ? 'bg-green-600 text-white shadow-md'
+                                    : 'text-slate-400 hover:text-slate-600'
+                                }`}
+                              >
+                                Nữ
+                              </button>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setGenderSelections(prev => ({ ...prev, [reward._id]: 'nam' }));
+                                  setCarouselIndexes(prev => ({ ...prev, [reward._id]: 0 }));
+                                }}
+                                className={`px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${
+                                  gender === 'nam'
+                                    ? 'bg-green-600 text-white shadow-md'
+                                    : 'text-slate-400 hover:text-slate-600'
+                                }`}
+                              >
+                                Nam
+                              </button>
+                            </div>
+                          </div>
+                        )}
 
                         <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden mb-4">
                           <AnimatePresence mode="wait">

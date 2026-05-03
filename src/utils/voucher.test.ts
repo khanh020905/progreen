@@ -23,7 +23,7 @@ describe('getRewardImage', () => {
   const { getRewardImage } = require('./voucher');
 
   test('should return correct path for standard rewards', () => {
-    expect(getRewardImage('Bình nước lúa mạch')).toBe('/rewards/binh-nuoc.jpg');
+    expect(getRewardImage('Bình nước lúa mạch')).toBe('/rewards/new-water-bottle/z7784889641728_d918a4f4a06858487d8b33f8cce40f8a.jpg');
     expect(getRewardImage('Dây sạc đa năng')).toBe('/rewards/day-sac.jpg');
     expect(getRewardImage('Mũ lưỡi trai')).toBe('/rewards/mu-luoi-trai.jpg');
   });
