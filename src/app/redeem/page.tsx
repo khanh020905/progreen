@@ -118,23 +118,23 @@ function RedeemContent() {
 
   return (
     <div className="min-h-screen py-10 md:py-16 bg-white">
-      <div className="container mx-auto px-4 max-w-5xl">
+      <div className="container mx-auto px-2 md:px-4 max-w-5xl">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4"><LeafIcon className="text-green-500 w-8 h-8" /></div>
-          <h2 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight uppercase leading-tight">
-            HOÀN THÀNH 3 BƯỚC ĐƠN GIẢN ĐỂ NHẬN QUÀ
+          <h2 className="text-xl md:text-2xl font-black text-slate-900 tracking-tight uppercase leading-tight">
+            HOÀN THÀNH 3 BƯỚC ĐƠN GIẢN <br /> ĐỂ NHẬN QUÀ
           </h2>
         </div>
 
         <StepIndicator />
 
-        <div className="bg-white border border-slate-50 rounded-[3rem] p-6 md:p-12 shadow-2xl shadow-slate-100/50 mt-6">
+        <div className="bg-white border border-slate-50 rounded-[2rem] md:rounded-[3rem] p-2 md:p-12 shadow-2xl shadow-slate-100/50 mt-6">
           <AnimatePresence mode="wait">
             {step === 1 && (
               <motion.div key="1" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="text-center max-w-md mx-auto space-y-12">
 
                 <div className="space-y-4">
-                  <h3 className="text-2xl font-black text-slate-900">Nhập mã số thẻ của bạn</h3>
+                  <h3 className="text-lg md:text-xl font-black text-slate-900">Nhập mã số thẻ của bạn</h3>
                   <p className="text-slate-400 font-bold text-sm leading-relaxed px-10">
                     Vui lòng nhập mã số trên thẻ quét mã QR để được nhận quà.
                   </p>
@@ -155,12 +155,12 @@ function RedeemContent() {
             )}
 
             {step === 2 && (
-              <motion.div key="2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-10">
+              <motion.div key="2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-5 md:space-y-10">
                 <div className="text-center space-y-2">
-                  <h3 className="text-3xl font-black text-slate-900">Chọn phần quà của bạn</h3>
+                  <h3 className="text-xl md:text-2xl font-black text-slate-900">Chọn phần quà của bạn</h3>
                   <p className="text-slate-400 font-bold uppercase tracking-[0.2em] text-[10px]">Chọn món quà bạn yêu thích nhất</p>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+                <div className="grid grid-cols-2 gap-2 md:gap-6 max-w-3xl mx-auto">
                   {voucherData?.rewards.map((reward: any) => {
                     const isShirt = isShirtReward(reward.name);
                     const gender = genderSelections[reward._id] || 'nu';
@@ -172,14 +172,14 @@ function RedeemContent() {
                     return (
                       <div 
                         key={reward._id} 
-                        className={`group p-4 bg-white rounded-[2.5rem] border-2 transition-all duration-500 flex flex-col relative ${
+                        className={`group p-2 md:p-4 bg-white rounded-2xl md:rounded-[2.5rem] border-2 transition-all duration-500 flex flex-col relative ${
                           isOutOfStock ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'
                         } ${
                           selectedReward?._id === reward._id ? 'border-green-500 shadow-2xl shadow-green-900/10' : 'border-slate-50 hover:border-green-200'
                         }`} 
                         onClick={() => !isOutOfStock && setSelectedReward(reward)}
                       >
-                        <div className="absolute top-8 right-8 z-20">
+                        <div className="absolute top-4 right-4 md:top-8 md:right-8 z-20">
                           {isOutOfStock ? (
                             <div className="bg-red-600 text-white px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg">
                               Hết hàng
@@ -192,7 +192,7 @@ function RedeemContent() {
                         </div>
 
                         {isShirt && (
-                          <div className="absolute top-8 left-8 z-20">
+                          <div className="absolute top-4 left-4 md:top-8 md:left-8 z-20">
                             <div className="flex bg-white/90 backdrop-blur-md rounded-full p-0.5 border border-green-100 shadow-sm">
                               <button
                                 onClick={(e) => {
@@ -200,7 +200,7 @@ function RedeemContent() {
                                   setGenderSelections(prev => ({ ...prev, [reward._id]: 'nu' }));
                                   setCarouselIndexes(prev => ({ ...prev, [reward._id]: 0 }));
                                 }}
-                                className={`px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${
+                                className={`px-2 py-1 rounded-full text-[8px] md:text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${
                                   gender === 'nu'
                                     ? 'bg-green-600 text-white shadow-md'
                                     : 'text-slate-400 hover:text-slate-600'
@@ -214,7 +214,7 @@ function RedeemContent() {
                                   setGenderSelections(prev => ({ ...prev, [reward._id]: 'nam' }));
                                   setCarouselIndexes(prev => ({ ...prev, [reward._id]: 0 }));
                                 }}
-                                className={`px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${
+                                className={`px-2 py-1 rounded-full text-[8px] md:text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${
                                   gender === 'nam'
                                     ? 'bg-green-600 text-white shadow-md'
                                     : 'text-slate-400 hover:text-slate-600'
@@ -226,7 +226,7 @@ function RedeemContent() {
                           </div>
                         )}
 
-                        <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden mb-4">
+                        <div className="relative aspect-[2/3] md:aspect-[3/4] rounded-[1rem] md:rounded-[2rem] overflow-hidden mb-4 bg-slate-50/50">
                           <AnimatePresence mode="wait">
                             <motion.div
                               key={displayImage}
@@ -240,7 +240,7 @@ function RedeemContent() {
                                 src={displayImage} 
                                 alt={reward.name} 
                                 fill
-                                className={`object-cover transition-all duration-700 ${isOutOfStock ? 'grayscale' : 'group-hover:scale-110'}`} 
+                                className={`object-contain md:object-cover p-2 md:p-0 transition-all duration-700 ${isOutOfStock ? 'grayscale' : 'group-hover:scale-110'}`} 
                               />
                             </motion.div>
                           </AnimatePresence>
@@ -273,9 +273,13 @@ function RedeemContent() {
                             </div>
                           )}
                         </div>
-                        <div className="px-4 flex-1 text-center space-y-2 mb-6">
-                          <h4 className="font-black text-slate-900 text-lg leading-tight">{reward.name}</h4>
-                          <p className="text-[11px] text-slate-400 font-bold leading-relaxed">{reward.description}</p>
+                        <div className="px-2 md:px-4 flex-1 text-center space-y-2 mb-4 md:mb-6">
+                          <h4 className="font-black text-slate-900 text-sm md:text-lg leading-tight">
+                            {reward.name === "Kem đánh răng Close up 100gr" ? (
+                              <>Kem đánh răng <br /> Close up 100gr</>
+                            ) : reward.name}
+                          </h4>
+                          <p className="text-[9px] md:text-[11px] text-slate-400 font-bold leading-relaxed">{reward.description}</p>
                         </div>
                         <button className={`w-full py-4 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
                           isOutOfStock 
@@ -290,7 +294,7 @@ function RedeemContent() {
                     );
                   })}
                 </div>
-                <div className="flex flex-col items-center gap-10 pt-10 border-t border-slate-50">
+                <div className="flex flex-col items-center gap-6 md:gap-10 pt-6 md:pt-10 border-t border-slate-50">
                    <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest flex items-center gap-2">
                      <CheckCircle className="w-3 h-3 text-green-500" /> Bạn chỉ có thể chọn một phần quà.
                    </p>
@@ -305,7 +309,7 @@ function RedeemContent() {
             {step === 3 && (
               <motion.div key="3" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-16">
                 <div className="text-center space-y-4">
-                  <h3 className="text-3xl font-black text-slate-900">Thông tin nhận quà</h3>
+                  <h3 className="text-xl md:text-2xl font-black text-slate-900">Thông tin nhận quà</h3>
                   <p className="text-slate-400 font-bold uppercase tracking-[0.2em] text-[10px]">Vui lòng điền thông tin để chúng tôi gửi quà đến bạn.</p>
                 </div>
                 <form onSubmit={handleSubmitClaim} className="space-y-10">
