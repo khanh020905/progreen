@@ -98,7 +98,7 @@ function RedeemContent() {
     <div className="flex items-center justify-center gap-12 mb-10 relative">
       {[1, 2, 3].map((s) => (
         <div key={s} className="relative flex flex-col items-center">
-          <div className={`w-12 h-12 rounded-full flex items-center justify-center font-black text-sm z-10 transition-all duration-500 ${
+          <div className={`w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center font-black text-xs md:text-sm z-10 transition-all duration-500 ${
             step === s ? 'bg-green-500 text-white shadow-xl shadow-green-500/30' : step > s ? 'bg-green-500 text-white' : 'bg-slate-100 text-slate-300'
           }`}>
             {s}
@@ -109,7 +109,7 @@ function RedeemContent() {
             {s === 1 ? 'Nhập mã' : s === 2 ? 'Chọn quà' : 'Nhận quà'}
           </span>
           {s < 3 && (
-            <div className={`absolute left-12 top-6 w-24 h-[1px] ${step > s ? 'bg-green-500' : 'bg-slate-100'}`} />
+            <div className={`absolute left-10 md:left-12 top-5 md:top-6 w-16 md:w-24 h-[1px] ${step > s ? 'bg-green-500' : 'bg-slate-100'}`} />
           )}
         </div>
       ))}
@@ -121,7 +121,7 @@ function RedeemContent() {
       <div className="container mx-auto px-2 md:px-4 max-w-5xl">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4"><LeafIcon className="text-green-500 w-8 h-8" /></div>
-          <h2 className="text-xl md:text-2xl font-black text-slate-900 tracking-tight uppercase leading-tight">
+          <h2 className="text-lg md:text-2xl font-black text-slate-900 tracking-tight uppercase leading-tight">
             HOÀN THÀNH 3 BƯỚC ĐƠN GIẢN <br /> ĐỂ NHẬN QUÀ
           </h2>
         </div>
@@ -226,7 +226,7 @@ function RedeemContent() {
                           </div>
                         )}
 
-                        <div className="relative aspect-[2/3] md:aspect-[3/4] rounded-[1rem] md:rounded-[2rem] overflow-hidden mb-4 bg-slate-50/50">
+                        <div className="relative aspect-square md:aspect-[3/4] rounded-[1rem] md:rounded-[2rem] overflow-hidden mb-2 md:mb-4 bg-slate-50/50">
                           <AnimatePresence mode="wait">
                             <motion.div
                               key={displayImage}
@@ -273,15 +273,15 @@ function RedeemContent() {
                             </div>
                           )}
                         </div>
-                        <div className="px-2 md:px-4 flex-1 text-center space-y-2 mb-4 md:mb-6">
-                          <h4 className="font-black text-slate-900 text-sm md:text-lg leading-tight">
+                        <div className="px-1 md:px-4 flex-1 text-center space-y-1 mb-3 md:mb-6">
+                          <h4 className="font-black text-slate-900 text-[10px] md:text-lg leading-tight tracking-tighter">
                             {reward.name === "Kem đánh răng Close up 100gr" ? (
                               <>Kem đánh răng <br /> Close up 100gr</>
                             ) : reward.name}
                           </h4>
-                          <p className="text-[9px] md:text-[11px] text-slate-400 font-bold leading-relaxed">{reward.description}</p>
+                          <p className="text-[8px] md:text-[11px] text-slate-400 font-bold leading-relaxed">{reward.description}</p>
                         </div>
-                        <button className={`w-full py-4 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                        <button className={`w-full py-2.5 md:py-4 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all ${
                           isOutOfStock 
                             ? 'bg-slate-100 text-slate-300' 
                             : selectedReward?._id === reward._id 
@@ -298,9 +298,9 @@ function RedeemContent() {
                    <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest flex items-center gap-2">
                      <CheckCircle className="w-3 h-3 text-green-500" /> Bạn chỉ có thể chọn một phần quà.
                    </p>
-                  <div className="flex flex-col md:flex-row justify-between items-center w-full gap-6">
+                  <div className="flex flex-col md:flex-row justify-between items-center w-full gap-4 md:gap-6">
                     <button onClick={() => setStep(1)} className="text-xs font-black text-slate-400 uppercase tracking-widest hover:text-green-600 transition-colors order-2 md:order-1">Quay lại</button>
-                    <button onClick={() => setStep(3)} disabled={!selectedReward} className="w-full md:w-auto px-12 py-4 bg-green-800 text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-green-900/10 disabled:opacity-50 order-1 md:order-2">Tiếp theo</button>
+                    <button onClick={() => setStep(3)} disabled={!selectedReward} className="w-full md:w-auto px-12 py-3.5 md:py-4 bg-green-800 text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-green-900/10 disabled:opacity-50 order-1 md:order-2">Tiếp theo</button>
                   </div>
                 </div>
               </motion.div>
