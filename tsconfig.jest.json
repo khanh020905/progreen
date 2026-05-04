@@ -4,6 +4,8 @@
     "jsx": "react-jsx",
     "module": "CommonJS",
     "moduleResolution": "node",
+    "isolatedModules": false,
+    "types": ["jest"],
     "rootDir": "."
   }
 }

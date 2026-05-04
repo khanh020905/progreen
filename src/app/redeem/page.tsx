@@ -11,6 +11,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import LeafIcon from '@/components/LeafIcon';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import SearchableSelect from '@/components/SearchableSelect';
+import { getProvinces, getDistricts, getWards } from '@/utils/location';
 
 function RedeemContent() {
   const router = useRouter();
@@ -29,8 +31,26 @@ function RedeemContent() {
     phone: '',
     address: '',
     provinceCity: '',
+    district: '',
+    ward: '',
+    streetAddress: '',
     notes: ''
   });
+
+  const [locationData, setLocationData] = useState({
+    provinces: [],
+    districts: [],
+    wards: []
+  });
+
+  const [codes, setCodes] = useState({
+    province: 0,
+    district: 0
+  });
+
+  const validatePhone = (phone: string) => {
+    return /^0\d{9}$/.test(phone);
+  };
 
   useEffect(() => {
     const code = searchParams.get('code');
@@ -38,6 +58,34 @@ function RedeemContent() {
       setVoucherCode(code.toUpperCase());
     }
   }, [searchParams]);
+
+  useEffect(() => {
+    if (step === 3) {
+      getProvinces().then(data => setLocationData(prev => ({ ...prev, provinces: data })));
+    }
+  }, [step]);
+
+  const handleProvinceChange = async (name: string, code: number) => {
+    setCustomerInfo(prev => ({ ...prev, provinceCity: name, district: '', ward: '' }));
+    setCodes(prev => ({ ...prev, province: code }));
+    try {
+      const districts = await getDistricts(code);
+      setLocationData(prev => ({ ...prev, districts, wards: [] }));
+    } catch (err) {
+      toast.error('Lỗi khi tải danh sách quận huyện');
+    }
+  };
+
+  const handleDistrictChange = async (name: string, code: number) => {
+    setCustomerInfo(prev => ({ ...prev, district: name, ward: '' }));
+    setCodes(prev => ({ ...prev, district: code }));
+    try {
+      const wards = await getWards(code);
+      setLocationData(prev => ({ ...prev, wards }));
+    } catch (err) {
+      toast.error('Lỗi khi tải danh sách phường xã');
+    }
+  };
 
   const handleValidateVoucher = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,6 +109,17 @@ function RedeemContent() {
 
   const handleSubmitClaim = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validatePhone(customerInfo.phone)) {
+      toast.error('Số điện thoại phải có 10 chữ số và bắt đầu bằng số 0');
+      return;
+    }
+
+    if (!customerInfo.provinceCity || !customerInfo.district || !customerInfo.ward || !customerInfo.streetAddress) {
+      toast.error('Vui lòng điền đầy đủ địa chỉ nhận quà');
+      return;
+    }
+
     setLoading(true);
     try {
       const payload = { 
@@ -326,22 +385,62 @@ function RedeemContent() {
                   <div className="space-y-3">
                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Số điện thoại *</label>
                     <input 
-                      className="w-full px-8 py-5 bg-slate-50 border-2 border-transparent rounded-2xl font-bold outline-none focus:bg-white focus:border-green-500 transition-all shadow-inner" 
+                      className={`w-full px-8 py-5 bg-slate-50 border-2 rounded-2xl font-bold outline-none focus:bg-white transition-all shadow-inner ${
+                        customerInfo.phone && !validatePhone(customerInfo.phone) ? 'border-red-500 bg-red-50' : 'border-transparent focus:border-green-500'
+                      }`} 
                       placeholder="0901 234 567" 
                       required 
                       value={customerInfo.phone}
-                      onChange={(e) => setCustomerInfo({...customerInfo, phone: e.target.value})} 
+                      onChange={(e) => {
+                        const val = e.target.value.replace(/\D/g, '').slice(0, 10);
+                        setCustomerInfo({...customerInfo, phone: val});
+                      }} 
+                    />
+                    {customerInfo.phone && !validatePhone(customerInfo.phone) && (
+                      <p className="text-[9px] text-red-500 font-black uppercase tracking-widest ml-1 animate-pulse">
+                        Số điện thoại không hợp lệ (Phải có 10 số và bắt đầu bằng 0)
+                      </p>
+                    )}
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <SearchableSelect 
+                      label="Tỉnh / Thành phố" 
+                      options={locationData.provinces} 
+                      value={customerInfo.provinceCity} 
+                      onChange={handleProvinceChange}
+                      placeholder="Chọn Tỉnh / Thành phố"
+                      required
+                    />
+                    <SearchableSelect 
+                      label="Quận / Huyện" 
+                      options={locationData.districts} 
+                      value={customerInfo.district} 
+                      onChange={handleDistrictChange}
+                      disabled={!customerInfo.provinceCity}
+                      placeholder={customerInfo.provinceCity ? "Chọn Quận / Huyện" : "Vui lòng chọn Tỉnh trước"}
+                      required
                     />
                   </div>
-                  <div className="space-y-3">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Địa chỉ nhận quà *</label>
-                    <textarea 
-                      className="w-full px-8 py-5 bg-slate-50 border-2 border-transparent rounded-2xl font-bold outline-none focus:bg-white focus:border-green-500 transition-all shadow-inner min-h-[120px]" 
-                      placeholder="Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành phố" 
-                      required 
-                      value={customerInfo.address}
-                      onChange={(e) => setCustomerInfo({...customerInfo, address: e.target.value})} 
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <SearchableSelect 
+                      label="Phường / Xã" 
+                      options={locationData.wards} 
+                      value={customerInfo.ward} 
+                      onChange={(name) => setCustomerInfo({...customerInfo, ward: name})}
+                      disabled={!customerInfo.district}
+                      placeholder={customerInfo.district ? "Chọn Phường / Xã" : "Vui lòng chọn Quận trước"}
+                      required
                     />
+                    <div className="space-y-3">
+                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Số nhà, tên đường *</label>
+                      <input 
+                        className="w-full px-8 py-5 bg-slate-50 border-2 border-transparent rounded-2xl font-bold outline-none focus:bg-white focus:border-green-500 transition-all shadow-inner" 
+                        placeholder="Ví dụ: 123 Đường ABC" 
+                        required 
+                        value={customerInfo.streetAddress}
+                        onChange={(e) => setCustomerInfo({...customerInfo, streetAddress: e.target.value})} 
+                      />
+                    </div>
                   </div>
                   <div className="flex flex-col-reverse md:flex-row justify-between items-center pt-12 border-t border-slate-50 gap-6">
                     <button type="button" onClick={() => setStep(2)} className="text-xs font-black text-slate-400 uppercase tracking-widest hover:text-green-600 transition-colors flex items-center gap-2">Quay lại</button>

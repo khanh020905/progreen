@@ -56,8 +56,20 @@ export default function AdminClaimsPage() {
 
   const exportToCSV = () => {
     if (claims.length === 0) return;
-    const headers = ['Reference', 'Voucher', 'Customer', 'Phone', 'Reward', 'Status', 'Date'];
-    const rows = claims.map(c => [c.claimReference, c.voucherCode, c.customerName, c.phone, c.rewardName, c.status, new Date(c.createdAt).toLocaleDateString()]);
+    const headers = ['Reference', 'Voucher', 'Customer', 'Phone', 'Street', 'Ward', 'District', 'Province', 'Reward', 'Status', 'Date'];
+    const rows = claims.map(c => [
+      c.claimReference, 
+      c.voucherCode, 
+      c.customerName, 
+      c.phone, 
+      c.streetAddress || '',
+      c.ward || '',
+      c.district || '',
+      c.province || c.provinceCity || '',
+      c.rewardName, 
+      c.status, 
+      new Date(c.createdAt).toLocaleDateString()
+    ]);
     const csvContent = [headers, ...rows].map(e => e.join(',')).join('\n');
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
@@ -275,7 +287,17 @@ export default function AdminClaimsPage() {
 
                 <div>
                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Shipping Address</p>
-                  <p className="font-bold text-slate-900 leading-relaxed bg-slate-50 p-6 rounded-2xl">{selectedClaim.address}, {selectedClaim.provinceCity}</p>
+                  <div className="font-bold text-slate-900 leading-relaxed bg-slate-50 p-6 rounded-2xl">
+                    {selectedClaim.streetAddress ? (
+                      <>
+                        <p>{selectedClaim.streetAddress}</p>
+                        <p>{selectedClaim.ward}, {selectedClaim.district}</p>
+                        <p>{selectedClaim.province || selectedClaim.provinceCity}</p>
+                      </>
+                    ) : (
+                      <p>{selectedClaim.address}, {selectedClaim.provinceCity}</p>
+                    )}
+                  </div>
                 </div>
 
                 {selectedClaim.notes && (

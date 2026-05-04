@@ -197,7 +197,17 @@ export default function AdminDashboardPage() {
 
                 <div>
                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Shipping Address</p>
-                  <p className="font-bold text-slate-900 leading-relaxed bg-slate-50 p-6 rounded-2xl">{selectedClaim.address}, {selectedClaim.provinceCity}</p>
+                  <div className="font-bold text-slate-900 leading-relaxed bg-slate-50 p-6 rounded-2xl">
+                    {selectedClaim.streetAddress ? (
+                      <>
+                        <p>{selectedClaim.streetAddress}</p>
+                        <p>{selectedClaim.ward}, {selectedClaim.district}</p>
+                        <p>{selectedClaim.province || selectedClaim.provinceCity}</p>
+                      </>
+                    ) : (
+                      <p>{selectedClaim.address}, {selectedClaim.provinceCity}</p>
+                    )}
+                  </div>
                 </div>
 
                 {selectedClaim.notes && (

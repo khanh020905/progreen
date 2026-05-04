@@ -7,6 +7,10 @@ export interface IClaim extends Document {
   customerName: string;
   phone: string;
   address: string;
+  province: string;
+  district: string;
+  ward: string;
+  streetAddress: string;
   provinceCity?: string;
   notes?: string;
   status: 'Pending' | 'Confirmed' | 'Shipping' | 'Completed' | 'Rejected';
@@ -38,6 +42,22 @@ const claimSchema = new mongoose.Schema({
     trim: true
   },
   address: {
+    type: String,
+    required: true
+  },
+  province: {
+    type: String,
+    required: true
+  },
+  district: {
+    type: String,
+    required: true
+  },
+  ward: {
+    type: String,
+    required: true
+  },
+  streetAddress: {
     type: String,
     required: true
   },

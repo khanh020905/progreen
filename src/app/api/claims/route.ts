@@ -23,9 +23,14 @@ export async function POST(request: Request) {
       customerName, 
       phone, 
       address, 
-      provinceCity, 
+      provinceCity,
+      district,
+      ward,
+      streetAddress,
       notes 
     } = await request.json();
+
+    const finalAddress = address || `${streetAddress}, ${ward}, ${district}, ${provinceCity}`;
 
     // 1. TEST MODE LOGIC
     const upperCode = voucherCode?.toUpperCase();
@@ -41,8 +46,12 @@ export async function POST(request: Request) {
         rewardId: undefined, // Don't set rewardId for test codes to avoid CastError
         customerName,
         phone,
-        address,
-        provinceCity,
+        address: finalAddress,
+        province: provinceCity,
+        district,
+        ward,
+        streetAddress,
+        provinceCity, // Keep for backward compatibility
         notes,
         claimReference,
         status: 'Pending'
@@ -81,7 +90,11 @@ export async function POST(request: Request) {
       rewardId: reward._id,
       customerName,
       phone,
-      address,
+      address: finalAddress,
+      province: provinceCity,
+      district,
+      ward,
+      streetAddress,
       provinceCity,
       notes,
       claimReference
