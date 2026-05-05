@@ -38,13 +38,13 @@ export default function SearchableSelect({ label, options, value, onChange, disa
   }, []);
 
   return (
-    <div className="space-y-3 relative" ref={containerRef}>
+    <div className="space-y-2 md:space-y-3 relative" ref={containerRef}>
       <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">
         {label} {required && '*'}
       </label>
       <div 
         onClick={() => !disabled && setIsOpen(!isOpen)}
-        className={`w-full px-8 py-5 bg-slate-50 border-2 rounded-2xl font-bold flex justify-between items-center cursor-pointer transition-all ${
+        className={`w-full px-5 md:px-8 py-3.5 md:py-5 bg-slate-50 border-2 rounded-xl md:rounded-2xl font-bold flex justify-between items-center cursor-pointer transition-all ${
           disabled ? 'opacity-50 cursor-not-allowed' : 'hover:border-green-500'
         } ${isOpen ? 'border-green-500 bg-white ring-4 ring-green-50 shadow-lg' : 'border-transparent shadow-inner'}`}
       >
@@ -60,13 +60,13 @@ export default function SearchableSelect({ label, options, value, onChange, disa
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="absolute z-50 w-full mt-2 bg-white border border-slate-100 rounded-2xl shadow-2xl overflow-hidden"
+            className="absolute z-50 w-full mt-2 bg-white border border-slate-100 rounded-xl md:rounded-2xl shadow-2xl overflow-hidden"
           >
-            <div className="p-4 border-b border-slate-50 relative">
-              <Search className="absolute left-8 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <div className="p-3 md:p-4 border-b border-slate-50 relative">
+              <Search className="absolute left-6 md:left-8 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <input 
                 autoFocus
-                className="w-full pl-10 pr-4 py-3 bg-slate-50 rounded-xl outline-none text-sm font-bold focus:bg-white transition-colors"
+                className="w-full pl-9 md:pl-10 pr-4 py-2.5 md:py-3 bg-slate-50 rounded-lg md:rounded-xl outline-none text-sm font-bold focus:bg-white transition-colors"
                 placeholder="Tìm kiếm..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -83,7 +83,7 @@ export default function SearchableSelect({ label, options, value, onChange, disa
                     setIsOpen(false);
                     setSearchTerm('');
                   }}
-                  className={`px-6 py-4 rounded-xl flex items-center justify-between cursor-pointer transition-colors group ${
+                  className={`px-4 md:px-6 py-3 md:py-4 rounded-lg md:rounded-xl flex items-center justify-between cursor-pointer transition-colors group ${
                     value === opt.name ? 'bg-green-50 text-green-700' : 'hover:bg-slate-50 text-slate-700'
                   }`}
                 >

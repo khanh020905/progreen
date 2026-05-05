@@ -366,26 +366,26 @@ function RedeemContent() {
             )}
 
             {step === 3 && (
-              <motion.div key="3" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-16">
+              <motion.div key="3" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-8 md:space-y-16">
                 <div className="text-center space-y-4">
                   <h3 className="text-xl md:text-2xl font-black text-slate-900">Thông tin nhận quà</h3>
                   <p className="text-slate-400 font-bold uppercase tracking-[0.2em] text-[10px]">Vui lòng điền thông tin để chúng tôi gửi quà đến bạn.</p>
                 </div>
-                <form onSubmit={handleSubmitClaim} className="space-y-10">
-                  <div className="space-y-3">
+                <form onSubmit={handleSubmitClaim} className="space-y-5 md:space-y-10">
+                  <div className="space-y-2 md:space-y-3">
                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Họ và tên *</label>
                     <input 
-                      className="w-full px-8 py-5 bg-slate-50 border-2 border-transparent rounded-2xl font-bold outline-none focus:bg-white focus:border-green-500 transition-all shadow-inner" 
+                      className="w-full px-5 md:px-8 py-3.5 md:py-5 bg-slate-50 border-2 border-transparent rounded-xl md:rounded-2xl font-bold outline-none focus:bg-white focus:border-green-500 transition-all shadow-inner" 
                       placeholder="Nguyễn Văn A" 
                       required 
                       value={customerInfo.customerName}
                       onChange={(e) => setCustomerInfo({...customerInfo, customerName: e.target.value})} 
                     />
                   </div>
-                  <div className="space-y-3">
+                  <div className="space-y-2 md:space-y-3">
                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Số điện thoại *</label>
                     <input 
-                      className={`w-full px-8 py-5 bg-slate-50 border-2 rounded-2xl font-bold outline-none focus:bg-white transition-all shadow-inner ${
+                      className={`w-full px-5 md:px-8 py-3.5 md:py-5 bg-slate-50 border-2 rounded-xl md:rounded-2xl font-bold outline-none focus:bg-white transition-all shadow-inner ${
                         customerInfo.phone && !validatePhone(customerInfo.phone) ? 'border-red-500 bg-red-50' : 'border-transparent focus:border-green-500'
                       }`} 
                       placeholder="0901 234 567" 
@@ -402,7 +402,7 @@ function RedeemContent() {
                       </p>
                     )}
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <SearchableSelect 
                       label="Tỉnh / Thành phố" 
                       options={locationData.provinces} 
@@ -421,7 +421,7 @@ function RedeemContent() {
                       required
                     />
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <SearchableSelect 
                       label="Phường / Xã" 
                       options={locationData.wards} 
@@ -431,10 +431,10 @@ function RedeemContent() {
                       placeholder={customerInfo.district ? "Chọn Phường / Xã" : "Vui lòng chọn Quận trước"}
                       required
                     />
-                    <div className="space-y-3">
+                    <div className="space-y-2 md:space-y-3">
                       <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Số nhà, tên đường *</label>
                       <input 
-                        className="w-full px-8 py-5 bg-slate-50 border-2 border-transparent rounded-2xl font-bold outline-none focus:bg-white focus:border-green-500 transition-all shadow-inner" 
+                        className="w-full px-5 md:px-8 py-3.5 md:py-5 bg-slate-50 border-2 border-transparent rounded-xl md:rounded-2xl font-bold outline-none focus:bg-white focus:border-green-500 transition-all shadow-inner" 
                         placeholder="Ví dụ: 123 Đường ABC" 
                         required 
                         value={customerInfo.streetAddress}
@@ -442,9 +442,9 @@ function RedeemContent() {
                       />
                     </div>
                   </div>
-                  <div className="flex flex-col-reverse md:flex-row justify-between items-center pt-12 border-t border-slate-50 gap-6">
+                  <div className="flex flex-col-reverse md:flex-row justify-between items-center pt-6 md:pt-12 border-t border-slate-50 gap-4 md:gap-6">
                     <button type="button" onClick={() => setStep(2)} className="text-xs font-black text-slate-400 uppercase tracking-widest hover:text-green-600 transition-colors flex items-center gap-2">Quay lại</button>
-                    <button type="submit" className="w-full md:w-auto px-16 py-5 bg-green-800 text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-2xl shadow-green-900/20 hover:bg-green-950 transition-all">
+                    <button type="submit" className="w-full md:w-auto px-10 md:px-16 py-3.5 md:py-5 bg-green-800 text-white rounded-xl md:rounded-2xl font-black text-xs md:text-sm uppercase tracking-widest shadow-2xl shadow-green-900/20 hover:bg-green-950 transition-all">
                       {loading ? <Loader2 className="w-6 h-6 animate-spin mx-auto" /> : 'Xác nhận & Hoàn thành'}
                     </button>
                   </div>
