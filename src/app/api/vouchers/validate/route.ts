@@ -44,8 +44,7 @@ export async function POST(request: Request) {
       
       if (upperCode === 'PGL300') {
         mockRewards = [
-          { name: 'Set 3 đôi tất thể thao', description: 'chất cotton cao cấp, thấm hút mồ hôi', image: '/rewards/new-sock/z7784889641726_db0599a60ae270e4fc1bb50d5b196f25.jpg' },
-          { name: 'Bình đựng nước thể thao', description: 'Bình nhựa lúa mạch an toàn cho sức khỏe', image: '/rewards/new-water-bottle/z7784889641728_d918a4f4a06858487d8b33f8cce40f8a.jpg' }
+          { name: 'Tất Thể Thao', description: 'chất cotton cao cấp, thấm hút mồ hôi', image: '/rewards/new-sock/z7784889641726_db0599a60ae270e4fc1bb50d5b196f25.jpg' }
         ];
       } else if (upperCode === 'PGL500') {
         mockRewards = [

@@ -186,7 +186,7 @@ function RedeemContent() {
                     return (
                       <div
                         key={reward._id}
-                        className={`group p-2 md:p-4 bg-white rounded-2xl md:rounded-[2.5rem] border-2 transition-all duration-500 flex flex-col relative ${
+                        className={`group p-2 md:p-4 bg-white rounded-2xl md:rounded-[2.5rem] border-2 transition-all duration-500 flex flex-col ${
                           isOutOfStock ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'
                         } ${
                           selectedReward?._id === reward._id ? 'border-green-500 shadow-2xl shadow-green-900/10' : 'border-slate-50 hover:border-green-200'
@@ -197,19 +197,10 @@ function RedeemContent() {
                           setSelectedShirtChoice(null);
                         }}
                       >
-                        <div className="absolute top-4 right-4 md:top-8 md:right-8 z-20">
-                          {isOutOfStock ? (
-                            <div className="bg-red-600 text-white px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg">Hết hàng</div>
-                          ) : (
-                            <div className="bg-white/90 backdrop-blur-md text-[#2d5a27] px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border border-green-100 shadow-sm">
-                              Còn lại: {reward.stock ?? 0}
-                            </div>
-                          )}
-                        </div>
-
-                        {isShirt && (
-                          <div className="absolute top-4 left-4 md:top-8 md:left-8 z-20">
-                            <div className="flex bg-white/90 backdrop-blur-md rounded-full p-0.5 border border-green-100 shadow-sm">
+                        {/* Header row: gender toggle + stock — sits above image, no overlap */}
+                        <div className="flex items-center justify-between mb-1 px-0.5">
+                          {isShirt ? (
+                            <div className="flex bg-slate-100 rounded-full p-0.5">
                               <button
                                 onClick={(e) => {
                                   e.stopPropagation();
@@ -217,7 +208,7 @@ function RedeemContent() {
                                   setCarouselIndexes(prev => ({ ...prev, [reward._id]: 0 }));
                                   setSelectedShirtChoice(null);
                                 }}
-                                className={`px-2 py-1 rounded-full text-[8px] md:text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${gender === 'nu' ? 'bg-green-600 text-white shadow-md' : 'text-slate-400 hover:text-slate-600'}`}
+                                className={`px-2 py-0.5 rounded-full text-[8px] md:text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${gender === 'nu' ? 'bg-green-600 text-white shadow-md' : 'text-slate-400'}`}
                               >
                                 Nữ
                               </button>
@@ -228,13 +219,20 @@ function RedeemContent() {
                                   setCarouselIndexes(prev => ({ ...prev, [reward._id]: 0 }));
                                   setSelectedShirtChoice(null);
                                 }}
-                                className={`px-2 py-1 rounded-full text-[8px] md:text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${gender === 'nam' ? 'bg-green-600 text-white shadow-md' : 'text-slate-400 hover:text-slate-600'}`}
+                                className={`px-2 py-0.5 rounded-full text-[8px] md:text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${gender === 'nam' ? 'bg-green-600 text-white shadow-md' : 'text-slate-400'}`}
                               >
                                 Nam
                               </button>
                             </div>
-                          </div>
-                        )}
+                          ) : <div />}
+                          {isOutOfStock ? (
+                            <div className="bg-red-600 text-white px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest">Hết hàng</div>
+                          ) : (
+                            <div className="text-[#2d5a27] px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest border border-green-100 bg-slate-50">
+                              Còn lại: {reward.stock ?? 0}
+                            </div>
+                          )}
+                        </div>
 
                         <div className="relative h-32 md:h-auto md:aspect-[3/4] rounded-[1rem] md:rounded-[2rem] overflow-hidden mb-1 md:mb-4 bg-slate-50/50">
                           <AnimatePresence mode="wait">
