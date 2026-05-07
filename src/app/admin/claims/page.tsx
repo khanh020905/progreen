@@ -56,18 +56,20 @@ export default function AdminClaimsPage() {
 
   const exportToCSV = () => {
     if (claims.length === 0) return;
-    const headers = ['Reference', 'Voucher', 'Customer', 'Phone', 'Street', 'Ward', 'District', 'Province', 'Reward', 'Status', 'Date'];
+    const headers = ['Reference', 'Voucher', 'Customer', 'Phone', 'Address', 'Street', 'Ward', 'District', 'Province', 'Reward', 'Shirt Choice', 'Status', 'Date'];
     const rows = claims.map(c => [
-      c.claimReference, 
-      c.voucherCode, 
-      c.customerName, 
-      c.phone, 
+      c.claimReference,
+      c.voucherCode,
+      c.customerName,
+      c.phone,
+      c.address || '',
       c.streetAddress || '',
       c.ward || '',
       c.district || '',
       c.province || c.provinceCity || '',
-      c.rewardName, 
-      c.status, 
+      c.rewardName,
+      c.shirtChoice || '',
+      c.status,
       new Date(c.createdAt).toLocaleDateString()
     ]);
     const csvContent = [headers, ...rows].map(e => e.join(',')).join('\n');
@@ -285,6 +287,22 @@ export default function AdminClaimsPage() {
                   </div>
                 </div>
 
+                {selectedClaim.shirtChoice && (
+                  <div>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Mẫu áo đã chọn</p>
+                    <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                      <img
+                        src={selectedClaim.shirtChoice}
+                        alt="Mẫu áo"
+                        className="w-20 h-20 object-cover rounded-xl border border-slate-200 flex-shrink-0"
+                      />
+                      <p className="font-black text-slate-700 text-sm">
+                        Giới tính: {selectedClaim.shirtChoice.includes('female') ? 'Nữ' : 'Nam'}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
                 <div>
                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Shipping Address</p>
                   <div className="font-bold text-slate-900 leading-relaxed bg-slate-50 p-6 rounded-2xl">
@@ -295,7 +313,7 @@ export default function AdminClaimsPage() {
                         <p>{selectedClaim.province || selectedClaim.provinceCity}</p>
                       </>
                     ) : (
-                      <p>{selectedClaim.address}, {selectedClaim.provinceCity}</p>
+                      <p>{selectedClaim.address}{selectedClaim.provinceCity ? `, ${selectedClaim.provinceCity}` : ''}</p>
                     )}
                   </div>
                 </div>

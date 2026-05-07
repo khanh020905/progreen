@@ -83,3 +83,26 @@ export const getRewardImages = (rewardName: string, genderOverride?: 'nam' | 'nu
   // Default: return single image as an array
   return [getRewardImage(rewardName)];
 };
+
+/**
+ * Returns selectable design-choice images for shirt rewards.
+ * @param gender 'nam' | 'nu'
+ */
+export const getShirtChoiceImages = (gender: 'nam' | 'nu'): string[] => {
+  if (gender === 'nam') {
+    return [
+      "/rewards/new-shirt/male-choice/z7796798086915_9ae1fa366257195fa542cf63e7b58626.jpg",
+      "/rewards/new-shirt/male-choice/z7796798114308_1ef65f2a5dd94b5bd2aafd1d0999c23c.jpg",
+      "/rewards/new-shirt/male-choice/z7796798132887_bfb8caf11d723efef716a7460a039c41.jpg",
+      "/rewards/new-shirt/male-choice/z7796798208000_3836f8f907f781837cb89918fff14e1f.jpg",
+      "/rewards/new-shirt/male-choice/z7796798232906_429658c8cd25a5fed4093d6d71df94dd.jpg",
+    ];
+  }
+  return [
+    "/rewards/new-shirt/female-choice/z7796848631227_f57eeba21532d4eee48ac9157773a325.jpg",
+    "/rewards/new-shirt/female-choice/z7796848702318_dc5c7f36d354fe0128bfffdfedc8bae6.jpg",
+    "/rewards/new-shirt/female-choice/z7796848737851_4a4316a7cc37ec56c481c9387a814771.jpg",
+    "/rewards/new-shirt/female-choice/z7796848794811_00e9a1c2ae566aa587590254d64ac0c1.jpg",
+    "/rewards/new-shirt/female-choice/z7796848839863_c30a4e659982875002448a6a603652a9.jpg",
+  ];
+};

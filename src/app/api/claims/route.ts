@@ -16,18 +16,19 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const { 
-      voucherCode, 
-      rewardId, 
+    const {
+      voucherCode,
+      rewardId,
       rewardName: bodyRewardName,
-      customerName, 
-      phone, 
-      address, 
+      customerName,
+      phone,
+      address,
       provinceCity,
       district,
       ward,
       streetAddress,
-      notes 
+      shirtChoice,
+      notes
     } = await request.json();
 
     const finalAddress = address || `${streetAddress}, ${ward}, ${district}, ${provinceCity}`;
@@ -43,7 +44,7 @@ export async function POST(request: Request) {
       const testClaim = new Claim({
         voucherCode: upperCode,
         rewardName: bodyRewardName || (rewardId?.startsWith('r') ? 'Test Reward' : rewardId),
-        rewardId: undefined, // Don't set rewardId for test codes to avoid CastError
+        rewardId: undefined,
         customerName,
         phone,
         address: finalAddress,
@@ -51,7 +52,8 @@ export async function POST(request: Request) {
         district,
         ward,
         streetAddress,
-        provinceCity, // Keep for backward compatibility
+        provinceCity,
+        shirtChoice,
         notes,
         claimReference,
         status: 'Pending'
@@ -96,6 +98,7 @@ export async function POST(request: Request) {
       ward,
       streetAddress,
       provinceCity,
+      shirtChoice,
       notes,
       claimReference
     });

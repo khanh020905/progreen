@@ -195,6 +195,22 @@ export default function AdminDashboardPage() {
                   </div>
                 </div>
 
+                {selectedClaim.shirtChoice && (
+                  <div>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Mẫu áo đã chọn</p>
+                    <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                      <img
+                        src={selectedClaim.shirtChoice}
+                        alt="Mẫu áo"
+                        className="w-20 h-20 object-cover rounded-xl border border-slate-200 flex-shrink-0"
+                      />
+                      <p className="font-black text-slate-700 text-sm">
+                        Giới tính: {selectedClaim.shirtChoice.includes('female') ? 'Nữ' : 'Nam'}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
                 <div>
                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Shipping Address</p>
                   <div className="font-bold text-slate-900 leading-relaxed bg-slate-50 p-6 rounded-2xl">
@@ -205,7 +221,7 @@ export default function AdminDashboardPage() {
                         <p>{selectedClaim.province || selectedClaim.provinceCity}</p>
                       </>
                     ) : (
-                      <p>{selectedClaim.address}, {selectedClaim.provinceCity}</p>
+                      <p>{selectedClaim.address}{selectedClaim.provinceCity ? `, ${selectedClaim.provinceCity}` : ''}</p>
                     )}
                   </div>
                 </div>
