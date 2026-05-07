@@ -41,10 +41,13 @@ function RedeemContent() {
     try {
       const response = await axios.post('/api/vouchers/validate', { code: voucherCode });
       setVoucherData(response.data.voucher);
-      if (response.data.voucher.rewards.length === 1) {
-        setSelectedReward(response.data.voucher.rewards[0]);
+      const rewards = response.data.voucher.rewards;
+      if (rewards.length === 1) {
+        setSelectedReward(rewards[0]);
+        setStep(isShirtReward(rewards[0].name) ? 2 : 3);
+      } else {
+        setStep(2);
       }
-      setStep(2);
     } catch (err: any) {
       setError(err.response?.data?.message || 'Mã số thẻ không hợp lệ');
       toast.error('Xác thực thất bại!');
@@ -160,9 +163,9 @@ function RedeemContent() {
 
             {/* ── Step 2 ── */}
             {step === 2 && (
-              <motion.div key="2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-5 md:space-y-10">
-                <div className="text-center space-y-2">
-                  <h3 className="text-xl md:text-2xl font-black text-slate-900">Chọn phần quà của bạn</h3>
+              <motion.div key="2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-3 md:space-y-10">
+                <div className="text-center space-y-1">
+                  <h3 className="text-base md:text-2xl font-black text-slate-900">Chọn phần quà của bạn</h3>
                   <p className="text-slate-400 font-bold uppercase tracking-[0.2em] text-[10px]">Chọn món quà bạn yêu thích nhất</p>
                 </div>
 
@@ -171,9 +174,13 @@ function RedeemContent() {
                   {voucherData?.rewards.map((reward: any) => {
                     const isShirt = isShirtReward(reward.name);
                     const gender = genderSelections[reward._id] || 'nu';
-                    const images = getRewardImages(reward.name, isShirt ? gender : undefined);
-                    const currentIndex = carouselIndexes[reward._id] || 0;
-                    const displayImage = images[currentIndex % images.length];
+                    const images = isShirt ? getShirtChoiceImages(gender) : getRewardImages(reward.name);
+                    const rawIndex = carouselIndexes[reward._id] || 0;
+                    const syncedIndex = isShirt && selectedShirtChoice && selectedReward?._id === reward._id
+                      ? selectedShirtChoice.index
+                      : rawIndex;
+                    const currentIndex = syncedIndex % images.length;
+                    const displayImage = images[currentIndex];
                     const isOutOfStock = reward.stock !== undefined && reward.stock <= 0;
 
                     return (
@@ -229,7 +236,7 @@ function RedeemContent() {
                           </div>
                         )}
 
-                        <div className="relative aspect-square md:aspect-[3/4] rounded-[1rem] md:rounded-[2rem] overflow-hidden mb-2 md:mb-4 bg-slate-50/50">
+                        <div className="relative h-32 md:h-auto md:aspect-[3/4] rounded-[1rem] md:rounded-[2rem] overflow-hidden mb-1 md:mb-4 bg-slate-50/50">
                           <AnimatePresence mode="wait">
                             <motion.div key={displayImage} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }} className="absolute inset-0">
                               <Image src={displayImage} alt={reward.name} fill className={`object-contain md:object-cover p-2 md:p-0 transition-all duration-700 ${isOutOfStock ? 'grayscale' : 'group-hover:scale-110'}`} />
@@ -259,13 +266,13 @@ function RedeemContent() {
                           )}
                         </div>
 
-                        <div className="px-1 md:px-4 flex-1 text-center space-y-1 mb-3 md:mb-6">
-                          <h4 className="font-black text-slate-900 text-[10px] md:text-lg leading-tight tracking-tighter">
+                        <div className="px-1 md:px-4 flex-1 text-center space-y-0.5 mb-1 md:mb-6">
+                          <h4 className="font-black text-slate-900 text-[9px] md:text-lg leading-tight tracking-tighter">
                             {reward.name === 'Kem đánh răng Close up 100gr' ? (<>Kem đánh răng <br /> Close up 100gr</>) : reward.name}
                           </h4>
-                          <p className="text-[8px] md:text-[11px] text-slate-400 font-bold leading-relaxed">{reward.description}</p>
+                          <p className="hidden md:block text-[8px] md:text-[11px] text-slate-400 font-bold leading-relaxed">{reward.description}</p>
                         </div>
-                        <button className={`w-full py-2.5 md:py-4 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all ${
+                        <button className={`w-full py-2 md:py-4 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all ${
                           isOutOfStock ? 'bg-slate-100 text-slate-300' : selectedReward?._id === reward._id ? 'bg-green-800 text-white shadow-lg' : 'bg-slate-50 text-slate-400 group-hover:bg-green-50 group-hover:text-green-700'
                         }`}>
                           {isOutOfStock ? 'Tạm hết hàng' : selectedReward?._id === reward._id ? 'Đã chọn' : 'Chọn'}
@@ -283,13 +290,13 @@ function RedeemContent() {
                       initial={{ opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 12 }}
-                      className="pt-6 border-t border-slate-50 space-y-4"
+                      className="pt-3 border-t border-slate-50 space-y-2 md:space-y-4"
                     >
-                      <div className="text-center space-y-1">
-                        <h4 className="font-black text-slate-900 text-sm uppercase tracking-widest">Chọn mẫu áo bạn yêu thích</h4>
-                        <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Nhấn vào mẫu để chọn</p>
+                      <div className="text-center space-y-0.5">
+                        <h4 className="font-black text-slate-900 text-xs md:text-sm uppercase tracking-widest">Chọn mẫu áo bạn yêu thích</h4>
+                        <p className="text-slate-400 text-[9px] font-bold uppercase tracking-widest">Nhấn vào mẫu để chọn</p>
                       </div>
-                      <div className="grid grid-cols-5 gap-2 md:gap-3 max-w-xs md:max-w-lg mx-auto">
+                      <div className="grid grid-cols-5 gap-1.5 md:gap-3 max-w-xs md:max-w-lg mx-auto">
                         {getShirtChoiceImages(genderSelections[selectedReward._id] || 'nu').map((img, idx) => (
                           <div
                             key={idx}
