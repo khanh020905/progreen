@@ -41,6 +41,8 @@ function RedeemContent() {
     try {
       const response = await axios.post('/api/vouchers/validate', { code: voucherCode });
       setVoucherData(response.data.voucher);
+      setSelectedReward(null);
+      setSelectedShirtChoice(null);
       const rewards = response.data.voucher.rewards;
       if (rewards.length === 1) {
         setSelectedReward(rewards[0]);
@@ -208,7 +210,7 @@ function RedeemContent() {
                                   setCarouselIndexes(prev => ({ ...prev, [reward._id]: 0 }));
                                   setSelectedShirtChoice(null);
                                 }}
-                                className={`px-2 py-0.5 rounded-full text-[8px] md:text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${gender === 'nu' ? 'bg-green-600 text-white shadow-md' : 'text-slate-400'}`}
+                                className={`px-3 py-1 rounded-full text-[12px] md:text-[14px] font-black uppercase tracking-widest transition-all duration-300 ${gender === 'nu' ? 'bg-green-600 text-white shadow-md' : 'text-slate-400'}`}
                               >
                                 Nữ
                               </button>
@@ -219,16 +221,16 @@ function RedeemContent() {
                                   setCarouselIndexes(prev => ({ ...prev, [reward._id]: 0 }));
                                   setSelectedShirtChoice(null);
                                 }}
-                                className={`px-2 py-0.5 rounded-full text-[8px] md:text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${gender === 'nam' ? 'bg-green-600 text-white shadow-md' : 'text-slate-400'}`}
+                                className={`px-3 py-1 rounded-full text-[12px] md:text-[14px] font-black uppercase tracking-widest transition-all duration-300 ${gender === 'nam' ? 'bg-green-600 text-white shadow-md' : 'text-slate-400'}`}
                               >
                                 Nam
                               </button>
                             </div>
                           ) : <div />}
                           {isOutOfStock ? (
-                            <div className="bg-red-600 text-white px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest">Hết hàng</div>
+                            <div className="bg-red-600 text-white px-1.5 py-0.5 rounded-full text-[7px] font-black uppercase tracking-widest">Hết hàng</div>
                           ) : (
-                            <div className="text-[#2d5a27] px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest border border-green-100 bg-slate-50">
+                            <div className="text-[#2d5a27] px-1.5 py-0.5 rounded-full text-[7px] font-black uppercase tracking-widest border border-green-100 bg-slate-50">
                               Còn lại: {reward.stock ?? 0}
                             </div>
                           )}
