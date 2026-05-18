@@ -125,7 +125,7 @@ function RedeemContent() {
   const canProceed = selectedReward && (!isShirtReward(selectedReward.name) || selectedShirtChoice !== null);
 
   return (
-    <div className="min-h-screen py-10 md:py-16 bg-white">
+    <div className="min-h-screen py-10 md:py-16 bg-[#f7faf8]">
       <div className="container mx-auto px-2 md:px-4 max-w-5xl">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4"><LeafIcon className="text-green-500 w-8 h-8" /></div>
@@ -136,7 +136,7 @@ function RedeemContent() {
 
         <StepIndicator />
 
-        <div className="bg-white border border-slate-50 rounded-[2rem] md:rounded-[3rem] p-2 md:p-12 shadow-2xl shadow-slate-100/50 mt-6">
+        <div className="bg-white border border-slate-100/60 rounded-[2rem] md:rounded-[3rem] p-6 md:p-12 shadow-2xl shadow-slate-100/40 mt-6">
           <AnimatePresence mode="wait">
 
             {/* ── Step 1 ── */}
@@ -167,12 +167,12 @@ function RedeemContent() {
             {step === 2 && (
               <motion.div key="2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-3 md:space-y-10">
                 <div className="text-center space-y-1">
-                  <h3 className="text-base md:text-2xl font-black text-slate-900">Chọn phần quà của bạn</h3>
+                  <h3 className="text-xl md:text-2xl font-black text-slate-900">Chọn phần quà của bạn</h3>
                   <p className="text-slate-400 font-bold uppercase tracking-[0.2em] text-[10px]">Chọn món quà bạn yêu thích nhất</p>
                 </div>
 
                 {/* Reward cards */}
-                <div className="grid grid-cols-2 gap-2 md:gap-6 max-w-3xl mx-auto">
+                <div className="grid grid-cols-2 gap-4 md:gap-6 max-w-3xl mx-auto">
                   {voucherData?.rewards.map((reward: any) => {
                     const isShirt = isShirtReward(reward.name);
                     const gender = genderSelections[reward._id] || 'nu';
@@ -188,7 +188,7 @@ function RedeemContent() {
                     return (
                       <div
                         key={reward._id}
-                        className={`group p-2 md:p-4 bg-white rounded-2xl md:rounded-[2.5rem] border-2 transition-all duration-500 flex flex-col ${
+                        className={`group p-3 md:p-5 bg-white rounded-2xl md:rounded-[2.5rem] border-2 transition-all duration-500 flex flex-col ${
                           isOutOfStock ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'
                         } ${
                           selectedReward?._id === reward._id ? 'border-green-500 shadow-2xl shadow-green-900/10' : 'border-slate-50 hover:border-green-200'
@@ -200,7 +200,7 @@ function RedeemContent() {
                         }}
                       >
                         {/* Header row: gender toggle + stock — sits above image, no overlap */}
-                        <div className="flex items-center justify-between mb-1 px-0.5">
+                        <div className="flex items-center justify-between mb-2 md:mb-3 px-0.5">
                           {isShirt ? (
                             <div className="flex bg-slate-100 rounded-full p-0.5">
                               <button
@@ -236,7 +236,7 @@ function RedeemContent() {
                           )}
                         </div>
 
-                        <div className="relative h-32 md:h-auto md:aspect-[3/4] rounded-[1rem] md:rounded-[2rem] overflow-hidden mb-1 md:mb-4 bg-slate-50/50">
+                        <div className="relative aspect-[3/4] rounded-[1rem] md:rounded-[2rem] overflow-hidden mb-3 md:mb-4 bg-slate-50/50">
                           <AnimatePresence mode="wait">
                             <motion.div key={displayImage} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }} className="absolute inset-0">
                               <Image src={displayImage} alt={reward.name} fill className={`object-contain md:object-cover p-2 md:p-0 transition-all duration-700 ${isOutOfStock ? 'grayscale' : 'group-hover:scale-110'}`} />
@@ -267,12 +267,12 @@ function RedeemContent() {
                         </div>
 
                         <div className="px-1 md:px-4 flex-1 text-center space-y-0.5 mb-1 md:mb-6">
-                          <h4 className="font-black text-slate-900 text-[9px] md:text-lg leading-tight tracking-tighter">
-                            {reward.name === 'Kem đánh răng Close up 100gr' ? (<>Kem đánh răng <br /> Close up 100gr</>) : reward.name}
+                          <h4 className="font-black text-slate-900 text-xs sm:text-sm md:text-lg leading-tight tracking-tight">
+                            {reward.name}
                           </h4>
                           <p className="hidden md:block text-[8px] md:text-[11px] text-slate-400 font-bold leading-relaxed">{reward.description}</p>
                         </div>
-                        <button className={`w-full py-2 md:py-4 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all ${
+                        <button className={`w-full py-2.5 md:py-4 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest transition-all ${
                           isOutOfStock ? 'bg-slate-100 text-slate-300' : selectedReward?._id === reward._id ? 'bg-green-800 text-white shadow-lg' : 'bg-slate-50 text-slate-400 group-hover:bg-green-50 group-hover:text-green-700'
                         }`}>
                           {isOutOfStock ? 'Tạm hết hàng' : selectedReward?._id === reward._id ? 'Đã chọn' : 'Chọn'}
@@ -326,7 +326,7 @@ function RedeemContent() {
                 </AnimatePresence>
 
                 <div className="flex flex-col items-center gap-6 md:gap-10 pt-6 md:pt-10 border-t border-slate-50">
-                  <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest flex items-center gap-2">
+                  <p className="text-[11px] md:text-xs text-slate-400 font-black uppercase tracking-widest flex items-center gap-2">
                     <CheckCircle className="w-3 h-3 text-green-500" /> Bạn chỉ có thể chọn một phần quà.
                   </p>
                   <div className="flex flex-col md:flex-row justify-between items-center w-full gap-4 md:gap-6">

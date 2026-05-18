@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc *)",
+      "Bash(Get-ChildItem -Path \"d:\\\\Quoc Khanh\\\\CODING-PROJECT\\\\progreenlife.vercel.app\" -Directory)",
+      "Bash(Select-Object Name)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
+    ]
+  }
+}
