@@ -33,4 +33,11 @@ describe('Redeem Page', () => {
     const emailLabel = screen.queryByText(/Email \(Không bắt buộc\)/i);
     expect(emailLabel).toBeNull();
   });
+
+  it('should render the mobile-only gift box illustration and description text', () => {
+    render(<RedeemPage />);
+    const descriptionText = screen.getByText(/Phần quà hấp dẫn đang chờ bạn!/i);
+    expect(descriptionText).toBeDefined();
+  });
 });
+
