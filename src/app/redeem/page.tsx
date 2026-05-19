@@ -408,6 +408,38 @@ function RedeemContent() {
 
           </AnimatePresence>
         </div>
+
+        {/* Mobile-Only Gift Box Illustration */}
+        <div className="md:hidden flex flex-col items-center justify-center mt-8 pb-10">
+          <motion.div
+            animate={{ y: [0, -10, 0] }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="relative w-40 h-40 drop-shadow-[0_20px_35px_rgba(45,90,39,0.15)]"
+          >
+            <Image
+              src="/faq-gift.png"
+              alt="Hộp quà may mắn"
+              fill
+              className="object-contain"
+              priority
+            />
+          </motion.div>
+          <motion.p
+            animate={{ opacity: [0.6, 1, 0.6] }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="text-[10px] font-black uppercase tracking-[0.2em] text-[#2d5a27] mt-3 text-center"
+          >
+            Phần quà hấp dẫn đang chờ bạn!
+          </motion.p>
+        </div>
       </div>
     </div>
   );
